@@ -3,9 +3,35 @@ import { motion } from 'motion/react'
 import { t, tSide } from '../i18n'
 import { RichText } from './RichText'
 import { VectorSpaceSlide } from './VectorSpaceSlide'
+import { McpStackDiagram } from './McpStackDiagram'
+import { FlowTimelineDiagram } from './FlowTimelineDiagram'
+import { SideBySideComparison, resolveBodyComparison } from './SideBySideComparison'
 
 function L(slide, lang) {
   return slide.no_translate ? 'en' : lang
+}
+
+function isPointCardBullet(item) {
+  return item != null && typeof item === 'object' && !Array.isArray(item) && ('heading' in item || 'body' in item)
+}
+
+function PointCardContent({ item, lang }) {
+  const heading = item.heading != null ? t(item.heading, lang) : null
+  const body = item.body != null ? t(item.body, lang) : null
+  return (
+    <>
+      {heading ? (
+        <div className="point-card__heading">
+          <RichText>{heading}</RichText>
+        </div>
+      ) : null}
+      {body ? (
+        <p className="point-card__body">
+          <RichText>{body}</RichText>
+        </p>
+      ) : null}
+    </>
+  )
 }
 
 // ─── Layout renderers ──────────────────────────────────────────────────────
@@ -41,35 +67,113 @@ function HeaderGlass({ slide, styleClass, lang }) {
   )
 }
 
+function resolveMcpStack(slide, lang) {
+  const raw = slide.mcpStack
+  if (!raw || typeof raw !== 'object') return null
+  if ('en' in raw && typeof raw.en === 'object' && raw.en !== null) return t(raw, lang)
+  return raw
+}
+
+function resolveFlowTimeline(slide, lang) {
+  const raw = slide.flowTimeline
+  if (!raw || typeof raw !== 'object') return null
+  if ('en' in raw && typeof raw.en === 'object' && raw.en !== null) return t(raw, lang)
+  return raw
+}
+
 function BodyGlass({ slide, styleClass, lang }) {
   const lg = L(slide, lang)
   const body = t(slide.body, lg)
+  const bodyAfter = slide.bodyAfter ? t(slide.bodyAfter, lg) : null
   const bullets = t(slide.bullets, lg)
-  if (!body && !bullets?.length) return null
+  const mcpStack =
+    slide.bodyDiagram === 'mcp-stack' ? resolveMcpStack(slide, lg) : null
+  const flowTimeline =
+    slide.bodyDiagram === 'flow-timeline' ? resolveFlowTimeline(slide, lg) : null
+  const bodyComparison = resolveBodyComparison(slide, lg)
+  const bodyClosing = slide.bodyClosing ? t(slide.bodyClosing, lg) : null
+
+  if (!body && !bullets?.length && !mcpStack && !flowTimeline && !bodyAfter && !bodyComparison)
+    return null
 
   const kicker = t(slide.kicker, lg)
   const title = t(slide.title, lg)
   const showChip = !kicker && !title && (slide.section || slide.chapter)
 
+  const bodyGlassClass = [
+    'slide-glass',
+    'slide-glass--body',
+    slide.bodySurface === 'mcp-connect' ? 'slide-glass--body-mcp-connect' : '',
+    styleClass,
+  ]
+    .filter(Boolean)
+    .join(' ')
+
   return (
-    <div className={`slide-glass slide-glass--body ${styleClass}`}>
-      <div className="slide-content__inner">
+    <div className={bodyGlassClass}>
+      <div
+        className={[
+          'slide-content__inner',
+          flowTimeline || mcpStack ? 'slide-content__inner--body-diagram-stack' : '',
+          slide.bodyInnerClass,
+        ]
+          .filter(Boolean)
+          .join(' ')}
+      >
         {showChip && (
           <div className="section-chip animated">
             {slide.section && <span>{t(slide.section, lg)}</span>}
             {slide.chapter && <span>{slide.chapter}</span>}
           </div>
         )}
-        {body && (
-          <p className={['lead', 'animated', slide.bodyClass].filter(Boolean).join(' ')}>
-            <RichText>{body}</RichText>
-          </p>
+        {mcpStack || flowTimeline ? (
+          <>
+            {body ? (
+              <p className="lead animated">
+                <RichText>{body}</RichText>
+              </p>
+            ) : null}
+            {mcpStack ? <McpStackDiagram key={`${slide.id}-${lang}`} stack={mcpStack} /> : null}
+            {flowTimeline ? (
+              <FlowTimelineDiagram key={`${slide.id}-${lang}`} timeline={flowTimeline} />
+            ) : null}
+            {bodyAfter ? (
+              <p className="lead lead--after-diagram animated">
+                <RichText>{bodyAfter}</RichText>
+              </p>
+            ) : null}
+          </>
+        ) : (
+          <>
+            {body ? (
+              <p className={['lead', 'animated', slide.bodyClass].filter(Boolean).join(' ')}>
+                <RichText>{body}</RichText>
+              </p>
+            ) : null}
+            {bodyComparison ? (
+              <SideBySideComparison
+                leftHeading={bodyComparison.leftHeading}
+                rightHeading={bodyComparison.rightHeading}
+                rows={bodyComparison.rows}
+                rowKeyPrefix={`${slide.id}-cmp`}
+              />
+            ) : null}
+            {bodyClosing ? (
+              <p className="lead lead--after-comparison animated">
+                <RichText>{bodyClosing}</RichText>
+              </p>
+            ) : null}
+          </>
         )}
         {bullets?.length > 0 && (
-          <ul className="points">
-            {bullets.map((b) => (
-              <li className="animated" key={b}>
-                <RichText>{b}</RichText>
+          <ul
+            className={['points', bullets.some(isPointCardBullet) ? 'points--card-prose' : '']
+              .filter(Boolean)
+              .join(' ')}
+          >
+            {bullets.map((b, i) => (
+              <li className="animated" key={`${slide.id}-${i}`}>
+                {isPointCardBullet(b) ? <PointCardContent item={b} lang={lg} /> : <RichText>{b}</RichText>}
               </li>
             ))}
           </ul>

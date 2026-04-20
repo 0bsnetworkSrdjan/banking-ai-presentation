@@ -300,6 +300,13 @@ body {
 .slide-glass--body {
   flex: 1;
   min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.slide-glass--body > .slide-content__inner {
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 /* col — equal-width pane inside .slide-two-pane */
@@ -639,7 +646,16 @@ body {
 
 .slide-glass--col .points li {
   font-size: clamp(0.68rem, 0.26rem + 2.35cqh, 1.32rem);
-  padding: 0.55rem 0.8rem;
+  padding: clamp(0.75rem, 0.35rem + 1.8cqh, 1.1rem) clamp(0.95rem, 0.45rem + 2cqh, 1.35rem);
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: 0;
+}
+
+.slide-glass--col .points li .rich-bold,
+.slide-glass--col .points li strong {
+  font-weight: 800;
 }
 
 .slide-glass--col .slide-content__inner {
@@ -668,6 +684,354 @@ body {
   letter-spacing: -0.015em;
 }
 
+/* Optional glass tint when the card represents the MCP connective layer */
+.slide-glass--body.slide-glass--body-mcp-connect {
+  border-color: rgba(100, 110, 250, 0.28);
+  box-shadow:
+    0 0 0 1px rgba(100, 110, 250, 0.08) inset,
+    0 18px 48px rgba(20, 34, 24, 0.06);
+}
+
+.slide-glass--body .lead.lead--after-diagram {
+  margin-top: clamp(0.5rem, 1.2cqh, 0.85rem);
+}
+
+/* Side-by-side comparison (e.g. Without MCP / With MCP)
+   Opaque “paper” card + dark copy so it stays readable on light glass and
+   light app-shell backgrounds (avoid coupling to .section-b — that class
+   lives on main and previously forced white text on a translucent panel). */
+.body-comparison {
+  --bc-line: rgba(20, 34, 24, 0.14);
+  --bc-line-soft: rgba(20, 34, 24, 0.09);
+  width: 100%;
+  margin-top: clamp(0.65rem, 1.4cqh, 1rem);
+  border-radius: clamp(12px, 1.2cqh, 18px);
+  border: 1px solid var(--bc-line);
+  overflow: hidden;
+  color: var(--text-main);
+  background: linear-gradient(180deg, #fbfcfb 0%, #f2f5f3 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 1px 2px rgba(20, 34, 24, 0.06);
+}
+
+.body-comparison strong,
+.body-comparison .rich-bold {
+  color: inherit;
+  font-weight: 800;
+}
+
+.body-comparison__header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  font-size: clamp(0.72rem, 0.28rem + 2.35cqh, 1.05rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #2a3d30;
+  border-bottom: 1px solid var(--bc-line);
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.body-comparison__col {
+  padding: clamp(0.55rem, 1.1cqh, 0.75rem) clamp(0.65rem, 1.4cqw, 1rem);
+}
+
+.body-comparison__col--left {
+  border-right: 1px solid var(--bc-line-soft);
+  color: #3d5244;
+}
+
+.body-comparison__col--right {
+  border-right: none;
+  color: #2f3d8a;
+  background: rgba(100, 110, 250, 0.1);
+}
+
+.body-comparison__rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.body-comparison__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  font-size: clamp(0.72rem, 0.3rem + 2.65cqh, 1.12rem);
+  line-height: 1.42;
+  font-weight: 600;
+  color: var(--text-main);
+  border-bottom: 1px solid var(--bc-line-soft);
+}
+
+.body-comparison__row:last-child {
+  border-bottom: none;
+}
+
+.body-comparison__cell {
+  padding: clamp(0.5rem, 1cqh, 0.7rem) clamp(0.65rem, 1.4cqw, 1rem);
+}
+
+.body-comparison__cell--left {
+  border-right: 1px solid var(--bc-line-soft);
+  color: #3d5244;
+}
+
+.body-comparison__cell--right {
+  color: #1e2558;
+  background: rgba(100, 110, 250, 0.08);
+}
+
+.slide-glass--body .lead.lead--after-comparison {
+  margin-top: clamp(0.65rem, 1.4cqh, 1rem);
+}
+
+/* Agent orchestration flow (Module 8 — “The Full Picture”) */
+.flow-timeline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: min(34rem, 100%);
+  margin-inline: auto;
+  margin-top: clamp(0.35rem, 1cqh, 0.65rem);
+  gap: 0;
+  font-size: clamp(0.72rem, 0.28rem + 2.45cqh, 1.05rem);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.flow-timeline__arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.1rem 0;
+}
+
+.flow-timeline__arrow-line {
+  display: block;
+  width: 2px;
+  height: clamp(0.55rem, 1.5cqh, 0.9rem);
+  background: linear-gradient(
+    180deg,
+    rgba(100, 110, 250, 0.35),
+    rgba(100, 110, 250, 0.85)
+  );
+  border-radius: 2px;
+  position: relative;
+}
+
+.flow-timeline__arrow-line::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid rgba(100, 110, 250, 0.88);
+}
+
+.flow-timeline__node {
+  width: 100%;
+  text-align: center;
+  padding: 0.48rem 0.85rem;
+  border-radius: 0.55rem;
+  border: 1px solid rgba(20, 34, 24, 0.1);
+  background: rgba(255, 255, 255, 0.72);
+  line-height: 1.38;
+}
+
+.flow-timeline__node--text {
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.flow-timeline__node--agent {
+  font-weight: 700;
+  color: var(--text-main);
+  border-color: rgba(20, 34, 24, 0.12);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+}
+
+.flow-timeline__node--review {
+  font-weight: 700;
+  color: var(--text-main);
+  border-color: rgba(100, 110, 250, 0.28);
+  background: linear-gradient(
+    135deg,
+    rgba(100, 110, 250, 0.08) 0%,
+    rgba(255, 255, 255, 0.88) 50%,
+    rgba(184, 196, 255, 0.1) 100%
+  );
+}
+
+.flow-timeline__tools {
+  width: 100%;
+  padding: 0.6rem 0.85rem 0.72rem;
+  border-radius: 0.55rem;
+  border: 1px solid rgba(20, 34, 24, 0.1);
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.flow-timeline__tools-title {
+  margin: 0 0 0.42rem;
+  font-size: clamp(0.68rem, 0.26rem + 2.15cqh, 0.95rem);
+  font-weight: 700;
+  color: var(--text-main);
+  text-align: center;
+}
+
+.flow-timeline__tools-list {
+  margin: 0;
+  padding: 0 0 0 1.1rem;
+  display: grid;
+  gap: 0.26rem;
+  font-size: clamp(0.64rem, 0.24rem + 2.05cqh, 0.9rem);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-muted);
+  text-align: left;
+}
+
+.flow-timeline__tools-list li {
+  padding-left: 0.12rem;
+}
+
+/* MCP architecture stack (Module 8 — “Where MCP Sits in the Architecture”) */
+.mcp-stack-diagram {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: min(36rem, 100%);
+  margin-inline: auto;
+  gap: 0;
+  font-size: clamp(0.72rem, 0.28rem + 2.45cqh, 1.05rem);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.mcp-stack-diagram__node {
+  width: 100%;
+  text-align: center;
+  padding: 0.55rem 1rem;
+  border-radius: 0.55rem;
+  border: 1px solid rgba(20, 34, 24, 0.12);
+  background: rgba(255, 255, 255, 0.78);
+  line-height: 1.35;
+}
+
+.mcp-stack-diagram__node--agent {
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.mcp-stack-diagram__arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.12rem 0;
+}
+
+.mcp-stack-diagram__arrow-line {
+  display: block;
+  width: 2px;
+  height: clamp(0.65rem, 1.8cqh, 1rem);
+  background: linear-gradient(
+    180deg,
+    rgba(100, 110, 250, 0.35),
+    rgba(100, 110, 250, 0.85)
+  );
+  border-radius: 2px;
+  position: relative;
+}
+
+.mcp-stack-diagram__arrow-line::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid rgba(100, 110, 250, 0.88);
+}
+
+.mcp-stack-diagram__layer-wrap {
+  width: 100%;
+}
+
+.mcp-stack-diagram__layer {
+  width: 100%;
+  text-align: center;
+  padding: 0.65rem 1rem 0.7rem;
+  border-radius: 0.6rem;
+  border: 2px solid rgba(100, 110, 250, 0.55);
+  background:
+    linear-gradient(135deg, rgba(100, 110, 250, 0.14) 0%, rgba(255, 255, 255, 0.92) 55%, rgba(184, 196, 255, 0.16) 100%);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.7) inset,
+    0 10px 28px rgba(100, 110, 250, 0.12);
+}
+
+.mcp-stack-diagram__layer-label {
+  display: block;
+  font-family: 'Noto Serif', Georgia, serif;
+  font-size: clamp(0.82rem, 0.32rem + 2.65cqh, 1.12rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-primary);
+}
+
+.mcp-stack-diagram__layer-caption {
+  display: block;
+  margin-top: 0.28rem;
+  font-family: Manrope, system-ui, sans-serif;
+  font-size: clamp(0.58rem, 0.22rem + 1.85cqh, 0.72rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: rgba(100, 110, 250, 0.82);
+}
+
+.mcp-stack-diagram__servers {
+  width: 100%;
+  padding: 0.65rem 0.85rem 0.75rem;
+  border-radius: 0.55rem;
+  border: 1px solid rgba(20, 34, 24, 0.1);
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.mcp-stack-diagram__servers-title {
+  margin: 0 0 0.45rem;
+  font-size: clamp(0.68rem, 0.26rem + 2.2cqh, 0.95rem);
+  font-weight: 700;
+  color: var(--text-main);
+  text-align: center;
+}
+
+.mcp-stack-diagram__server-list {
+  margin: 0;
+  padding: 0 0 0 1.15rem;
+  display: grid;
+  gap: 0.28rem;
+  font-size: clamp(0.65rem, 0.24rem + 2.1cqh, 0.9rem);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
+.mcp-stack-diagram__server-list li {
+  padding-left: 0.15rem;
+}
+
 .slide-glass--body .points li {
   font-size: clamp(0.72rem, 0.28rem + 2.5cqh, 1.32rem);
 }
@@ -694,6 +1058,51 @@ body {
 
 .slide-content__inner::-webkit-scrollbar {
   display: none;
+}
+
+/*
+ * Dense single-column body (single / bullets-only via BodyGlass):
+ * equal top/bottom inset + vertical centering when extra height remains.
+ * Use from slides.js: bodyInnerClass: 'slide-content__inner--body-vert-balanced'
+ */
+.slide-content__inner.slide-content__inner--body-vert-balanced {
+  display: grid;
+  justify-items: stretch;
+  align-content: center;
+  gap: clamp(0.45rem, 1vh, 0.85rem);
+  padding-block: clamp(1rem, 0.42rem + 1.9cqh, 1.9rem);
+  padding-inline: clamp(1.15rem, 2.4vw, 2.1rem);
+}
+
+/* Flow-timeline + MCP stack slides: flex column so the diagram slot gets a real height budget, then JS scales the diagram to fit */
+.slide-content__inner.slide-content__inner--body-diagram-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: clamp(0.35rem, 0.9vh, 0.75rem);
+  padding-block: clamp(0.55rem, 0.3rem + 1.2cqh, 1.25rem);
+  padding-inline: clamp(1.15rem, 2.4vw, 2.1rem);
+  overflow: hidden;
+}
+
+.slide-content__inner.slide-content__inner--body-diagram-stack > .lead {
+  flex: 0 0 auto;
+}
+
+.body-diagram-slot {
+  flex: 1 1 0;
+  min-height: 0;
+  min-width: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.body-diagram-slot .flow-timeline {
+  margin-top: 0;
+}
+
+.body-diagram-slot .mcp-stack-diagram {
+  margin-block: 0;
 }
 
 .kicker {
@@ -765,6 +1174,64 @@ h1 {
   font-size: var(--slide-fs-bullet);
   letter-spacing: 0.01em;
   font-weight: 700;
+}
+
+/* Long-form bullet cards: heading + body (e.g. “Inside a Skill file”) — one row so every card stays in view */
+.points.points--card-prose {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.4rem;
+  align-content: start;
+}
+
+.points.points--card-prose li {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.28rem;
+  min-width: 0;
+  padding: 0.5rem 0.42rem;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.45;
+  color: var(--text-muted);
+  overflow-wrap: break-word;
+}
+
+.point-card__heading {
+  font-family: 'Noto Serif', Georgia, serif;
+  font-size: clamp(0.82rem, 0.32rem + 2.4cqh, 1.2rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--color-primary);
+}
+
+.point-card__body {
+  margin: 0;
+  font-size: clamp(0.68rem, 0.24rem + 2.05cqh, 1.02rem);
+  font-weight: 500;
+  line-height: 1.58;
+  color: #2a3358;
+}
+
+.points.points--card-prose .point-card__body .rich-highlight {
+  font-weight: 700;
+}
+
+/* Narrow tiles in a single row: keep type legible without blowing vertical space */
+.points.points--card-prose .point-card__heading {
+  font-size: clamp(0.58rem, 0.16rem + 1.55cqh, 0.88rem);
+  line-height: 1.2;
+}
+
+.points.points--card-prose .point-card__body {
+  font-size: clamp(0.5rem, 0.12rem + 1.28cqh, 0.76rem);
+  line-height: 1.38;
+}
+
+.slide-glass--body .points.points--card-prose li {
+  font-size: clamp(0.52rem, 0.14rem + 1.35cqh, 0.78rem);
 }
 
 /* ─── Progress rail ─────────────────────────────────────────────────────────── */
@@ -1150,8 +1617,13 @@ h1 {
 
 .slide-content__inner--timeline {
   min-height: 0;
+  height: 100%;
   overflow: auto;
-  padding: clamp(0.4rem, 0.85vw, 0.65rem) clamp(0.65rem, 1.35vw, 1.05rem);
+  /* Flex so the step list can sit with equal top/bottom inset inside the body glass */
+  display: flex;
+  flex-direction: column;
+  padding-block: clamp(0.55rem, 0.55rem + 0.9cqh, 1.05rem);
+  padding-inline: clamp(0.65rem, 1.35vw, 1.05rem);
   gap: 0.3rem;
 }
 
@@ -1162,6 +1634,12 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 0.28rem;
+}
+
+/* After base .slide-timeline margin reset — center list vertically in the body glass */
+.slide-content__inner--timeline > .slide-timeline {
+  flex: 0 0 auto;
+  margin-block: auto;
 }
 
 .slide-timeline__step {

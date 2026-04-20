@@ -711,24 +711,31 @@ A well-deployed AI in banking is not just a frozen model — it's a frozen model
   },
   {
     id: 'm8b1K3nL8x',
-    layout: 'single',
+    layout: 'two-col',
     section: 'Module 8',
     chapter: '08',
     kicker: 'Agents',
     title: 'Beyond Answering — AI That Does',
+    intro:
+      '***Evolution:*** **so far** — a model that reads, reasons, and responds.\n**Next** — one that can act.',
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `So far: a model that reads, reasons, and responds.
-Next: a model that can act.
-A standard LLM takes input → produces text. That's it.
-An agent is an LLM given:
-
-A goal rather than just a question
-A set of tools it can decide to use
-The ability to chain multiple steps together — reasoning as it goes
-
-The difference between a brilliant advisor who can only talk — and one who can also pick up the phone, pull the file, and send the email.`,
+    left: {
+      title: 'LLM alone',
+      body:
+        '**Input → text.** One turn at a time. No tools, no side effects.\n\nLike a brilliant advisor who can only talk — not pull the file or send the update.',
+    },
+    right: {
+      title: 'LLM + agent',
+      body: 'Same model — set up to **pursue a goal**, not just finish an answer.',
+      bullets: [
+        '**Goal** — not only a single question',
+        '**Tools** — APIs, data, documents; the model chooses when to call them',
+        '**Multi-step** — plan, act, read results, keep reasoning',
+        '**👉 Contrast:** can pick up the phone, pull the file, and send the email — not only describe how.',
+      ],
+    },
   },
   {
     id: 'm8b2L4mP9y',
@@ -740,6 +747,7 @@ The difference between a brilliant advisor who can only talk — and one who can
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
+    bodyInnerClass: 'slide-content__inner--body-vert-balanced',
     body: `Tools are functions the model can choose to call.
 The model doesn't execute them itself — it decides when and why to use them, and receives the result back into its context.
 
@@ -752,6 +760,183 @@ The model doesn't execute them itself — it decides when and why to use them, a
 **Trigger workflow** — Initiate a compliance check or approval process
 
 ***Tools turn language into action.***`,
+  },
+  {
+    id: 'mcp1X2kN9w',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'MCP',
+    title: 'The Problem Before MCP',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    bodyInnerClass: 'slide-content__inner--body-vert-balanced',
+    body: `**MCP — Giving Agents a Standard Language**
+
+Every tool connection was built by hand.
+As agents became more capable, teams wanted to connect them to more systems:
+
+**CRM platforms
+Internal databases
+Document stores
+Calendar, email, communication tools
+Core banking systems**
+
+***The problem: every integration was custom-built. Different syntax, different authentication, different error handling — for every model, for every tool, for every vendor.***`,
+  },
+  {
+    id: 'mcp2Y3lP8x',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'MCP',
+    title: 'What MCP Is',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `**MCP = Model Context Protocol**
+An open standard, introduced by Anthropic in 2024, that defines a single, universal way for AI models to connect to external tools and data sources.
+Think of it as USB for AI agents:
+
+**Without MCP** | **With MCP**
+Custom integration per tool | One standard connection method
+Rebuild for every model update | Tool works with any MCP-compatible model
+Fragile, expensive to maintain | Plug in, and it works
+Siloed by vendor | Interoperable across platforms
+
+***Build the tool once. Any compatible agent can use it.***`,
+  },
+  {
+    id: 'mcp3Z4mQ7y',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'MCP',
+    title: 'Where MCP Sits in the Architecture',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    bodySurface: 'mcp-connect',
+    bodyDiagram: 'mcp-stack',
+    body: `MCP is the connective layer between the agent and the outside world:`,
+    mcpStack: {
+      agentLabel: 'Agent / Orchestrator',
+      layerLabel: 'MCP Interface',
+      serversTitle: 'MCP Servers (tools/systems)',
+      servers: [
+        'Internal document store',
+        'Core banking API',
+        'CRM / client data',
+        'Compliance & risk systems',
+        'Email & calendar',
+        'Market data feeds',
+      ],
+    },
+    bodyAfter: `***Each system exposes itself as an MCP server. The agent speaks to all of them through the same standard interface — it doesn't need to know the specifics of each system underneath.***`,
+  },
+  {
+    id: 'mcp4A5nR6z',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'MCP',
+    title: 'Why It Matters for Banking',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `MCP turns AI integration from a bespoke engineering project into an infrastructure decision.
+
+✅ **Faster deployment** — connect new systems without rebuilding agent logic
+✅ **Vendor flexibility** — swap the underlying model without rewiring all your tools
+✅ **Auditability** — a standardised layer is easier to monitor and govern
+✅ **Ecosystem momentum** — MCP is being adopted rapidly across platforms, tools, and vendors
+
+In the same way that REST APIs standardised how web services talk to each other — MCP is standardising how AI agents talk to the world.
+
+***For bank leadership, the strategic implication is clear: institutions that build their integrations on open standards now will not be locked into a single vendor's ecosystem later.***`,
+  },
+  {
+    id: 'm8skA1b2c3',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'Skills',
+    title: 'Skills — Packaged, reusable procedures',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `**Agent Skills** are a lightweight, open format for extending AI agent capabilities with specialized knowledge and workflows.
+
+    In every serious bank, there are standardized procedures — for example, a procedure for loan approval. These procedures are written, tested, and aligned with regulations.
+
+When a new associate arrives, they don't reinvent the procedure — they apply the existing one. A Skill is exactly that, but for a ***packaged procedure***, ***tailored to a specific task***, which the AI can "take off the shelf" and apply.`,
+  },
+  {
+    id: 'm8skD4e5f6',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'Skills',
+    title: 'Inside a Skill file',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `A Skill file is essentially a Markdown document — like a detailed work manual you give to an AI agent before it starts its task. The agent "reads" it, and from that moment on, knows exactly how to proceed.
+
+Here is what a summary of a Credit Assessment Skill looks like:`,
+    bullets: [
+      {
+        heading: 'Overview',
+        body: 'The AI agent reads this first. It clearly states the purpose and, just as importantly, ++what is NOT its purpose++ (e.g., it does not make the final decision).',
+      },
+      {
+        heading: 'When to Use',
+        body: 'The agent must know ++when to invoke this specific skill versus another++. Without this, it might try to process mortgage loans using the same rules as consumer loans.',
+      },
+      {
+        heading: 'Required Tools',
+        body: 'A list of all ++MCP++ connections that the agent is allowed to use within this skill. The agent ++cannot call a tool that isn\'t on this list++.',
+      },
+      {
+        heading: 'Step-by-Step Procedure',
+        body: 'The core of the file. Every step has clear ++IF/THEN rules++ — the agent does not improvise; it applies policy literally. You\'ll notice ++"STOP"++ written in several places — these are ++hard stops++ that the agent is not allowed to bypass.',
+      },
+      {
+        heading: 'What the Agent Must NOT Do',
+        body: 'Negative rules are just as important as positive ones. This is the section where you define ++the boundaries of autonomy++.',
+      },
+      {
+        heading: 'Audit and Compliance',
+        body: 'Every skill in a regulated industry must have this. ++Every call, every result, every decision++ — everything is logged.',
+      },
+      {
+        heading: 'Skill Metadata',
+        body: 'Version, owner, revision date. This is crucial because skills change when regulations or internal policies change — you need to know ++which version was active++ at the time of a specific decision.',
+      },
+    ],
+  },
+  {
+    id: 'm8b4N6pR2v',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'Governance',
+    title: 'Guardrails — Why Control Matters',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `**More capability = more responsibility.**
+Agents operating in banking contexts must be carefully constrained:
+
+Human-in-the-loop — certain actions require approval before execution
+***Tool boundaries*** — the agent can only access what it is explicitly permitted to
+***Audit trails*** — every tool call and decision step should be logged
+***Failure handling*** — what happens when a tool returns unexpected results?
+
+An agent with access to client data, communication channels, and workflow systems is not a chatbot. It requires governance like any other operational system.
+
+***The question is never just "can it do this?" — but "should it do this autonomously?"***`,
   },
   {
     id: 'm8b3M5nQ1z',
@@ -773,7 +958,42 @@ The agent doesn't just answer — it works:
 🧠 Reasons across all retrieved information
 ✍️ Produces a structured briefing — ready for the meeting
 
-Each step informs the next. The model decides the sequence.`,
+***Each step informs the next. The model decides the sequence.***`,
+  },
+  {
+    id: 'm8b5O7qS3w',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'Arc',
+    title: 'The Full Picture',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    bodyDiagram: 'flow-timeline',
+    body: `**How everything connects:**`,
+    flowTimeline: {
+      steps: [
+        { kind: 'text', label: 'User request' },
+        { kind: 'agent', label: '[ Agent / Orchestrator ]' },
+        { kind: 'text', label: 'Reasons about the goal' },
+        {
+          kind: 'tools',
+          title: 'Tools available',
+          items: [
+            'RAG (your documents)',
+            'Database queries',
+            'APIs & live data',
+            'Calculations & code',
+            'Workflow triggers',
+          ],
+        },
+        { kind: 'text', label: 'Synthesises results' },
+        { kind: 'text', label: 'Response or Action' },
+        { kind: 'review', label: '[ Human review — where required ]' },
+      ],
+    },
+    bodyAfter: `***The frozen chef, handed the right recipes, the right ingredients, and a fully equipped kitchen — with a supervisor in the room for the dishes that matter.***`,
   },
   {
     id: 'm8tWF4nP2x',
@@ -847,195 +1067,6 @@ Each step informs the next. The model decides the sequence.`,
           sr: 'Klijent dobija odgovor za 2–4 minuta. Sve je evidentirano. Kompletan revizijski trag. Ništa ne propada iz vida.',
         },
       },
-    ],
-  },
-  {
-    id: 'm8b4N6pR2v',
-    layout: 'single',
-    section: 'Module 8',
-    chapter: '08',
-    kicker: 'Governance',
-    title: 'Guardrails — Why Control Matters',
-    tone: 'section-b',
-    animation: 'stagger',
-    anim_stagger: 0.12,
-    body: `More capability = more responsibility.
-Agents operating in banking contexts must be carefully constrained:
-
-Human-in-the-loop — certain actions require approval before execution
-Tool boundaries — the agent can only access what it is explicitly permitted to
-Audit trails — every tool call and decision step should be logged
-Failure handling — what happens when a tool returns unexpected results?
-
-An agent with access to client data, communication channels, and workflow systems is not a chatbot. It requires governance like any other operational system.
-
-The question is never just "can it do this?" — but "should it do this autonomously?"`,
-  },
-  {
-    id: 'm8b5O7qS3w',
-    layout: 'single',
-    section: 'Module 8',
-    chapter: '08',
-    kicker: 'Arc',
-    title: 'The Full Picture',
-    tone: 'section-b',
-    animation: 'stagger',
-    anim_stagger: 0.12,
-    bodyClass: 'lead--flowchart',
-    body: `How everything connects:
-User request
-      ↓
-  [ Agent / Orchestrator ]
-      ↓
-  Reasons about the goal
-      ↓
- ┌─────────────────────────────┐
- │  Tools available:           │
- │  • RAG (your documents)     │
- │  • Database queries         │
- │  • APIs & live data         │
- │  • Calculations & code      │
- │  • Workflow triggers        │
- └─────────────────────────────┘
-      ↓
-  Synthesises results
-      ↓
-  Response or Action
-      ↓
- [ Human review — where required ]
-
-The frozen chef, handed the right recipes, the right ingredients, and a fully equipped kitchen — with a supervisor in the room for the dishes that matter.`,
-  },
-  {
-    id: 'mcp1X2kN9w',
-    layout: 'single',
-    section: 'Module 8',
-    chapter: '08',
-    kicker: 'MCP',
-    title: 'The Problem Before MCP',
-    tone: 'section-b',
-    animation: 'stagger',
-    anim_stagger: 0.12,
-    body: `**MCP — Giving Agents a Standard Language**
-
-Every tool connection was built by hand.
-As agents became more capable, teams wanted to connect them to more systems:
-
-CRM platforms
-Internal databases
-Document stores
-Calendar, email, communication tools
-Core banking systems
-
-The problem: every integration was custom-built. Different syntax, different authentication, different error handling — for every model, for every tool, for every vendor.
-
-Imagine every appliance in the kitchen needing its own unique, incompatible power socket.`,
-  },
-  {
-    id: 'mcp2Y3lP8x',
-    layout: 'single',
-    section: 'Module 8',
-    chapter: '08',
-    kicker: 'MCP',
-    title: 'What MCP Is',
-    tone: 'section-b',
-    animation: 'stagger',
-    anim_stagger: 0.12,
-    body: `MCP = Model Context Protocol
-An open standard, introduced by Anthropic in 2024, that defines a single, universal way for AI models to connect to external tools and data sources.
-Think of it as USB for AI agents:
-
-**Without MCP** | **With MCP**
-Custom integration per tool | One standard connection method
-Rebuild for every model update | Tool works with any MCP-compatible model
-Fragile, expensive to maintain | Plug in, and it works
-Siloed by vendor | Interoperable across platforms
-
-***Build the tool once. Any compatible agent can use it.***`,
-  },
-  {
-    id: 'mcp3Z4mQ7y',
-    layout: 'single',
-    section: 'Module 8',
-    chapter: '08',
-    kicker: 'MCP',
-    title: 'Where MCP Sits in the Architecture',
-    tone: 'section-b',
-    animation: 'stagger',
-    anim_stagger: 0.12,
-    body: `MCP is the connective layer between the agent and the outside world:
-[ Agent / Orchestrator ]
-         ↓
-   [ MCP Interface ]
-         ↓
-┌────────────────────────────────┐
-│  MCP Servers (tools/systems):  │
-│  • Internal document store     │
-│  • Core banking API            │
-│  • CRM / client data           │
-│  • Compliance & risk systems   │
-│  • Email & calendar            │
-│  • Market data feeds           │
-└────────────────────────────────┘
-
-Each system exposes itself as an MCP server. The agent speaks to all of them through the same standard interface — it doesn't need to know the specifics of each system underneath.`,
-  },
-  {
-    id: 'mcp4A5nR6z',
-    layout: 'single',
-    section: 'Module 8',
-    chapter: '08',
-    kicker: 'MCP',
-    title: 'Why It Matters for Banking',
-    tone: 'section-b',
-    animation: 'stagger',
-    anim_stagger: 0.12,
-    body: `MCP turns AI integration from a bespoke engineering project into an infrastructure decision.
-
-✅ Faster deployment — connect new systems without rebuilding agent logic
-✅ Vendor flexibility — swap the underlying model without rewiring all your tools
-✅ Auditability — a standardised layer is easier to monitor and govern
-✅ Ecosystem momentum — MCP is being adopted rapidly across platforms, tools, and vendors
-
-In the same way that REST APIs standardised how web services talk to each other — MCP is standardising how AI agents talk to the world.
-
-For bank leadership, the strategic implication is clear: institutions that build their integrations on open standards now will not be locked into a single vendor's ecosystem later.`,
-  },
-  {
-    id: 'm8skA1b2c3',
-    layout: 'single',
-    section: 'Module 8',
-    chapter: '08',
-    kicker: 'Skills',
-    title: 'Skills — Packaged, reusable procedures',
-    tone: 'section-b',
-    animation: 'stagger',
-    anim_stagger: 0.12,
-    body: `In every serious bank, there are standardized procedures — for example, a procedure for loan approval. These procedures are written, tested, and aligned with regulations.
-
-When a new associate arrives, they don't reinvent the procedure — they apply the existing one. A Skill is exactly that, but for AI: a packaged procedure, tailored to a specific task, which the AI can "take off the shelf" and apply.`,
-  },
-  {
-    id: 'm8skD4e5f6',
-    layout: 'single',
-    section: 'Module 8',
-    chapter: '08',
-    kicker: 'Skills',
-    title: 'Inside a Skill file',
-    tone: 'section-b',
-    animation: 'stagger',
-    anim_stagger: 0.12,
-    body: `A Skill file is essentially a Markdown document — like a detailed work manual you give to an AI agent before it starts its task. The agent "reads" it, and from that moment on, knows exactly how to proceed.
-
-Here is what a summary of a Credit Assessment Skill looks like:`,
-    bullets: [
-      '**Overview** — The AI agent reads this first. It clearly states the purpose and, just as importantly, what is NOT its purpose (e.g., it does not make the final decision).',
-      '**When to Use** — The agent must know when to invoke this specific skill versus another. Without this, it might try to process mortgage loans using the same rules as consumer loans.',
-      '**Required Tools** — A list of all MCP (Model Context Protocol) connections that the agent is allowed to use within this skill. The agent cannot call a tool that isn\'t on this list.',
-      '**Step-by-Step Procedure** — The core of the file. Every step has clear IF/THEN rules — the agent does not improvise; it applies policy literally. You\'ll notice "STOP" written in several places — these are hard stops that the agent is not allowed to bypass.',
-      '**What the Agent Must NOT Do** — Negative rules are just as important as positive ones. This is the section where you define the boundaries of autonomy.',
-      '**Audit and Compliance** — Every skill in a regulated industry must have this. Every call, every result, every decision — everything is logged.',
-      '**Skill Metadata** — Version, owner, revision date. This is crucial because skills change when regulations or internal policies change — you need to know which version was active at the time of a specific decision.',
     ],
   },
 ]

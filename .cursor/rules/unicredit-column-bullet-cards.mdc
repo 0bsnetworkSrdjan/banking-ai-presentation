@@ -1,0 +1,27 @@
+---
+description: UniCredit RS deck — column bullet tiles (two-col `.points` styling and copy conventions)
+globs: sites/unicredit-rs/**
+---
+
+# Column bullet cards (“LLM + agent” pattern)
+
+When adding or editing **bullet lists inside a two-column glass** (`layout: 'two-col'`, `left` / `right` with `bullets` rendered by `ColContent` in `SlideFrame.jsx`):
+
+## Styling (do not regress)
+
+Implemented in `sites/unicredit-rs/src/index.css` under **`.slide-glass--col .points li`**:
+
+- Extra padding via `clamp` (vertical + horizontal).
+- Body: `Manrope`, `font-weight: 500`, comfortable `line-height`.
+- Labels wrapped in `**...**` in slide strings: keep bold via **`.slide-glass--col .points li .rich-bold` / `strong`** (`font-weight: 800`).
+
+Global `.points li` still uses heavy defaults; column overrides are intentional.
+
+## Copy convention
+
+- Prefer **`**Label** — description`** for each tile.
+- Avoid casual emoji in labels; use **`→`** in markdown (e.g. `**→ Contrast:**`) or a plain text label like **`**Key Takeaway:**`**.
+
+## How to ask the AI to reuse this
+
+Say: **“Apply the column bullet card pattern (LLM + agent / `.slide-glass--col .points`)”** or **“Match the Beyond Answering right-column tiles.”**
