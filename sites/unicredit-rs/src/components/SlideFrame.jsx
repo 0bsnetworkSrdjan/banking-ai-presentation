@@ -140,6 +140,11 @@ function ColContent({ side, lang }) {
           <RichText>{resolved.title}</RichText>
         </h2>
       )}
+      {resolved.icon && (
+        <div className="col-icon-wrap animated" aria-hidden="true">
+          <DeckIcon name={resolved.icon} />
+        </div>
+      )}
       {resolved.subtitle && (
         <p className="col-role animated">
           <RichText>{resolved.subtitle}</RichText>
@@ -314,6 +319,38 @@ function DeckIcon({ name }) {
           <rect x="3" y="8" width="18" height="4" rx="1" stroke="currentColor" strokeWidth="1.5" />
           <path d="M12 8v13M3 12v7a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-7" stroke="currentColor" strokeWidth="1.5" />
           <path d="M12 8h5.5a2.5 2.5 0 1 0 0-5C15 3 12 8 12 8Zm0 0H6.5a2.5 2.5 0 1 1 0-5C9 3 12 8 12 8Z" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+      )
+    case 'robot-arm':
+      return (
+        <svg {...common}>
+          <path
+            d="M5 19h6v2H5v-2ZM8 19V11"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+          <path
+            d="M8 11c0-2 2-3.5 5-4.5s5-2 5-4"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            fill="none"
+          />
+          <circle cx="18" cy="2.5" r="2" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M11 9.5h3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+      )
+    case 'text-stream':
+      return (
+        <svg {...common}>
+          <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" opacity="0.35" />
+          <path
+            d="M7 8h10M7 11.5h13M7 15h11M7 18.5h9"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
         </svg>
       )
     default:

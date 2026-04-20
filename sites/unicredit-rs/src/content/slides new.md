@@ -84,12 +84,12 @@ margin-top: 1rem per line
 quotation marks included as authored (do not add or remove them)
 - The English version of the same slide has only one # line and must
 render identically to a standard title slide.
-KEY SLIDES
-──────────
-Certain slides are marked with a  comment
-directly above the ---SLIDE--- divider. These are high-impact,
-structurally significant moments in the presentation — treat them
-with extra visual weight and animation care. Key slides share:
+  KEY SLIDES
+  ──────────
+  Certain slides are marked with a  comment
+  directly above the ---SLIDE--- divider. These are high-impact,
+  structurally significant moments in the presentation — treat them
+  with extra visual weight and animation care. Key slides share:
 - style: tinted (blue glass, white text)
 - animation: blur-in with longer duration (anim_duration: 1.1)
 and generous stagger (anim_stagger: 0.22)
@@ -97,12 +97,12 @@ and generous stagger (anim_stagger: 0.22)
 section chip cluttering the visual field
 All key slides should feel visually and rhythmically consistent
 with each other across the full presentation.
-MODULE TITLE SLIDES
-────────────────────
-Slides that open a new module are marked with a 
-comment directly above the ---SLIDE--- divider. These are section
-openers — less philosophical than key slides, less strategic than
-hero slides. Module title slides share:
+  MODULE TITLE SLIDES
+  ────────────────────
+  Slides that open a new module are marked with a 
+  comment directly above the ---SLIDE--- divider. These are section
+  openers — less philosophical than key slides, less strategic than
+  hero slides. Module title slides share:
 - layout: title, style: dark, tone: section-b
 - animation: blur-in with anim_duration: 0.9, anim_stagger: 0.18
 - kicker: module number (e.g. "Module 1")
@@ -110,36 +110,36 @@ hero slides. Module title slides share:
 - subtitle: a short descriptive line
 All module title slides should feel rhythmically consistent — a
 reliable visual signal that a new section of content is beginning.
-LAYOUT: four-quad
-──────────────────
-Glass structure: header glass + 2×2 grid of four equal glass boxes.
-Quadrant markers (each on its own line): [top-left], [bottom-left],
-[top-right], [bottom-right].
-Within each quadrant:
+  LAYOUT: four-quad
+  ──────────────────
+  Glass structure: header glass + 2×2 grid of four equal glass boxes.
+  Quadrant markers (each on its own line): [top-left], [bottom-left],
+  [top-right], [bottom-right].
+  Within each quadrant:
 - # Heading → quadrant title (rendered prominently, ~1rem, bold)
 - paragraph → quadrant body text (flowing descriptive text, ~0.82rem)
 - **[Badge label]** on its own line → small accent pill badge rendered
 below the body text (primary blue bg, white text, 0.7rem, uppercase)
-Grid layout:
+  Grid layout:
 - Left column: [top-left] above [bottom-left], each flex: 1
 - Right column: [top-right] above [bottom-right], each flex: 1
 - All four boxes share equal height (grid rows: 1fr 1fr)
 - Gap between boxes: ~0.6rem (tighter than the header-to-body gap)
-Left-brain vs right-brain visual differentiation:
+  Left-brain vs right-brain visual differentiation:
 - [top-left] and [bottom-left] (left brain): glass has a subtle cool
 blue-left border (2px, rgba(100,110,250,0.35)) to signal analytical/AI
 - [top-right] and [bottom-right] (right brain): glass has a subtle warm
 green-left border (2px, rgba(80,135,100,0.35)) to signal human/holistic
 - Both sets use the default white frosted glass background
-pre_title field rendering:
+  pre_title field rendering:
 - Renders inside the header glass above the h1
 - font-size: ~0.85rem, font-style: italic, opacity: 0.72
 - If kicker is also present: kicker → pre_title → h1 (top to bottom)
-INLINE EMPHASIS PANEL (> in single layout)
-────────────────────────────────────────────
-When layout is "single" and the body contains a > blockquote, render
-it as a contained emphasis panel within the body glass — not a
-full-screen pull-quote. Styling:
+  INLINE EMPHASIS PANEL (> in single layout)
+  ────────────────────────────────────────────
+  When layout is "single" and the body contains a > blockquote, render
+  it as a contained emphasis panel within the body glass — not a
+  full-screen pull-quote. Styling:
 - Background: rgba(100, 110, 250, 0.07) (very faint primary blue)
 - Left border: 3px solid var(--color-primary)
 - Border radius: 6px
@@ -148,22 +148,22 @@ full-screen pull-quote. Styling:
 - Margin: 0.75rem 0 above and below, within the body text flow
 The emphasis panel is an .animated element and participates in the
 stagger sequence.
-STRESSED TEXT (***text*** in body)
-────────────────────────────────────
-***text*** (bold+italic in CommonMark) within any body paragraph
-receives additional accent styling:
+  STRESSED TEXT (***text*** in body)
+  ────────────────────────────────────
+  ***text*** (bold+italic in CommonMark) within any body paragraph
+  receives additional accent styling:
 - color: var(--color-primary)
 - font-weight: 700, font-style: italic
 Use for a single closing statement or key phrase. Do not apply to
 entire paragraphs — only to a phrase or sentence within them.
-HERO SLIDES
-───────────
-Certain slides are marked with a  comment
-directly above the ---SLIDE--- divider. Hero slides carry the same
-visual weight as key slides but serve a different purpose: they are
-strategic, aspirational moments directed at the audience — calls to
-action, opportunity framings, or pivotal transitions between sections.
-Hero slides share:
+  HERO SLIDES
+  ───────────
+  Certain slides are marked with a  comment
+  directly above the ---SLIDE--- divider. Hero slides carry the same
+  visual weight as key slides but serve a different purpose: they are
+  strategic, aspirational moments directed at the audience — calls to
+  action, opportunity framings, or pivotal transitions between sections.
+  Hero slides share:
 - style: dark (dark frosted glass, white text) — grounded and
 authoritative, distinct from the philosophical intensity of tinted
 key slides
@@ -175,8 +175,8 @@ All hero slides should feel visually and rhythmically consistent
 with each other across the full presentation.
 ================================================================ -->
 
-## ---SLIDE---
 
+## ---SLIDE---
 id: xK9mP2wQ4r
 layout: title
 section: Introduction
@@ -189,10 +189,11 @@ no_translate: true
 
 # "You are performing a dream."
 
-## — Anthropic, from system instructions to Claude AI agent
+## — Anthropic
+
+
 
 ## ---SLIDE---
-
 id: pL4hW9nX2q
 layout: title
 section: Introduction
@@ -204,20 +205,21 @@ anim_stagger: 0.22
 
 # "You are ++performing++ a dream."
 
-## — Anthropic, from system instructions to Claude AI agent
+## — Anthropic
 
 [sr]
 
 # "You are ++performing++ a dream."
 
-## — Anthropic, iz sistemskih instrukcija za Claude AI agenta
+## — Anthropic
 
 # "Izvodiš / sprovodiš u delo san."
 
 # "Igraš / glumiš san."
 
-## ---SLIDE---
 
+
+## ---SLIDE---
 id: rT5kN8mJ1w
 layout: title
 section: Introduction
@@ -236,9 +238,10 @@ anim_stagger: 0.18
 From buzzwords to real world business.  
 Practical guide to Generative AI & LLMs for decision-makers
 
-## ---SLIDE---
 
-id: bV2gK6sY9q
+
+## ---SLIDE---
+id: bV2gK6sY9q-edited
 layout: two-col
 section: Introduction
 title: Your guides today
@@ -248,6 +251,8 @@ animation: fade-up
 Blockstruct GmbH, member of AI Factory Austria AI:AT hub  
 AI Applications for Business. Zero Bullshit.  
 European Tech. Team in Austria, Serbia, UK, Montenegro, Croatia.
+Client projects in Austria, UK, USA and Croatia.
+Highly secure solutions - we have worked for banks and governments.
 
 [left]
 
@@ -265,9 +270,10 @@ Mergers & Acquisitions advisory, Management Consulting, Cutting-edge Tech Archit
 
 Electrotechnical engineering, Full stack software solutions development, AI applications.
 
-## ---SLIDE---
 
-id: nH8cF3pR7s-edited
+
+## ---SLIDE---
+id: nH8cF3pR7s
 layout: two-col-split-right
 section: Introduction
 kicker: member of EU-wide AI technology ecosystem
@@ -301,8 +307,9 @@ TU Wien · University of Vienna · BOKU University · TU Graz · JKU Linz · IST
 
 One of the hub's business members, working at the intersection of AI research and real-world enterprise deployment. Today's masterclass was developed within this ecosystem framing.
 
-## ---SLIDE---
 
+
+## ---SLIDE---
 id: wC5pM8jQ2x
 layout: icon-grid
 section: Introduction
@@ -319,8 +326,9 @@ By the end of this workshop, you won't be AI engineers. You'll be AI-literate de
 - [help-circle]: **Ask Better Questions** | Have a mental framework to evaluate AI proposals, pilots / POC projects, and vendor claims.
 - [gift]: *Bonus* | Brainstorm, identify and start developing 2–3 "low hanging fruit" wins for your first POC projects.
 
-## ---SLIDE---
 
+
+## ---SLIDE---
 id: kJ7nB4qW1v-edited
 layout: title
 section: Introduction
@@ -338,9 +346,9 @@ anim_stagger: 0.18
 
 
 
-## ---SLIDE---
 
-id: hQ3mK7vN5p
+## ---SLIDE---
+id: hQ3mK7vN5p-edited
 layout: toc
 section: Introduction
 kicker: Twelve Modules
@@ -349,21 +357,22 @@ tone: section-a
 animation: stagger
 anim_stagger: 0.07
 
-1. **What Is This Thing?**
-2. **AI vs Human Intelligence** (Lizards and the Four Personalities — building the mental model for understanding LLMs)
-3. **Vectors in Multidimensional Space — Excuse Me?** (How AI encodes information and meaning)
-4. **The Frozen Chef** (Training, parameters, and teaching AI your stuff)
-5. **What AI Knows & How to Add More** (Embeddings, RAG, fine-tuning)
-6. **Why Does AI Lie?** (Hallucinations and the split brain analogy)
-7. **Talk to AI Like a Pro** (Prompt & context engineering, iterative improvement)
-8. **AI That Acts, Not Just Answers** (Tools, MCP, Skills, Agents)
-9. **Safe Application of AI** (Cybersecurity implications, prompt injection)
-10. **The Big Picture** (Where we are, where we're going, and what stays human)
-11. **Brainstorming: AI @ UniCredit Srbija** (Your candidates for AI applications)
-12. **PoC Design Elaboration in Groups**
+**What Is This Thing?** (Text assembly robots)
+**AI vs Human Intelligence** (Lizards and the Four Personalities — building the mental model for understanding LLMs)
+**Vectors in Multidimensional Space — Excuse Me?** (How AI encodes information and meaning)
+**The Frozen Chef** (Training, parameters, and teaching AI your stuff)
+**What AI Knows & How to Add More** (Embeddings, RAG, fine-tuning)
+**Why Does AI Lie?** (Hallucinations and the split brain analogy)
+**Talk to AI Like a Pro** (Prompt & context engineering, iterative improvement)
+**AI That Acts, Not Just Answers** (Tools, MCP, Skills, Agents)
+**Safe Application of AI** (Cybersecurity implications, prompt injection)
+**The Big Picture** (Where we are, where we're going, and what stays human)
+**Brainstorming: AI @ UniCredit Srbija** (Your candidates for AI applications)
+**PoC Design Elaboration in Groups**
+
+
 
 ## ---SLIDE---
-
 id: yF6kD4nM9h
 layout: title
 section: Module 1
@@ -379,8 +388,41 @@ anim_stagger: 0.18
 
 ## Setting the mental model, and dispelling a few myths
 
-## ---SLIDE---
 
+
+## ---SLIDE---
+id: m7nK4pQ9wR
+layout: two-col
+section: Module 1
+chapter: "01"
+title: What is this thing - robot for text assembly.
+tone: section-a
+animation: stagger
+anim_stagger: 0.10
+
+[left]
+icon: robot-arm
+
+# Factory assembly robots
+
+We are used to seeing industrial robots and understand them intuitively, because they are basically computer-controlled arms.
+
+We have arms. Are they brain-controlled robots?
+
+An industrial robot arm can do a lot of damage if allowed to act randomly.
+
+[right]
+icon: text-stream
+
+# Text assembly robots
+
+We usually understand less about our text generating robots, but take a moment to listen to your own internal monologue.
+
+Similarly to an industrial robot, a text assembly robot can do a lot of damage if allowed to act randomly.
+
+
+
+## ---SLIDE---
 id: cT8vB2pR5m
 layout: four-quad
 section: Module 2
@@ -417,8 +459,9 @@ Peaceful, Open, Holistic, Big Picture-Oriented, Expansive, Interconnecting, Mean
 
 Present, Sensory, Empathetic, Experiential (in the moment). Empathy, Joy, Compassion, Connection, Intuition.
 
-## ---SLIDE---
 
+
+## ---SLIDE---
 id: qW3sN7gH1z
 layout: single
 section: Module 2
@@ -439,8 +482,9 @@ The world's most sophisticated autocomplete; one that has read every fiction and
 
 ***Not magic. Not remotely human. Still, genuinely remarkable when applied carefully.***
 
-## ---SLIDE---
 
+
+## ---SLIDE---
 id: jP9mK6fL2w
 layout: title
 section: Module 3

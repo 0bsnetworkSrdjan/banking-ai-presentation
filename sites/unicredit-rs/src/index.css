@@ -1,8 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Manrope:wght@400;600;700;800&family=Noto+Serif:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Manrope:wght@400;500;600;700;800&family=Noto+Serif:wght@500;600;700&display=swap');
+
+/* Scales all rem-based typography with viewport so slides stay readable on large displays */
+html {
+  font-size: clamp(15px, 1.65vmin + 0.42vw, 36px);
+}
 
 :root {
   --bg-image: url('/background.jpg');
   --color-primary: #646efa;
+  /* Soft periwinkle — matches tinted-glass accent; used for subheads on dark slides */
+  --color-accent-light-blue: #b8c4ff;
   --color-white: #ffffff;
   --color-mint-300: #aacdaa;
   --color-mint-700: #508764;
@@ -17,16 +24,16 @@
   --text-muted: #2f4134;
   --stroke-soft: rgba(20, 34, 24, 0.08);
 
-  /* Body / UI copy — larger for projection & back-row readability (headings use separate rules) */
-  --slide-fs-kicker: 0.95rem;
-  --slide-fs-chip: 0.94rem;
-  --slide-fs-lead: clamp(1.28rem, 1.82vw, 1.62rem);
-  --slide-fs-subtitle: clamp(1.2rem, 1.85vw, 1.55rem);
-  --slide-fs-bullet: clamp(1.06rem, 1.28vw, 1.22rem);
+  /* Body / UI copy — scales with html font-size + vw (headings use separate rules) */
+  --slide-fs-kicker: 1.05rem;
+  --slide-fs-chip: 1.02rem;
+  --slide-fs-lead: clamp(1.38rem, 1.95vw, 1.85rem);
+  --slide-fs-subtitle: clamp(1.28rem, 2vw, 1.72rem);
+  --slide-fs-bullet: clamp(1.12rem, 1.4vw, 1.32rem);
 
   font-family: 'Manrope', system-ui, sans-serif;
   line-height: 1.45;
-  font-weight: 400;
+  font-weight: 500;
   color: var(--text-main);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -87,6 +94,7 @@ body {
   align-items: center;
   padding: 1rem 1.5rem;
   font-size: 0.95rem;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -175,11 +183,15 @@ body {
   place-items: center;
 }
 
+/* Glass deck: always 80% of viewport — no max-width cap so large monitors fill the room */
 .slide-shell {
-  width: min(80vw, 1200px);
-  height: min(80vh, 900px);
-  min-width: 860px;
-  min-height: 560px;
+  width: 80vw;
+  height: 80vh;
+  max-width: 80vw;
+  max-height: 80vh;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
 }
 
 /* Stacked shell: flex column — header glass + content glass(es) */
@@ -266,6 +278,17 @@ body {
   min-height: 0;
 }
 
+/* Size containers: copy scales with pane height (cqh) so nothing needs in-box scrolling */
+.slide-glass--col,
+.slide-glass--quad,
+.slide-glass--body,
+.slide-glass--full,
+.slide-glass--split-main,
+.slide-glass--split-rt,
+.slide-glass--split-rb {
+  container-type: size;
+}
+
 /* ─── Header inner layout ───────────────────────────────────────────────── */
 
 .slide-header-inner {
@@ -273,6 +296,7 @@ body {
   display: grid;
   align-content: start;
   gap: 0.28rem;
+  overflow: hidden;
 }
 
 /* Heading inside the header box is slightly smaller — it shares space
@@ -280,6 +304,7 @@ body {
 .slide-header-inner h1 {
   margin: 0.15rem 0 0.25rem;
   font-size: clamp(1.75rem, 4.2vw, 3.2rem);
+  font-weight: 700;
 }
 
 /* Secondary highlight film — top-left quadrant catches more light */
@@ -341,7 +366,12 @@ body {
 .slide-glass--dark .kicker               { color: var(--color-mint-300); }
 .slide-glass--dark h1,
 .slide-glass--dark h2                    { color: #ffffff; }
-.slide-glass--dark .subtitle             { color: rgba(255, 255, 255, 0.62); }
+.slide-glass--dark .subtitle             { color: color-mix(in srgb, var(--color-accent-light-blue) 88%, white); }
+.slide-glass--dark .pre-title,
+.slide-glass--dark .title-quote-variant {
+  color: color-mix(in srgb, var(--color-accent-light-blue) 82%, white);
+  opacity: 1;
+}
 .slide-glass--dark .lead                 { color: rgba(255, 255, 255, 0.72); }
 .slide-glass--dark .section-chip {
   background: rgba(255, 255, 255, 0.10);
@@ -419,21 +449,22 @@ body {
   align-content: center;
   justify-items: center;
   text-align: center;
-  padding: clamp(2.5rem, 6vw, 5rem);
-  gap: clamp(1rem, 2.5vh, 1.8rem);
+  padding: clamp(1.25rem, 0.6rem + 6cqh, 5rem);
+  gap: clamp(0.6rem, 0.4rem + 2cqh, 1.8rem);
 }
 
 .slide-layout--title h1 {
-  font-size: clamp(2.6rem, 6.5vw, 5rem);
+  font-size: clamp(1.5rem, 0.45rem + 5.5cqh, 5rem);
   margin: 0;
+  font-weight: 700;
 }
 
 .subtitle {
   margin: 0;
-  max-width: 56ch;
+  max-width: min(56ch, 100%);
   font-family: 'Manrope', system-ui, sans-serif;
-  font-size: var(--slide-fs-subtitle);
-  font-weight: 400;
+  font-size: clamp(0.95rem, 0.35rem + 2.4cqh, 1.72rem);
+  font-weight: 600;
   line-height: 1.52;
   color: var(--text-muted);
 }
@@ -444,18 +475,19 @@ body {
   align-content: center;
   justify-items: center;
   text-align: center;
-  padding: clamp(2.5rem, 7vw, 6rem);
+  padding: clamp(1.25rem, 0.6rem + 6cqh, 6rem);
 }
 
 .slide-layout--quote blockquote {
   margin: 0;
-  max-width: 68ch;
+  max-width: min(68ch, 100%);
+  width: 100%;
 }
 
 .slide-layout--quote blockquote p {
   font-family: 'Noto Serif', Georgia, serif;
-  font-size: clamp(1.8rem, 3.8vw, 3.2rem);
-  font-weight: 600;
+  font-size: clamp(1.1rem, 0.45rem + 4cqh, 3.2rem);
+  font-weight: 700;
   line-height: 1.22;
   letter-spacing: -0.01em;
   color: var(--text-main);
@@ -465,10 +497,11 @@ body {
 .slide-layout--quote blockquote cite {
   display: block;
   font-style: normal;
-  font-size: clamp(0.98rem, 1.12vw, 1.12rem);
+  font-size: clamp(0.72rem, 0.25rem + 1.5cqh, 1.2rem);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-muted);
+  font-weight: 700;
 }
 
 /* ─── Layout: two-pane (two-col and image-text) ─────────────────────────────── */
@@ -533,19 +566,64 @@ body {
   margin: 0;
   max-width: none;
   text-align: center;
-  font-size: clamp(1.1rem, 1.4vw, 1.22rem);
+  font-size: clamp(1.2rem, 1.55vw, 1.38rem);
   white-space: pre-line;
+  font-weight: 600;
 }
 
-/* Two-col: smaller type to fit narrower cards */
+/* Two-col: type scales with pane height + width so long bios stay inside the card */
 .slide-glass--col h2 {
   font-family: 'Noto Serif', Georgia, serif;
-  font-size: clamp(1.6rem, 3.6vw, 2.9rem);
-  font-weight: 600;
+  font-size: clamp(1.05rem, 0.35rem + 3.4cqh, 2.9rem);
+  font-weight: 700;
   line-height: 1.08;
   letter-spacing: -0.01em;
   color: var(--text-main);
   margin: 0.4rem 0 0.75rem;
+}
+
+.slide-glass--col .col-role {
+  font-size: clamp(0.82rem, 0.28rem + 2.2cqh, 1.28rem);
+}
+
+.slide-glass--col .lead {
+  font-size: clamp(0.72rem, 0.32rem + 2.75cqh, 1.65rem);
+  line-height: 1.42;
+  max-width: none;
+  white-space: pre-line;
+}
+
+.slide-glass--col .col-icon-wrap {
+  margin: 0.15rem 0 0.55rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slide-glass--col .col-icon-wrap .icon-grid__glyph {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--color-primary);
+}
+
+.slide-glass--col .points li {
+  font-size: clamp(0.68rem, 0.26rem + 2.35cqh, 1.32rem);
+  padding: 0.55rem 0.8rem;
+}
+
+.slide-glass--col .slide-content__inner {
+  padding: clamp(0.75rem, 0.5rem + 1.8cqh, 2.2rem);
+  gap: clamp(0.35rem, 0.8cqh, 1rem);
+}
+
+/* Single full-width body card (bullets, emphasis, etc.) */
+.slide-glass--body .lead {
+  font-size: clamp(0.78rem, 0.35rem + 3.1cqh, 1.85rem);
+  line-height: 1.52;
+}
+
+.slide-glass--body .points li {
+  font-size: clamp(0.72rem, 0.28rem + 2.5cqh, 1.32rem);
 }
 
 .slide-glass--dark h2 { color: #ffffff; }
@@ -557,12 +635,19 @@ body {
   z-index: 2;
   width: 100%;
   height: 100%;
+  min-height: 0;
   padding: clamp(1.2rem, 2.5vw, 2.2rem);
-  overflow: auto;
+  /* Never show scrollbars inside glass — type scales via cqh on container panes above */
+  overflow: hidden;
+  scrollbar-width: none;
   display: grid;
   align-content: start;
   gap: clamp(0.7rem, 1.8vh, 1.1rem);
   color: var(--text-main);
+}
+
+.slide-content__inner::-webkit-scrollbar {
+  display: none;
 }
 
 .kicker {
@@ -580,16 +665,19 @@ h1 {
   font-size: clamp(2rem, 5.6vw, 4rem);
   line-height: 1.02;
   letter-spacing: -0.015em;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-main);
 }
 
 .lead {
   margin: 0;
-  max-width: 62ch;
+  /* Fill the glass content width — only horizontal inset is padding on .slide-content__inner (symmetric L/R) */
+  max-width: none;
+  min-width: 0;
   color: var(--text-muted);
   font-size: var(--slide-fs-lead);
   line-height: 1.58;
+  font-weight: 600;
 }
 
 .section-chip {
@@ -603,6 +691,7 @@ h1 {
   background: rgba(255, 255, 255, 0.78);
   color: var(--text-muted);
   font-size: var(--slide-fs-chip);
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -629,6 +718,7 @@ h1 {
   font-family: 'Archivo Black', 'Manrope', sans-serif;
   font-size: var(--slide-fs-bullet);
   letter-spacing: 0.01em;
+  font-weight: 700;
 }
 
 /* ─── Progress rail ─────────────────────────────────────────────────────────── */
@@ -668,8 +758,10 @@ h1 {
 
 @media (max-width: 1439px) {
   .slide-shell {
-    width: min(82vw, 1120px);
-    height: min(80vh, 840px);
+    width: 80vw;
+    height: 80vh;
+    max-width: 80vw;
+    max-height: 80vh;
   }
 }
 
@@ -684,8 +776,10 @@ h1 {
   }
 
   .slide-shell {
-    width: 88vw;
-    height: 78vh;
+    width: min(80vw, calc(100vw - 1.5rem));
+    height: min(80vh, calc(100vh - 5.5rem));
+    max-width: min(80vw, calc(100vw - 1.5rem));
+    max-height: min(80vh, calc(100vh - 5.5rem));
     min-width: 0;
     min-height: 0;
   }
@@ -710,8 +804,10 @@ h1 {
   }
 
   .slide-shell {
-    width: 92vw;
-    height: 82vh;
+    width: min(92vw, calc(100vw - 1rem));
+    height: min(78vh, calc(100vh - 5rem));
+    max-width: min(92vw, calc(100vw - 1rem));
+    max-height: min(78vh, calc(100vh - 5rem));
     min-width: 0;
     min-height: 0;
   }
@@ -767,10 +863,12 @@ h1 {
 
 .pre-title {
   margin: 0 0 0.35rem;
-  font-size: clamp(0.98rem, 1.28vw, 1.12rem);
+  font-size: clamp(1.05rem, 1.4vw, 1.22rem);
   font-style: italic;
+  font-weight: 600;
   opacity: 0.72;
-  max-width: 62ch;
+  max-width: none;
+  min-width: 0;
   line-height: 1.48;
 }
 
@@ -781,11 +879,11 @@ h1 {
 .title-quote-variant {
   margin: 1rem 0 0;
   text-align: center;
-  font-size: clamp(1.15rem, 1.55vw, 1.3rem);
-  font-weight: 500;
+  font-size: clamp(0.82rem, 0.3rem + 2.2cqh, 1.42rem);
+  font-weight: 600;
   font-style: italic;
   opacity: 0.82;
-  max-width: 52ch;
+  max-width: min(52ch, 100%);
 }
 
 /* ─── Single layout: emphasis blockquote panel ───────────────────────────── */
@@ -800,9 +898,9 @@ h1 {
 
 .emphasis-panel p {
   margin: 0;
-  font-size: clamp(1.18rem, 1.55vw, 1.28rem);
-  font-weight: 500;
-  line-height: 1.5;
+  font-size: clamp(0.85rem, 0.32rem + 2.6cqh, 1.45rem);
+  font-weight: 600;
+  line-height: 1.45;
 }
 
 .slide-glass--dark .emphasis-panel {
@@ -811,14 +909,15 @@ h1 {
 
 .lead--trailing {
   margin-top: 0.5rem;
+  font-weight: 600;
 }
 
 /* ─── Two-col: role line under name ──────────────────────────────────────── */
 
 .col-role {
   margin: -0.35rem 0 0.65rem;
-  font-size: clamp(1.1rem, 1.4vw, 1.2rem);
-  font-weight: 600;
+  font-size: clamp(1.15rem, 1.5vw, 1.28rem);
+  font-weight: 700;
   color: var(--color-primary);
   letter-spacing: 0.02em;
 }
@@ -856,8 +955,8 @@ h1 {
 
 .slide-content__inner--split-left .column-subheading {
   margin: 1rem 0 0.3rem;
-  font-size: 0.82rem;
-  font-weight: 700;
+  font-size: clamp(0.72rem, 0.2rem + 1.2cqh, 0.88rem);
+  font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   opacity: 0.6;
@@ -866,20 +965,22 @@ h1 {
 .column-sub-bullets {
   margin: 0.25rem 0 0;
   padding-left: 1.1rem;
-  font-size: clamp(1.02rem, 1.18vw, 1.14rem);
-  line-height: 1.5;
+  font-size: clamp(0.72rem, 0.28rem + 2.35cqh, 1.22rem);
+  line-height: 1.45;
   color: var(--text-muted);
+  font-weight: 600;
 }
 
 .lead--compact {
   margin-top: 0.35rem;
-  font-size: clamp(1.02rem, 1.18vw, 1.14rem);
+  font-size: clamp(0.72rem, 0.28rem + 2.35cqh, 1.22rem);
+  font-weight: 600;
 }
 
 .split-left-link {
   margin-top: 0.85rem;
-  font-weight: 700;
-  font-size: 1.05rem;
+  font-weight: 800;
+  font-size: 1.12rem;
   color: var(--color-primary);
   text-decoration: none;
 }
@@ -914,15 +1015,15 @@ h1 {
 }
 
 .stat-num {
-  font-size: clamp(2.1rem, 3.6vw, 2.75rem);
-  font-weight: 700;
+  font-size: clamp(1.35rem, 0.45rem + 4.5cqh, 3.05rem);
+  font-weight: 800;
   line-height: 1.1;
   color: inherit;
 }
 
 .stat-desc {
-  font-size: 0.95rem;
-  font-weight: 400;
+  font-size: clamp(0.75rem, 0.28rem + 1.8cqh, 1.05rem);
+  font-weight: 600;
   opacity: 0.75;
   max-width: 16ch;
   line-height: 1.3;
@@ -939,7 +1040,8 @@ h1 {
 }
 
 .icon-grid__intro {
-  max-width: 68ch;
+  max-width: none;
+  min-width: 0;
 }
 
 .icon-grid__list {
@@ -976,21 +1078,22 @@ h1 {
 
 .icon-grid__label {
   margin: 0 0 0.2rem;
-  font-weight: 700;
-  font-size: clamp(1.08rem, 1.32vw, 1.2rem);
+  font-weight: 800;
+  font-size: clamp(0.85rem, 0.32rem + 2.2cqh, 1.3rem);
 }
 
 .icon-grid__body {
   margin: 0;
-  font-size: clamp(1.02rem, 1.2vw, 1.12rem);
+  font-size: clamp(0.78rem, 0.3rem + 2.05cqh, 1.22rem);
   color: var(--text-muted);
-  line-height: 1.5;
+  line-height: 1.45;
+  font-weight: 600;
 }
 
 /* ─── toc ───────────────────────────────────────────────────────────────── */
 
 .slide-content__inner--toc {
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 .toc-list {
@@ -998,9 +1101,10 @@ h1 {
   padding-left: 1.35rem;
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
-  font-size: clamp(1.06rem, 1.32vw, 1.18rem);
-  line-height: 1.48;
+  gap: clamp(0.25rem, 0.6cqh, 0.45rem);
+  font-size: clamp(0.78rem, 0.32rem + 2.4cqh, 1.28rem);
+  line-height: 1.42;
+  font-weight: 600;
 }
 
 .toc-list__item::marker {
@@ -1045,16 +1149,17 @@ h1 {
 
 .quad-title {
   margin: 0;
-  font-size: clamp(0.95rem, 1.35vw, 1.05rem);
-  font-weight: 700;
+  font-size: clamp(0.78rem, 0.3rem + 2.2cqh, 1.15rem);
+  font-weight: 800;
   font-family: 'Manrope', system-ui, sans-serif;
   letter-spacing: -0.01em;
 }
 
 .lead--quad {
-  font-size: clamp(0.92rem, 1.12vw, 1.02rem);
-  line-height: 1.45;
+  font-size: clamp(0.62rem, 0.28rem + 2.5cqh, 1.12rem);
+  line-height: 1.4;
   margin: 0;
+  font-weight: 600;
 }
 
 .quad-badge {
@@ -1062,8 +1167,8 @@ h1 {
   margin-top: 0.35rem;
   padding: 0.28rem 0.55rem;
   border-radius: 6px;
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-size: 0.88rem;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   background: var(--color-primary);

@@ -29,5 +29,6 @@ export function tSide(side, lang) {
     subtitle: t(side.subtitle, lang),
     body:     t(side.body,     lang),
     bullets:  t(side.bullets,  lang),
+    icon:     side.icon,
   }
 }
