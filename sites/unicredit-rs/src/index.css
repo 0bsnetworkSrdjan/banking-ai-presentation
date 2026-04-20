@@ -1,0 +1,1084 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Manrope:wght@400;600;700;800&family=Noto+Serif:wght@500;600;700&display=swap');
+
+:root {
+  --bg-image: url('/background.jpg');
+  --color-primary: #646efa;
+  --color-white: #ffffff;
+  --color-mint-300: #aacdaa;
+  --color-mint-700: #508764;
+  --color-sand-100: #f5ebc8;
+  --color-sand-300: #fad296;
+  --color-accent-orange: #ff7828;
+
+  --surface-section-a: linear-gradient(120deg, #f5ebc8 0%, #ffffff 45%, #eaf2ff 100%);
+  --surface-section-b: linear-gradient(120deg, #eef7ed 0%, #ffffff 50%, #f3f7ff 100%);
+
+  --text-main: #142218;
+  --text-muted: #2f4134;
+  --stroke-soft: rgba(20, 34, 24, 0.08);
+
+  /* Body / UI copy — larger for projection & back-row readability (headings use separate rules) */
+  --slide-fs-kicker: 0.95rem;
+  --slide-fs-chip: 0.94rem;
+  --slide-fs-lead: clamp(1.28rem, 1.82vw, 1.62rem);
+  --slide-fs-subtitle: clamp(1.2rem, 1.85vw, 1.55rem);
+  --slide-fs-bullet: clamp(1.06rem, 1.28vw, 1.22rem);
+
+  font-family: 'Manrope', system-ui, sans-serif;
+  line-height: 1.45;
+  font-weight: 400;
+  color: var(--text-main);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+}
+
+/* ─── App shell ────────────────────────────────────────────────────────────── */
+
+.app-shell {
+  height: 100%;
+  transition: background 380ms ease;
+  background-image:
+    linear-gradient(120deg, rgba(245, 235, 200, 0.32), rgba(255, 255, 255, 0.22) 45%, rgba(234, 242, 255, 0.3)),
+    var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #f5ebc8;
+}
+
+.app-shell.section-b {
+  background-image:
+    linear-gradient(120deg, rgba(238, 247, 237, 0.34), rgba(255, 255, 255, 0.18) 50%, rgba(243, 247, 255, 0.3)),
+    var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* ─── Top bar ───────────────────────────────────────────────────────────────── */
+
+.topbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.topbar__meta {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.topbar__meta p,
+.topbar__count {
+  margin: 0;
+}
+
+.topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* ─── Language selector ─────────────────────────────────────────────────── */
+
+.lang-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.18rem;
+  padding: 0.25rem 0.35rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+.lang-btn {
+  border: none;
+  background: transparent;
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease;
+  line-height: 1;
+}
+
+.lang-btn:hover:not(.is-active) {
+  background: rgba(100, 110, 250, 0.10);
+  color: var(--color-primary);
+}
+
+.lang-btn.is-active {
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+/* ─── Slide deck ────────────────────────────────────────────────────────────── */
+
+.deck {
+  height: 100%;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  overscroll-behavior-x: none;
+}
+
+.deck::-webkit-scrollbar {
+  display: none;
+}
+
+.slide {
+  min-width: 100vw;
+  height: 100vh;
+  scroll-snap-align: start;
+  padding: clamp(4.5rem, 8vh, 6rem) clamp(1.2rem, 3vw, 2.4rem) clamp(2rem, 3vh, 2.4rem);
+  display: grid;
+  place-items: center;
+}
+
+.slide-shell {
+  width: min(80vw, 1200px);
+  height: min(80vh, 900px);
+  min-width: 860px;
+  min-height: 560px;
+}
+
+/* Stacked shell: flex column — header glass + content glass(es) */
+.slide-shell--stacked {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+/* Centered shell: used by title and quote (single full-height card) */
+.slide-shell--centered {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── 3D frosted-glass card ─────────────────────────────────────────────────── */
+
+/* Base glass styles — no height set here; sub-classes control sizing */
+.slide-glass {
+  position: relative;
+  width: 100%;
+  border-radius: 28px;
+  overflow: hidden;
+
+  /* Glass body: directional gradient simulates light from top-left */
+  background: linear-gradient(
+    148deg,
+    rgba(255, 255, 255, 0.84) 0%,
+    rgba(255, 255, 255, 0.66) 36%,
+    rgba(255, 255, 255, 0.54) 100%
+  );
+  backdrop-filter: blur(36px) saturate(1.25) brightness(1.10);
+  -webkit-backdrop-filter: blur(36px) saturate(1.25) brightness(1.10);
+
+  /* Border: bright on top-left, barely visible on bottom-right */
+  border-top:   1px solid rgba(255, 255, 255, 0.78);
+  border-left:  1px solid rgba(255, 255, 255, 0.52);
+  border-right: 1px solid rgba(255, 255, 255, 0.22);
+  border-bottom:1px solid rgba(255, 255, 255, 0.16);
+
+  /* Layered shadows create the illusion of real elevation.
+     Each layer is progressively softer and further away —
+     the same technique used for physical glass objects. */
+  box-shadow:
+    /* Specular catch on top edge */
+    inset 0 1.5px 0   rgba(255, 255, 255, 0.70),
+    /* Specular catch on left edge */
+    inset 1.5px 0 0   rgba(255, 255, 255, 0.36),
+    /* Subtle shadow on right rim */
+    inset -1px 0 0    rgba(0, 0, 0, 0.04),
+    /* Subtle shadow on bottom rim */
+    inset 0 -1px 0    rgba(0, 0, 0, 0.05),
+    /* Layer 1 — sharp contact shadow */
+    0  2px   6px      rgba(28, 44, 38, 0.06),
+    /* Layer 2 — near elevation */
+    0  8px  24px      rgba(28, 44, 38, 0.10),
+    /* Layer 3 — mid elevation */
+    0 22px  56px      rgba(28, 44, 38, 0.13),
+    /* Layer 4 — deep ambient */
+    0 52px 112px      rgba(28, 44, 38, 0.09);
+}
+
+/* full  — title / quote layouts: one card filling the whole shell */
+.slide-glass--full {
+  flex: 1;
+  min-height: 0;
+}
+
+/* header — compact strip at the top of stacked layouts */
+.slide-glass--header {
+  flex: 0 0 auto;
+}
+
+/* body — fills all remaining space below the header */
+.slide-glass--body {
+  flex: 1;
+  min-height: 0;
+}
+
+/* col — equal-width pane inside .slide-two-pane */
+.slide-glass--col {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* ─── Header inner layout ───────────────────────────────────────────────── */
+
+.slide-header-inner {
+  padding: clamp(0.75rem, 1.6vh, 1.15rem) clamp(1.4rem, 2.5vw, 2.2rem);
+  display: grid;
+  align-content: start;
+  gap: 0.28rem;
+}
+
+/* Heading inside the header box is slightly smaller — it shares space
+   with kicker + chip, and the content boxes below carry the weight */
+.slide-header-inner h1 {
+  margin: 0.15rem 0 0.25rem;
+  font-size: clamp(1.75rem, 4.2vw, 3.2rem);
+}
+
+/* Secondary highlight film — top-left quadrant catches more light */
+.slide-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    148deg,
+    rgba(255, 255, 255, 0.32) 0%,
+    transparent 48%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Refraction tint at the bottom edge — colour split, like a prism edge */
+.slide-glass::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 8%;
+  right: 8%;
+  height: 1.5px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(100, 110, 250, 0.22) 30%,
+    rgba(170, 205, 170, 0.22) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ─── Glass style variants ──────────────────────────────────────────────────── */
+
+/* dark — deep frosted glass, white text */
+.slide-glass--dark {
+  background: linear-gradient(
+    148deg,
+    rgba(14, 24, 20, 0.88) 0%,
+    rgba(20, 34, 28, 0.80) 36%,
+    rgba(12, 20, 18, 0.74) 100%
+  );
+  backdrop-filter: blur(36px) saturate(1.3) brightness(0.88);
+  -webkit-backdrop-filter: blur(36px) saturate(1.3) brightness(0.88);
+  border-top:    1px solid rgba(255, 255, 255, 0.18);
+  border-left:   1px solid rgba(255, 255, 255, 0.12);
+  border-right:  1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.slide-glass--dark::before {
+  background: linear-gradient(148deg, rgba(255, 255, 255, 0.08) 0%, transparent 48%);
+}
+.slide-glass--dark .slide-content__inner,
+.slide-glass--dark .slide-header-inner   { color: rgba(255, 255, 255, 0.90); }
+.slide-glass--dark .kicker               { color: var(--color-mint-300); }
+.slide-glass--dark h1,
+.slide-glass--dark h2                    { color: #ffffff; }
+.slide-glass--dark .subtitle             { color: rgba(255, 255, 255, 0.62); }
+.slide-glass--dark .lead                 { color: rgba(255, 255, 255, 0.72); }
+.slide-glass--dark .section-chip {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.72);
+}
+.slide-glass--dark .section-chip span:last-child { color: var(--color-mint-300); }
+.slide-glass--dark .points li {
+  background: rgba(255, 255, 255, 0.10);
+  color: rgba(255, 255, 255, 0.88);
+}
+/* More specific combined selectors beat the layout rules that come later */
+.slide-glass--dark blockquote p,
+.slide-glass--dark.slide-layout--quote blockquote p   { color: #ffffff; }
+.slide-glass--dark blockquote cite,
+.slide-glass--dark.slide-layout--quote blockquote cite { color: rgba(255, 255, 255, 0.58); }
+
+/* tinted — primary-blue frosted glass, white text */
+.slide-glass--tinted {
+  background: linear-gradient(
+    148deg,
+    rgba(80, 90, 220, 0.72) 0%,
+    rgba(60, 70, 200, 0.58) 36%,
+    rgba(50, 60, 180, 0.48) 100%
+  );
+  backdrop-filter: blur(36px) saturate(1.5) brightness(0.95);
+  -webkit-backdrop-filter: blur(36px) saturate(1.5) brightness(0.95);
+  border-top:    1px solid rgba(255, 255, 255, 0.28);
+  border-left:   1px solid rgba(255, 255, 255, 0.18);
+  border-right:  1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.slide-glass--tinted .slide-content__inner,
+.slide-glass--tinted .slide-header-inner   { color: rgba(255, 255, 255, 0.92); }
+.slide-glass--tinted .kicker               { color: var(--color-accent-light-blue); }
+.slide-glass--tinted h1,
+.slide-glass--tinted h2                    { color: #ffffff; }
+.slide-glass--tinted .subtitle             { color: rgba(255, 255, 255, 0.68); }
+.slide-glass--tinted .lead                 { color: rgba(255, 255, 255, 0.80); }
+.slide-glass--tinted .section-chip {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.20);
+  color: rgba(255, 255, 255, 0.82);
+}
+.slide-glass--tinted .section-chip span:last-child { color: var(--color-accent-light-blue); }
+.slide-glass--tinted .points li {
+  background: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.90);
+}
+
+/* ghost — near-transparent, let the background image dominate */
+.slide-glass--ghost {
+  background: linear-gradient(
+    148deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.10) 36%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  backdrop-filter: blur(12px) saturate(1.1) brightness(1.02);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1) brightness(1.02);
+  border-top:    1px solid rgba(255, 255, 255, 0.36);
+  border-left:   1px solid rgba(255, 255, 255, 0.22);
+  border-right:  1px solid rgba(255, 255, 255, 0.10);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.50),
+    inset 1.5px 0 0 rgba(255, 255, 255, 0.24),
+    0 4px 16px rgba(28, 44, 38, 0.04),
+    0 14px 40px rgba(28, 44, 38, 0.07);
+}
+
+/* ─── Layout: title ─────────────────────────────────────────────────────────── */
+
+.slide-layout--title .slide-content__inner {
+  align-content: center;
+  justify-items: center;
+  text-align: center;
+  padding: clamp(2.5rem, 6vw, 5rem);
+  gap: clamp(1rem, 2.5vh, 1.8rem);
+}
+
+.slide-layout--title h1 {
+  font-size: clamp(2.6rem, 6.5vw, 5rem);
+  margin: 0;
+}
+
+.subtitle {
+  margin: 0;
+  max-width: 56ch;
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: var(--slide-fs-subtitle);
+  font-weight: 400;
+  line-height: 1.52;
+  color: var(--text-muted);
+}
+
+/* ─── Layout: quote ─────────────────────────────────────────────────────────── */
+
+.slide-layout--quote .slide-content__inner {
+  align-content: center;
+  justify-items: center;
+  text-align: center;
+  padding: clamp(2.5rem, 7vw, 6rem);
+}
+
+.slide-layout--quote blockquote {
+  margin: 0;
+  max-width: 68ch;
+}
+
+.slide-layout--quote blockquote p {
+  font-family: 'Noto Serif', Georgia, serif;
+  font-size: clamp(1.8rem, 3.8vw, 3.2rem);
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  color: var(--text-main);
+  margin: 0 0 1.5rem;
+}
+
+.slide-layout--quote blockquote cite {
+  display: block;
+  font-style: normal;
+  font-size: clamp(0.98rem, 1.12vw, 1.12rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ─── Layout: two-pane (two-col and image-text) ─────────────────────────────── */
+
+.slide-two-pane {
+  flex: 1;        /* fills remaining space in .slide-shell--stacked */
+  min-height: 0;
+  display: flex;
+  gap: 0.85rem;
+  align-items: stretch;
+}
+
+/* Image pane — NOT a glass element, just a shaped container */
+.slide-image-pane {
+  flex: 0 0 44%;
+  border-radius: 28px;
+  overflow: hidden;
+  /* Subtle outline so it has a defined shape even before the image loads */
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow:
+    0  8px 24px rgba(28, 44, 38, 0.08),
+    0 22px 56px rgba(28, 44, 38, 0.11);
+}
+
+.slide-image-pane img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Placeholder state — shown when image file is missing */
+.slide-image-pane--missing {
+  background: rgba(100, 110, 250, 0.05);
+  border: 1.5px dashed rgba(100, 110, 250, 0.28);
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  color: rgba(100, 110, 250, 0.45);
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.slide-glass--deck-intro {
+  flex: 0 0 auto;
+}
+
+.lead--deck-intro {
+  margin: 0;
+  max-width: none;
+  text-align: center;
+  font-size: clamp(1.1rem, 1.4vw, 1.22rem);
+  white-space: pre-line;
+}
+
+/* Two-col: smaller type to fit narrower cards */
+.slide-glass--col h2 {
+  font-family: 'Noto Serif', Georgia, serif;
+  font-size: clamp(1.6rem, 3.6vw, 2.9rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: var(--text-main);
+  margin: 0.4rem 0 0.75rem;
+}
+
+.slide-glass--dark h2 { color: #ffffff; }
+
+/* ─── Slide inner content ───────────────────────────────────────────────────── */
+
+.slide-content__inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  padding: clamp(1.2rem, 2.5vw, 2.2rem);
+  overflow: auto;
+  display: grid;
+  align-content: start;
+  gap: clamp(0.7rem, 1.8vh, 1.1rem);
+  color: var(--text-main);
+}
+
+.kicker {
+  margin: 0;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: var(--slide-fs-kicker);
+  font-weight: 800;
+}
+
+h1 {
+  margin: 0.6rem 0 1rem;
+  font-family: 'Noto Serif', Georgia, serif;
+  font-size: clamp(2rem, 5.6vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.lead {
+  margin: 0;
+  max-width: 62ch;
+  color: var(--text-muted);
+  font-size: var(--slide-fs-lead);
+  line-height: 1.58;
+}
+
+.section-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: fit-content;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(80, 135, 100, 0.22);
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--text-muted);
+  font-size: var(--slide-fs-chip);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.section-chip span:last-child {
+  color: var(--color-primary);
+  font-weight: 800;
+}
+
+.points {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.7rem;
+}
+
+.points li {
+  border-radius: 14px;
+  padding: 0.9rem 1.05rem;
+  background: rgba(100, 110, 250, 0.12);
+  color: #1c2368;
+  font-family: 'Archivo Black', 'Manrope', sans-serif;
+  font-size: var(--slide-fs-bullet);
+  letter-spacing: 0.01em;
+}
+
+/* ─── Progress rail ─────────────────────────────────────────────────────────── */
+
+.progress-rail {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 6;
+  display: inline-flex;
+  gap: 0.45rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--stroke-soft);
+}
+
+.progress-dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(20, 34, 24, 0.18);
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease;
+}
+
+.progress-dot.is-active {
+  transform: scale(1.25);
+  background: var(--color-primary);
+}
+
+/* ─── Responsive breakpoints ────────────────────────────────────────────────── */
+
+@media (max-width: 1439px) {
+  .slide-shell {
+    width: min(82vw, 1120px);
+    height: min(80vh, 840px);
+  }
+}
+
+@media (max-width: 1023px) {
+  .topbar {
+    padding: 0.9rem 1rem;
+    font-size: 0.88rem;
+  }
+
+  .slide {
+    padding-inline: 1rem;
+  }
+
+  .slide-shell {
+    width: 88vw;
+    height: 78vh;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .slide-content__inner {
+    padding: clamp(1.2rem, 3.5vw, 2rem);
+  }
+
+  .points {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  body {
+    overflow: auto;
+  }
+
+  .slide {
+    padding: 4.6rem 0.85rem 1.15rem;
+    align-items: start;
+  }
+
+  .slide-shell {
+    width: 92vw;
+    height: 82vh;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .topbar {
+    align-items: flex-start;
+  }
+
+  .topbar__meta {
+    gap: 0.35rem 0.6rem;
+    flex-direction: column;
+  }
+
+  .progress-rail {
+    left: 50%;
+    right: auto;
+    bottom: 0.8rem;
+    transform: translateX(-50%);
+  }
+
+  .points {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-shell,
+  .progress-dot {
+    transition: none;
+  }
+}
+
+/* ─── Rich text (RichText.jsx) ───────────────────────────────────────────── */
+
+.rich-highlight {
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: rgba(100, 110, 250, 0.45);
+  text-underline-offset: 0.12em;
+}
+
+.rich-stress {
+  color: var(--color-primary);
+  font-weight: 700;
+  font-style: italic;
+}
+
+.rich-bold {
+  font-weight: 700;
+}
+
+/* ─── Title slide extras ──────────────────────────────────────────────────── */
+
+.pre-title {
+  margin: 0 0 0.35rem;
+  font-size: clamp(0.98rem, 1.28vw, 1.12rem);
+  font-style: italic;
+  opacity: 0.72;
+  max-width: 62ch;
+  line-height: 1.48;
+}
+
+.slide-layout--title .subtitle {
+  white-space: pre-line;
+}
+
+.title-quote-variant {
+  margin: 1rem 0 0;
+  text-align: center;
+  font-size: clamp(1.15rem, 1.55vw, 1.3rem);
+  font-weight: 500;
+  font-style: italic;
+  opacity: 0.82;
+  max-width: 52ch;
+}
+
+/* ─── Single layout: emphasis blockquote panel ───────────────────────────── */
+
+.emphasis-panel {
+  margin: 0.75rem 0;
+  padding: 0.8rem 1rem;
+  border-radius: 6px;
+  border-left: 3px solid var(--color-primary);
+  background: rgba(100, 110, 250, 0.07);
+}
+
+.emphasis-panel p {
+  margin: 0;
+  font-size: clamp(1.18rem, 1.55vw, 1.28rem);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.slide-glass--dark .emphasis-panel {
+  background: rgba(100, 110, 250, 0.12);
+}
+
+.lead--trailing {
+  margin-top: 0.5rem;
+}
+
+/* ─── Two-col: role line under name ──────────────────────────────────────── */
+
+.col-role {
+  margin: -0.35rem 0 0.65rem;
+  font-size: clamp(1.1rem, 1.4vw, 1.2rem);
+  font-weight: 600;
+  color: var(--color-primary);
+  letter-spacing: 0.02em;
+}
+
+.slide-glass--dark .col-role {
+  color: var(--color-mint-300);
+}
+
+/* ─── two-col-split-right ─────────────────────────────────────────────────── */
+
+.slide-two-pane--split-right {
+  align-items: stretch;
+}
+
+.slide-glass--split-main {
+  flex: 1.15;
+}
+
+.slide-split-right-stack {
+  flex: 0.85;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  min-width: 0;
+}
+
+.slide-glass--split-rt {
+  flex: 0 0 auto;
+}
+
+.slide-glass--split-rb {
+  flex: 1;
+  min-height: 0;
+}
+
+.slide-content__inner--split-left .column-subheading {
+  margin: 1rem 0 0.3rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.column-sub-bullets {
+  margin: 0.25rem 0 0;
+  padding-left: 1.1rem;
+  font-size: clamp(1.02rem, 1.18vw, 1.14rem);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.lead--compact {
+  margin-top: 0.35rem;
+  font-size: clamp(1.02rem, 1.18vw, 1.14rem);
+}
+
+.split-left-link {
+  margin-top: 0.85rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.split-left-link:hover {
+  text-decoration: underline;
+}
+
+/* Stats (right-top) */
+.stat-row {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.stat-row--spread {
+  justify-content: space-around;
+}
+
+.stat-row--stack {
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.stat-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.stat-num {
+  font-size: clamp(2.1rem, 3.6vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: inherit;
+}
+
+.stat-desc {
+  font-size: 0.95rem;
+  font-weight: 400;
+  opacity: 0.75;
+  max-width: 16ch;
+  line-height: 1.3;
+}
+
+.slide-glass--dark .stat-desc {
+  opacity: 0.78;
+}
+
+/* ─── icon-grid ──────────────────────────────────────────────────────────── */
+
+.slide-content__inner--icon-grid {
+  gap: 1rem;
+}
+
+.icon-grid__intro {
+  max-width: 68ch;
+}
+
+.icon-grid__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.icon-grid__item {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+}
+
+.icon-grid__icon-wrap {
+  flex: 0 0 auto;
+  width: 2.85rem;
+  height: 2.85rem;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: rgba(100, 110, 250, 0.12);
+  color: var(--color-primary);
+}
+
+.icon-grid__glyph {
+  display: block;
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.icon-grid__label {
+  margin: 0 0 0.2rem;
+  font-weight: 700;
+  font-size: clamp(1.08rem, 1.32vw, 1.2rem);
+}
+
+.icon-grid__body {
+  margin: 0;
+  font-size: clamp(1.02rem, 1.2vw, 1.12rem);
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ─── toc ───────────────────────────────────────────────────────────────── */
+
+.slide-content__inner--toc {
+  overflow-y: auto;
+}
+
+.toc-list {
+  margin: 0;
+  padding-left: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: clamp(1.06rem, 1.32vw, 1.18rem);
+  line-height: 1.48;
+}
+
+.toc-list__item::marker {
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+/* ─── four-quad ─────────────────────────────────────────────────────────── */
+
+.slide-four-quad {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  gap: 0.6rem;
+  align-items: stretch;
+}
+
+.slide-four-quad__col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.slide-glass--quad {
+  flex: 1;
+  min-height: 0;
+}
+
+.slide-glass--quad-left {
+  border-left: 2px solid rgba(100, 110, 250, 0.35);
+}
+
+.slide-glass--quad-right {
+  border-left: 2px solid rgba(80, 135, 100, 0.35);
+}
+
+.slide-content__inner--quad {
+  gap: 0.45rem;
+}
+
+.quad-title {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.35vw, 1.05rem);
+  font-weight: 700;
+  font-family: 'Manrope', system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.lead--quad {
+  font-size: clamp(0.92rem, 1.12vw, 1.02rem);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.quad-badge {
+  display: inline-block;
+  margin-top: 0.35rem;
+  padding: 0.28rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+.slide-glass--dark .quad-title,
+.slide-glass--tinted .quad-title {
+  color: #ffffff;
+}
+
+.slide-glass--dark .lead--quad {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.slide-glass--tinted .lead--quad {
+  color: rgba(255, 255, 255, 0.82);
+}
