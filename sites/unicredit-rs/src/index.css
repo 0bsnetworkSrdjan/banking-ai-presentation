@@ -1202,3 +1202,285 @@ h1 {
 .slide-glass--tinted .lead--quad {
   color: rgba(255, 255, 255, 0.82);
 }
+
+/* ── Vector Space slide ──────────────────────────────────────────────────── */
+
+.vs-slide {
+  width: 100%;
+  height: 100%;
+}
+
+.vs-canvas-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+
+.vs-canvas-wrap:active {
+  cursor: grabbing;
+}
+
+.vs-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.vs-term-label {
+  position: absolute;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  pointer-events: none;
+  transform: translate(-50%, -200%);
+  transition: opacity 0.15s;
+  white-space: nowrap;
+  font-family: 'Space Mono', 'Courier New', monospace;
+  text-shadow: 0 0 8px currentColor, 0 1px 3px rgba(0, 0, 0, 0.9);
+  color: #e0e8ff;
+}
+
+.vs-term-label.hovered {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.vs-tooltip {
+  position: absolute;
+  bottom: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(4, 8, 18, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(16px);
+  padding: 12px 20px;
+  border-radius: 3px;
+  pointer-events: none;
+  z-index: 20;
+  opacity: 0;
+  transition: opacity 0.2s;
+  text-align: center;
+  min-width: 200px;
+  font-family: 'Space Mono', 'Courier New', monospace;
+}
+
+.vs-tooltip.visible {
+  opacity: 1;
+}
+
+.vs-tt-word {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+  color: #e0e8ff;
+}
+
+.vs-tt-cluster {
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.4;
+  margin-bottom: 6px;
+  color: #e0e8ff;
+}
+
+.vs-tt-desc {
+  font-size: 10px;
+  opacity: 0.65;
+  line-height: 1.6;
+  color: #e0e8ff;
+}
+
+.vs-tt-coords {
+  font-size: 8px;
+  opacity: 0.3;
+  margin-top: 7px;
+  letter-spacing: 0.08em;
+  color: #e0e8ff;
+}
+
+.vs-legend {
+  position: absolute;
+  left: 20px;
+  bottom: 44px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vs-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  user-select: none;
+  font-family: 'Space Mono', 'Courier New', monospace;
+  color: #e0e8ff;
+}
+
+.vs-legend-item:hover,
+.vs-legend-item.active {
+  opacity: 1;
+}
+
+.vs-legend-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.vs-title-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 22;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding:
+    clamp(2.5rem, 6vh, 4.75rem)
+    clamp(2rem, 6vw, 5rem)
+    clamp(9rem, 24vh, 15rem);
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 14%, rgba(8, 14, 24, 0.52) 0%, rgba(8, 14, 24, 0.16) 30%, transparent 58%),
+    linear-gradient(180deg, rgba(8, 14, 24, 0.14) 0%, transparent 42%);
+  transition: opacity 280ms ease, visibility 280ms ease;
+}
+
+.vs-title-overlay.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.vs-title-overlay .slide-content__inner--title {
+  width: min(100%, 62rem);
+}
+
+.vs-title-overlay .subtitle {
+  max-width: min(58ch, 100%);
+}
+
+.vs-title-meta {
+  margin: 0;
+  font-family: 'Space Mono', 'Courier New', monospace;
+  font-size: clamp(0.72rem, 0.82vw, 0.86rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(224, 232, 255, 0.42);
+}
+
+.vs-hint {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.3;
+  z-index: 20;
+  pointer-events: none;
+  transition: opacity 1.5s;
+  white-space: nowrap;
+  color: #e0e8ff;
+  font-family: 'Space Mono', 'Courier New', monospace;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(4, 8, 18, 0.34);
+  backdrop-filter: blur(12px);
+}
+
+.vs-hint.fade {
+  opacity: 0;
+}
+
+.vs-axes {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 20;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-end;
+}
+
+.vs-axis-key {
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  opacity: 0.3;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #e0e8ff;
+  font-family: 'Space Mono', 'Courier New', monospace;
+}
+
+.vs-axis-line {
+  width: 18px;
+  height: 1px;
+}
+
+@media (max-width: 1023px) {
+  .vs-title-overlay {
+    padding:
+      clamp(2rem, 5vh, 3rem)
+      clamp(1.4rem, 4vw, 2rem)
+      clamp(8rem, 22vh, 12rem);
+  }
+
+  .vs-tooltip {
+    bottom: 72px;
+  }
+}
+
+@media (max-width: 767px) {
+  .vs-title-overlay {
+    padding:
+      1.4rem
+      1.15rem
+      7.2rem;
+  }
+
+  .vs-title-meta {
+    display: none;
+  }
+
+  .vs-hint {
+    max-width: calc(100% - 1.5rem);
+    white-space: normal;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .vs-tooltip {
+    min-width: 0;
+    max-width: calc(100% - 1.6rem);
+    bottom: 86px;
+  }
+
+  .vs-axes {
+    top: 18px;
+    right: 18px;
+  }
+
+  .vs-legend {
+    left: 16px;
+    bottom: 54px;
+  }
+}
