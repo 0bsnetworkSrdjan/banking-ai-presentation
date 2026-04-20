@@ -60,7 +60,7 @@ function BodyGlass({ slide, styleClass, lang }) {
           </div>
         )}
         {body && (
-          <p className="lead animated">
+          <p className={['lead', 'animated', slide.bodyClass].filter(Boolean).join(' ')}>
             <RichText>{body}</RichText>
           </p>
         )}

@@ -177,7 +177,7 @@ export const slides = [
       '**What Is This Thing?** (the story of assembly robots)',
       '**AI vs Human Intelligence** (Lizards and the Four Personalities — building the mental model for understanding LLMs)',
       '**Vectors in Multidimensional Space — Excuse Me?** (How AI encodes information and meaning)',
-      '**The Frozen Chef** (Training, parameters, and teaching AI your stuff)',
+      '**The Frozen Chef** (Training, parameters, a snapshot in time and that is it)',
       '**What AI Knows & How to Add More** (Embeddings, RAG, fine-tuning)',
       '**Why Does AI Lie?** (Hallucinations and the split brain analogy)',
       '**Talk to AI Like a Pro** (Prompt & context engineering, iterative improvement)',
@@ -324,6 +324,259 @@ export const slides = [
     subtitle: 'How AI encodes knowledge and meaning, illustrated.',
   },
   {
+    id: 'gH8kP3nL9w',
+    layout: 'title',
+    section: 'Module 4',
+    chapter: '04',
+    kicker: 'Module 4',
+    tone: 'section-b',
+    style: 'dark',
+    animation: 'blur-in',
+    anim_duration: 0.9,
+    anim_stagger: 0.18,
+    title: 'The Frozen Chef',
+    subtitle: 'Training, Parameters & Why Models Stop Learning',
+  },
+  {
+    id: 'vK2nQ9wR4m',
+    layout: 'single',
+    section: 'Module 4',
+    chapter: '04',
+    kicker: 'Building blocks',
+    title: 'Building the Brain',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `A model starts as pure noise.
+
+Billions of numerical values — called parameters — organised into layers
+Each layer transforms input: characters → words → concepts → reasoning
+At the start of training, every parameter is randomly initialised
+The architecture is a human design choice — training only changes the numbers inside it
+
+***A kitchen full of equipment. A chef who has never eaten a single meal.***`,
+  },
+  {
+    id: 'bL5xP7hJ8n',
+    layout: 'single',
+    section: 'Module 4',
+    chapter: '04',
+    kicker: 'Training',
+    title: 'Training — Learning by Predicting',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `One deceptively simple task, repeated trillions of times:
+
+Show the model text → ask it to predict the next word
+Measure the error → send it backwards through the layers (backpropagation)
+Nudge every parameter slightly toward a better answer
+Repeat — across books, articles, code, science, law, and much of the internet
+
+The result? Not memorisation — but distilled understanding, compressed into billions of numbers.`,
+  },
+  {
+    id: 'cM3wT6nK2y',
+    layout: 'single',
+    section: 'Module 4',
+    chapter: '04',
+    kicker: 'Refinement',
+    title: 'From Raw Model to Useful Assistant',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `A pre-trained model is powerful but impractical. Refinement makes it deployable:
+
+**Instruction fine-tuning** — Teaches it to behave like an assistant
+
+**RLHF** — Human raters guide it toward helpful, safe responses
+
+**System instructions** — Deployers set rules and persona — without retraining
+
+**Alignment & safety testing** — Red-teaming, benchmarks, sign-off
+
+When this is done — the model is frozen.`,
+  },
+  {
+    id: 'dN8jR4qV5z',
+    layout: 'single',
+    section: 'Module 4',
+    chapter: '04',
+    kicker: 'Deployment',
+    title: 'The Frozen Chef',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `After deployment: the model does not learn. Not even a little.
+
+❌ Unaware of anything after its training cut-off
+❌ Cannot learn from user corrections or feedback
+❌ Does not improve with usage
+❌ Holds no memory between conversations
+
+This is intentional — a model that silently updated from live interactions would be nearly impossible to audit, certify, or govern.
+
+***The intelligence is real. The knowledge has an expiry date.***`,
+  },
+  {
+    id: 'pQ7wN4kL9x',
+    layout: 'title',
+    section: 'Module 5',
+    chapter: '05',
+    kicker: 'Module 5',
+    tone: 'section-b',
+    style: 'dark',
+    animation: 'blur-in',
+    anim_duration: 0.9,
+    anim_stagger: 0.18,
+    title: 'What AI Knows — and How to Add More',
+    subtitle: 'Embeddings, RAG, fine-tuning',
+  },
+  {
+    id: 'rK2mT8hJ3v',
+    layout: 'single',
+    section: 'Module 5',
+    chapter: '05',
+    kicker: 'The gap',
+    title: 'The Knowledge Problem',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `A frozen model only knows what it learned during training.
+In banking, that's rarely enough:
+
+❌ No knowledge of your internal documents, policies, or data
+❌ No awareness of events after its training cut-off
+❌ No understanding of your specific products, clients, or processes
+
+So how do we close the gap?
+
+Two distinct problems — two distinct solutions:
+
+**Problem** | **Solution**
+**What it knows** | Embeddings + RAG
+**How it behaves** | Fine-tuning`,
+  },
+  {
+    id: 'sL3nU9jK4w',
+    layout: 'single',
+    section: 'Module 5',
+    chapter: '05',
+    kicker: 'Meaning',
+    title: 'Embeddings — How AI Understands Meaning',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `Before we can feed a model new knowledge, it needs to be able to find it.
+
+Every piece of text — a policy document, a client note, a regulation — gets converted into a vector: a list of numbers representing its meaning
+Similar meanings → similar vectors → stored close together in a vector database
+When a user asks a question, the question is also converted to a vector — and the database finds the most semantically relevant content
+
+***Not a keyword search. A meaning search.***
+
+This is what makes it possible to ask "What is our policy on early loan repayment?" and retrieve the right paragraph — even if it never uses those exact words.`,
+  },
+  {
+    id: 'tM4oV0kL5x',
+    layout: 'single',
+    section: 'Module 5',
+    chapter: '05',
+    kicker: 'Retrieval',
+    title: 'RAG — Giving the Model What It Needs, Just in Time',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `RAG = Retrieval-Augmented Generation
+The process in practice:
+
+User asks a question
+System searches the vector database for relevant content
+That content is inserted into the context alongside the question
+The model answers — grounded in your documents, not just its training
+
+What this enables:
+
+✅ Answers based on current, internal knowledge
+✅ Responses that can cite their source
+✅ No retraining required — update the database, not the model
+
+The model's brain stays frozen. You just hand it the right documents before it speaks.`,
+  },
+  {
+    id: 'uN5pW1mM6y',
+    layout: 'single',
+    section: 'Module 5',
+    chapter: '05',
+    kicker: 'Behaviour',
+    title: 'Fine-Tuning — Changing How It Behaves',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `RAG adds knowledge. Fine-tuning shapes behaviour.
+Fine-tuning means continuing the training process on a curated, domain-specific dataset — adjusting the model's parameters for a specific purpose.
+
+**Use case** — **Example**
+**Tone & style** — Always respond formally, in German
+**Domain fluency** — Deeply familiar with credit risk terminology
+**Task specialisation** — Trained specifically on loan assessment workflows
+**Reducing hallucination** — Reinforced on verified, accurate domain content
+
+**Important:** Fine-tuning is expensive, requires expertise, and needs to be redone when the model updates. It is not a substitute for RAG — most organisations use both.`,
+  },
+  {
+    id: 'vO6qX2nN7z',
+    layout: 'single',
+    section: 'Module 5',
+    chapter: '05',
+    kicker: 'Summary',
+    title: 'Putting It Together',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `**Method** — **Adds** — **Best for** — **Requires retraining?**
+**RAG** — Current, specific knowledge — Policies, documents, live data — ❌ No
+**Fine-tuning** — Behaviour, tone, domain fluency — Style, specialisation, task focus — ✅ Yes
+**System instructions** — Rules & persona — Guardrails, context setting — ❌ No
+
+A well-deployed AI in banking is not just a frozen model — it's a frozen model with the right documents in hand, the right instructions on the desk, and the right behaviour trained in.`,
+  },
+  {
+    id: 'fL7xQ3nK8w',
+    layout: 'title',
+    section: 'Module 6',
+    chapter: '06',
+    kicker: 'Module 6',
+    tone: 'section-b',
+    style: 'dark',
+    animation: 'blur-in',
+    anim_duration: 0.9,
+    anim_stagger: 0.18,
+    title: 'Why Does AI Lie?',
+    subtitle: 'Hallucinations and the split brain analogy',
+  },
+  {
+    id: 'dR9mP2vH5n',
+    layout: 'two-col',
+    section: 'Module 6',
+    chapter: '06',
+    kicker: 'Split-brain research',
+    title: 'Split-Brain Research (Sperry & Gazzaniga): The “Interpreter” Effect',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.1,
+    left: {
+      title: 'Setup & key experiment',
+      body:
+        '**Setup (corpus callosotomy patients)**\n\nConnection between hemispheres is cut → no information sharing\n\nRight hemisphere = perception & action (no speech)\n\nLeft hemisphere = language, reasoning, explanation\n\n**Key experiment**\n\nObject seen only by right hemisphere (or placed in left hand)\n\nPatient acts correctly (e.g., selects object)\n\nBut when asked why → left hemisphere has no access to the cause',
+    },
+    right: {
+      title: 'Interpretation & bridge',
+      body:
+        '**What happens next**\n\nLeft hemisphere does not say “I don’t know”\n\nIt confidently invents a logical explanation (“to clean the chicken coop”)\n\n👉 This is called the “interpreter” (Gazzaniga)\n\n**Implication (bridge to our story)**\n\nHuman reasoning is partly post-hoc storytelling\n\nThe brain prioritizes coherence over truth when information is missing\n\nOur “rational explanation” is often a constructed narrative, not direct access to reality\n\n**👉 Bridge:**\n\nEven humans don’t fully “know” why they act →\nBut unlike LLMs, we integrate across systems and update over time',
+    },
+  },
+  {
     id: 'kW8nR3pL9v',
     layout: 'title',
     section: 'Module 7',
@@ -427,5 +680,237 @@ export const slides = [
         'Ready for automation at scale',
       ],
     },
+  },
+  {
+    id: 'm8pQ2wR9k',
+    layout: 'title',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'Module 8',
+    tone: 'section-b',
+    style: 'dark',
+    animation: 'blur-in',
+    anim_duration: 0.9,
+    anim_stagger: 0.18,
+    title: 'Agents & Tools — AI That Can Act',
+    subtitle: 'AI That Acts, Not Just Answers — Tools, MCP, Skills, Agents',
+  },
+  {
+    id: 'm8b1K3nL8x',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'Agents',
+    title: 'Beyond Answering — AI That Does',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `So far: a model that reads, reasons, and responds.
+Next: a model that can act.
+A standard LLM takes input → produces text. That's it.
+An agent is an LLM given:
+
+A goal rather than just a question
+A set of tools it can decide to use
+The ability to chain multiple steps together — reasoning as it goes
+
+The difference between a brilliant advisor who can only talk — and one who can also pick up the phone, pull the file, and send the email.`,
+  },
+  {
+    id: 'm8b2L4mP9y',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'Definitions',
+    title: 'What Are Tools?',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `Tools are functions the model can choose to call.
+The model doesn't execute them itself — it decides when and why to use them, and receives the result back into its context.
+
+**Tool type** — **Example in banking**
+**Search / RAG** — Retrieve relevant policy or client documents
+**Database query** — Look up a client's transaction history
+**API call** — Check current exchange rates or market data
+**Calculator / code** — Run a precise financial calculation
+**Write / send** — Draft an email, fill a form, log a case note
+**Trigger workflow** — Initiate a compliance check or approval process
+
+***Tools turn language into action.***`,
+  },
+  {
+    id: 'm8b3M5nQ1z',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'Orchestration',
+    title: 'How an Agent Thinks',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `A simple example: "Summarise the credit risk for client X before tomorrow's meeting"
+The agent doesn't just answer — it works:
+
+🔍 Retrieves the client's file from the document store (RAG)
+📊 Queries the database for recent transaction patterns
+🧮 Runs a risk scoring calculation
+🌐 Checks current market conditions via API
+🧠 Reasons across all retrieved information
+✍️ Produces a structured briefing — ready for the meeting
+
+Each step informs the next. The model decides the sequence.`,
+  },
+  {
+    id: 'm8b4N6pR2v',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'Governance',
+    title: 'Guardrails — Why Control Matters',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `More capability = more responsibility.
+Agents operating in banking contexts must be carefully constrained:
+
+Human-in-the-loop — certain actions require approval before execution
+Tool boundaries — the agent can only access what it is explicitly permitted to
+Audit trails — every tool call and decision step should be logged
+Failure handling — what happens when a tool returns unexpected results?
+
+An agent with access to client data, communication channels, and workflow systems is not a chatbot. It requires governance like any other operational system.
+
+The question is never just "can it do this?" — but "should it do this autonomously?"`,
+  },
+  {
+    id: 'm8b5O7qS3w',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'Arc',
+    title: 'The Full Picture',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    bodyClass: 'lead--flowchart',
+    body: `How everything connects:
+User request
+      ↓
+  [ Agent / Orchestrator ]
+      ↓
+  Reasons about the goal
+      ↓
+ ┌─────────────────────────────┐
+ │  Tools available:           │
+ │  • RAG (your documents)     │
+ │  • Database queries         │
+ │  • APIs & live data         │
+ │  • Calculations & code      │
+ │  • Workflow triggers        │
+ └─────────────────────────────┘
+      ↓
+  Synthesises results
+      ↓
+  Response or Action
+      ↓
+ [ Human review — where required ]
+
+The frozen chef, handed the right recipes, the right ingredients, and a fully equipped kitchen — with a supervisor in the room for the dishes that matter.`,
+  },
+  {
+    id: 'mcp1X2kN9w',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'MCP',
+    title: 'The Problem Before MCP',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `**MCP — Giving Agents a Standard Language**
+
+Every tool connection was built by hand.
+As agents became more capable, teams wanted to connect them to more systems:
+
+CRM platforms
+Internal databases
+Document stores
+Calendar, email, communication tools
+Core banking systems
+
+The problem: every integration was custom-built. Different syntax, different authentication, different error handling — for every model, for every tool, for every vendor.
+
+Imagine every appliance in the kitchen needing its own unique, incompatible power socket.`,
+  },
+  {
+    id: 'mcp2Y3lP8x',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'MCP',
+    title: 'What MCP Is',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `MCP = Model Context Protocol
+An open standard, introduced by Anthropic in 2024, that defines a single, universal way for AI models to connect to external tools and data sources.
+Think of it as USB for AI agents:
+
+**Without MCP** | **With MCP**
+Custom integration per tool | One standard connection method
+Rebuild for every model update | Tool works with any MCP-compatible model
+Fragile, expensive to maintain | Plug in, and it works
+Siloed by vendor | Interoperable across platforms
+
+***Build the tool once. Any compatible agent can use it.***`,
+  },
+  {
+    id: 'mcp3Z4mQ7y',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'MCP',
+    title: 'Where MCP Sits in the Architecture',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `MCP is the connective layer between the agent and the outside world:
+[ Agent / Orchestrator ]
+         ↓
+   [ MCP Interface ]
+         ↓
+┌────────────────────────────────┐
+│  MCP Servers (tools/systems):  │
+│  • Internal document store     │
+│  • Core banking API            │
+│  • CRM / client data           │
+│  • Compliance & risk systems   │
+│  • Email & calendar            │
+│  • Market data feeds           │
+└────────────────────────────────┘
+
+Each system exposes itself as an MCP server. The agent speaks to all of them through the same standard interface — it doesn't need to know the specifics of each system underneath.`,
+  },
+  {
+    id: 'mcp4A5nR6z',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'MCP',
+    title: 'Why It Matters for Banking',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `MCP turns AI integration from a bespoke engineering project into an infrastructure decision.
+
+✅ Faster deployment — connect new systems without rebuilding agent logic
+✅ Vendor flexibility — swap the underlying model without rewiring all your tools
+✅ Auditability — a standardised layer is easier to monitor and govern
+✅ Ecosystem momentum — MCP is being adopted rapidly across platforms, tools, and vendors
+
+In the same way that REST APIs standardised how web services talk to each other — MCP is standardising how AI agents talk to the world.
+
+For bank leadership, the strategic implication is clear: institutions that build their integrations on open standards now will not be locked into a single vendor's ecosystem later.`,
   },
 ]

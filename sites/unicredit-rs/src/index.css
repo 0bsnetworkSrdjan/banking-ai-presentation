@@ -620,6 +620,21 @@ body {
 .slide-glass--body .lead {
   font-size: clamp(0.78rem, 0.35rem + 3.1cqh, 1.85rem);
   line-height: 1.52;
+  white-space: pre-line;
+}
+
+/* Flowchart / diagram blocks in body copy (Module 8 “Full Picture”, etc.) */
+.slide-glass--body .lead.lead--flowchart {
+  font-family:
+    ui-monospace,
+    'SF Mono',
+    'Menlo',
+    Monaco,
+    Consolas,
+    monospace;
+  font-size: clamp(0.72rem, 0.3rem + 2.6cqh, 1.05rem);
+  line-height: 1.45;
+  letter-spacing: -0.015em;
 }
 
 .slide-glass--body .points li {
