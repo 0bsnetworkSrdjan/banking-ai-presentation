@@ -241,7 +241,7 @@ Practical guide to Generative AI & LLMs for decision-makers
 
 
 ## ---SLIDE---
-id: bV2gK6sY9q-edited
+id: bV2gK6sY9q
 layout: two-col
 section: Introduction
 title: Your guides today
@@ -251,8 +251,6 @@ animation: fade-up
 Blockstruct GmbH, member of AI Factory Austria AI:AT hub  
 AI Applications for Business. Zero Bullshit.  
 European Tech. Team in Austria, Serbia, UK, Montenegro, Croatia.
-Client projects in Austria, UK, USA and Croatia.
-Highly secure solutions - we have worked for banks and governments.
 
 [left]
 
@@ -283,7 +281,7 @@ animation: stagger
 anim_stagger: 0.12
 
 [left]
-Part of the European AI Factories initiative, funded by the European High Performance Computing Joint Undertaking (EuroHPC JU) — a €2.6B+ pan-European commitment to AI research, infrastructure and applications.
+Part of the European AI Factories initiative, funded by the European High Performance Computing Joint Undertaking (EuroHPC JU) — a €1.5B+ pan-European commitment to AI research, infrastructure and applications.
 
 ### Led jointly by:
 
@@ -329,7 +327,7 @@ By the end of this workshop, you won't be AI engineers. You'll be AI-literate de
 
 
 ## ---SLIDE---
-id: kJ7nB4qW1v-edited
+id: kJ7nB4qW1v
 layout: title
 section: Introduction
 kicker: UniCredit Srbija · The Opportunity
@@ -341,14 +339,16 @@ anim_stagger: 0.18
 
 # The Window Is Open.
 
-## UniCredit Srbija has an opportunity to position itself as one of the Group's AI Centers of Excellence.
+## While the Group focuses on its most significant strategic move in years, country offices have the freedom — and the moment — to define their own AI agenda.
 
+---
 
+UniCredit Srbija has an opportunity to position itself as one of the Group's AI Centers of Excellence.
 
 
 
 ## ---SLIDE---
-id: hQ3mK7vN5p-edited
+id: hQ3mK7vN5p
 layout: toc
 section: Introduction
 kicker: Twelve Modules
@@ -357,7 +357,7 @@ tone: section-a
 animation: stagger
 anim_stagger: 0.07
 
-**What Is This Thing?** (Text assembly robots)
+**What Is This Thing?** (the story of assembly robots)
 **AI vs Human Intelligence** (Lizards and the Four Personalities — building the mental model for understanding LLMs)
 **Vectors in Multidimensional Space — Excuse Me?** (How AI encodes information and meaning)
 **The Frozen Chef** (Training, parameters, and teaching AI your stuff)
@@ -423,6 +423,24 @@ Similarly to an industrial robot, a text assembly robot can do a lot of damage i
 
 
 ## ---SLIDE---
+id: pR2vL8kN4m
+layout: title
+section: Module 2
+chapter: "02"
+kicker: Module 2
+tone: section-b
+style: dark
+animation: blur-in
+anim_duration: 0.9
+anim_stagger: 0.18
+
+# AI vs Human Intelligence
+
+## Lizards, the four personalities, and a mental model for understanding LLMs
+
+
+
+## ---SLIDE---
 id: cT8vB2pR5m
 layout: four-quad
 section: Module 2
@@ -458,6 +476,26 @@ Peaceful, Open, Holistic, Big Picture-Oriented, Expansive, Interconnecting, Mean
 # Right Emotional
 
 Present, Sensory, Empathetic, Experiential (in the moment). Empathy, Joy, Compassion, Connection, Intuition.
+
+
+
+## ---SLIDE---
+id: hK3nP9qW5x
+layout: bullets-only
+section: Module 2
+chapter: "02"
+kicker: Human cognition
+title: Human Thinking is a self-building reflective fluid of loops and branches
+tone: section-b
+animation: stagger
+anim_stagger: 0.10
+
+- Human cognition = parallel, embodied, adaptive
+- Multiple brain regions collaborate (analytical, emotional, sensory, intuitive)
+- Continuous input: vision, sound, movement, touch, internal state
+- Thought is recursive → we reflect, question, adjust in real time
+- Decisions shaped by context + memory + emotion + feedback loops
+- Brain constantly updates its model of reality
 
 
 
@@ -499,3 +537,137 @@ anim_stagger: 0.18
 # Vectors in Multidimensional Space — Excuse Me?
 
 ## How AI encodes knowledge and meaning, illustrated.
+
+
+
+## ---SLIDE---
+id: kW8nR3pL9v
+layout: title
+section: Module 7
+chapter: "07"
+kicker: Module 7
+tone: section-b
+style: dark
+animation: blur-in
+anim_duration: 0.9
+anim_stagger: 0.18
+
+# Talk to AI Like a Pro
+
+## Prompt & context engineering, iterative improvement
+
+
+
+## ---SLIDE---
+id: m4tQ7nJ2x
+layout: toc
+section: Module 7
+chapter: "07"
+kicker: Techniques
+title: Prompt Engineering
+tone: section-a
+animation: stagger
+anim_stagger: 0.06
+
+**Clear and specific instructions** — Precisely define the task to reduce ambiguity and improve output quality.
+**Role prompting (persona assignment)** — Instruct the model to adopt a specific role to shape tone and expertise.
+**Few-shot prompting** — Provide examples to guide the model toward the desired pattern or format.
+**Zero-shot prompting** — Give only the instruction and rely on the model’s general knowledge to perform the task.
+**Chain-of-thought prompting** — Encourage step-by-step reasoning for more accurate handling of complex problems.
+**Instruction decomposition** — Break complex tasks into smaller, explicit steps within the prompt.
+**Output format specification** — Explicitly define how the response should be structured (e.g., JSON, table).
+**Self-consistency prompting** — Generate multiple reasoning paths and select the most consistent answer.
+**Meta-prompting (prompt refinement loop)** — Ask the model to clarify your intent with questions and then generate an optimized version of your prompt.
+**Critique and refine (self-reflection prompting)** — Instruct the model to review and improve its own output.
+
+
+
+## ---SLIDE---
+id: n8xK2pQ5wR
+layout: two-col
+section: Module 7
+chapter: "07"
+kicker: Context
+title: From Prompt Engineering → Context Engineering
+tone: section-a
+animation: stagger
+anim_stagger: 0.10
+
+**👉 Shift:** from "write a good prompt" → "design the environment the AI operates in"
+
+[left]
+
+# Prompt Engineering
+
+**Prompt Engineering** = asking better questions
+
+Crafting instructions to guide the model
+
+Works for one-off tasks
+
+[right]
+
+# Context Engineering
+
+**Context Engineering** = designing the full input system
+
+Combine: instructions + data + memory + tools
+
+Makes outputs reliable, repeatable, automatable
+
+
+
+## ---SLIDE---
+id: v3nL9mT4jH
+layout: toc
+section: Module 7
+chapter: "07"
+kicker: Context
+title: What "Context" Actually Includes
+tone: section-a
+animation: stagger
+anim_stagger: 0.06
+
+**Instructions** — Task, role, constraints
+**Business Data** — Customer data, transactions, documents
+**Memory / State** — Previous steps, conversation, workflow status
+**Tools & Actions** — APIs, databases, internal systems
+**Guardrails** — Policies, compliance rules, validation
+**👉 Output quality** = function of all context, not just the prompt
+
+
+
+## ---SLIDE---
+id: b6wR8kP2nY
+layout: two-col
+section: Module 7
+chapter: "07"
+kicker: Example
+title: Banking Example (Before vs After)
+tone: section-a
+animation: stagger
+anim_stagger: 0.10
+
+[left]
+
+# Prompt Engineering mindset
+
+**"Summarize this loan application"**
+
+→ Inconsistent, missing context, not auditable
+
+[right]
+
+# Context Engineering approach
+
+**Inject:** customer profile, credit policy, risk thresholds
+
+**Track:** workflow state (application stage)
+
+**Connect:** scoring API + document extraction
+
+**Enforce:** compliance rules (e.g., KYC, risk flags)
+
+- **👉 Result:** Consistent decisions
+- Traceable reasoning
+- Ready for automation at scale
