@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { motion } from 'motion/react'
 import { t, tSide } from '../i18n'
 import { RichText } from './RichText'
-import { VectorSpaceSlide } from './VectorSpaceSlide'
 
 function L(slide, lang) {
   return slide.no_translate ? 'en' : lang
@@ -498,7 +497,6 @@ function ImagePane({ src, alt }) {
 // ─── Layout constants ──────────────────────────────────────────────────────
 
 const FULL_CARD_LAYOUTS = ['title', 'quote']
-const RAW_FILL_LAYOUTS  = ['vector-space']
 
 // ─── Main component ────────────────────────────────────────────────────────
 
@@ -506,7 +504,6 @@ export function SlideFrame({ slide, isActive, lang }) {
   const layout = slide.layout || 'single'
   const styleClass = slide.style ? `slide-glass--${slide.style}` : ''
   const isFullCard = FULL_CARD_LAYOUTS.includes(layout)
-  const isRawFill = RAW_FILL_LAYOUTS.includes(layout)
 
   return (
     <article
@@ -514,7 +511,7 @@ export function SlideFrame({ slide, isActive, lang }) {
       aria-hidden={!isActive}
     >
       <motion.div
-        className={`slide-shell ${isRawFill ? 'slide-shell--centered' : isFullCard ? 'slide-shell--centered' : 'slide-shell--stacked'}`}
+        className={`slide-shell ${isFullCard ? 'slide-shell--centered' : 'slide-shell--stacked'}`}
         initial={{ opacity: 0.5, scale: 0.98 }}
         animate={{ opacity: isActive ? 1 : 0.44, scale: isActive ? 1 : 0.98 }}
         transition={{ duration: 0.48, ease: 'easeOut' }}
@@ -584,12 +581,6 @@ export function SlideFrame({ slide, isActive, lang }) {
         {layout === 'toc' && <TocLayout slide={slide} styleClass={styleClass} lang={lang} />}
 
         {layout === 'four-quad' && <FourQuadLayout slide={slide} styleClass={styleClass} lang={lang} />}
-
-        {layout === 'vector-space' && (
-          <div className={`slide-glass slide-glass--full ${styleClass || 'slide-glass--dark'} slide-layout--title slide-layout--vector-space`}>
-            <VectorSpaceSlide slide={slide} lang={L(slide, lang)} isActive={isActive} />
-          </div>
-        )}
 
         {layout === 'image-text' && (
           <>
