@@ -30,7 +30,7 @@ function HeaderGlass({ slide, styleClass, lang }) {
             <RichText>{title}</RichText>
           </h1>
         )}
-        {(slide.section || slide.chapter) && (
+        {(slide.section || slide.chapter) && !slide.hideSectionChip && (
           <div className="section-chip animated">
             {slide.section && <span>{t(slide.section, lg)}</span>}
             {slide.chapter && <span>{slide.chapter}</span>}
@@ -363,6 +363,70 @@ function DeckIcon({ name }) {
   }
 }
 
+function TimelineLayout({ slide, styleClass, lang }) {
+  const lg = L(slide, lang)
+  const steps = Array.isArray(slide.timelineSteps) ? slide.timelineSteps : []
+
+  return (
+    <>
+      <HeaderGlass slide={slide} styleClass={styleClass} lang={lang} />
+      <div className={`slide-glass slide-glass--body ${styleClass}`}>
+        <div className="slide-content__inner slide-content__inner--timeline">
+          <ol className="slide-timeline" aria-label={t(slide.title, lg) || 'Workflow'}>
+            {steps.map((step, i) => {
+              const label = t(step.label, lg)
+              const body = t(step.body, lg)
+              const badge = step.badge != null ? t(step.badge, lg) : null
+              const highlight = Boolean(step.highlight)
+              return (
+                <li
+                  key={i}
+                  className={[
+                    'slide-timeline__step',
+                    'animated',
+                    highlight ? 'slide-timeline__step--hitl' : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                >
+                  <div className="slide-timeline__marker-col" aria-hidden="true">
+                    <span className="slide-timeline__num">{i + 1}</span>
+                    {i < steps.length - 1 && <span className="slide-timeline__connector" />}
+                  </div>
+                  <div className="slide-timeline__card">
+                    <div className="slide-timeline__head">
+                      {step.emoji ? (
+                        <span className="slide-timeline__emoji" aria-hidden="true">
+                          {step.emoji}
+                        </span>
+                      ) : null}
+                      {label && (
+                        <p className="slide-timeline__label">
+                          <RichText>{label}</RichText>
+                        </p>
+                      )}
+                      {badge && (
+                        <span className="slide-timeline__badge">
+                          <RichText>{badge}</RichText>
+                        </span>
+                      )}
+                    </div>
+                    {body && (
+                      <p className="slide-timeline__body">
+                        <RichText>{body}</RichText>
+                      </p>
+                    )}
+                  </div>
+                </li>
+              )
+            })}
+          </ol>
+        </div>
+      </div>
+    </>
+  )
+}
+
 function IconGridLayout({ slide, styleClass, lang }) {
   const lg = L(slide, lang)
   const intro = slide.intro ? t(slide.intro, lg) : null
@@ -510,11 +574,11 @@ export function SlideFrame({ slide, isActive, lang }) {
 
   return (
     <article
-      className={`slide ${isActive ? 'is-active' : ''} ${slide.tone}`}
+      className={`slide ${isActive ? 'is-active' : ''} ${slide.tone} ${layout === 'timeline' ? 'slide--timeline' : ''}`}
       aria-hidden={!isActive}
     >
       <motion.div
-        className={`slide-shell ${isRawFill ? 'slide-shell--centered' : isFullCard ? 'slide-shell--centered' : 'slide-shell--stacked'}`}
+        className={`slide-shell ${isRawFill ? 'slide-shell--centered' : isFullCard ? 'slide-shell--centered' : 'slide-shell--stacked'} ${layout === 'timeline' ? 'slide-shell--timeline' : ''}`}
         initial={{ opacity: 0.5, scale: 0.98 }}
         animate={{ opacity: isActive ? 1 : 0.44, scale: isActive ? 1 : 0.98 }}
         transition={{ duration: 0.48, ease: 'easeOut' }}
@@ -580,6 +644,8 @@ export function SlideFrame({ slide, isActive, lang }) {
         )}
 
         {layout === 'icon-grid' && <IconGridLayout slide={slide} styleClass={styleClass} lang={lang} />}
+
+        {layout === 'timeline' && <TimelineLayout slide={slide} styleClass={styleClass} lang={lang} />}
 
         {layout === 'toc' && <TocLayout slide={slide} styleClass={styleClass} lang={lang} />}
 

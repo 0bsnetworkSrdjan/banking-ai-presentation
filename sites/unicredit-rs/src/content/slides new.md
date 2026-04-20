@@ -1263,3 +1263,45 @@ MCP turns AI integration from a bespoke engineering project into an infrastructu
 In the same way that REST APIs standardised how web services talk to each other — MCP is standardising how AI agents talk to the world.
 
 For bank leadership, the strategic implication is clear: institutions that build their integrations on open standards now will not be locked into a single vendor's ecosystem later.
+
+
+
+## ---SLIDE---
+id: m8skA1b2c3
+layout: single
+section: Module 8
+chapter: "08"
+kicker: Skills
+title: Skills — Packaged, reusable procedures
+tone: section-b
+animation: stagger
+anim_stagger: 0.12
+
+In every serious bank, there are standardized procedures — for example, a procedure for loan approval. These procedures are written, tested, and aligned with regulations.
+
+When a new associate arrives, they don't reinvent the procedure — they apply the existing one. A Skill is exactly that, but for AI: a packaged procedure, tailored to a specific task, which the AI can "take off the shelf" and apply.
+
+
+
+## ---SLIDE---
+id: m8skD4e5f6
+layout: single
+section: Module 8
+chapter: "08"
+kicker: Skills
+title: Inside a Skill file
+tone: section-b
+animation: stagger
+anim_stagger: 0.12
+
+A Skill file is essentially a Markdown document — like a detailed work manual you give to an AI agent before it starts its task. The agent "reads" it, and from that moment on, knows exactly how to proceed.
+
+Here is what a summary of a Credit Assessment Skill looks like:
+
+- **Overview** — The AI agent reads this first. It clearly states the purpose and, just as importantly, what is NOT its purpose (e.g., it does not make the final decision).
+- **When to Use** — The agent must know when to invoke this specific skill versus another. Without this, it might try to process mortgage loans using the same rules as consumer loans.
+- **Required Tools** — A list of all MCP (Model Context Protocol) connections that the agent is allowed to use within this skill. The agent cannot call a tool that isn't on this list.
+- **Step-by-Step Procedure** — The core of the file. Every step has clear IF/THEN rules — the agent does not improvise; it applies policy literally. You'll notice "STOP" written in several places — these are hard stops that the agent is not allowed to bypass.
+- **What the Agent Must NOT Do** — Negative rules are just as important as positive ones. This is the section where you define the boundaries of autonomy.
+- **Audit and Compliance** — Every skill in a regulated industry must have this. Every call, every result, every decision — everything is logged.
+- **Skill Metadata** — Version, owner, revision date. This is crucial because skills change when regulations or internal policies change — you need to know which version was active at the time of a specific decision.

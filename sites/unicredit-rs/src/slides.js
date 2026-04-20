@@ -776,6 +776,80 @@ The agent doesn't just answer — it works:
 Each step informs the next. The model decides the sequence.`,
   },
   {
+    id: 'm8tWF4nP2x',
+    layout: 'timeline',
+    section: 'Module 8',
+    chapter: '08',
+    hideSectionChip: true,
+    kicker: 'Example',
+    title: 'Agentic Workflow — Tools, MCP & Skills',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.07,
+    timelineSteps: [
+      {
+        emoji: '📥',
+        label: {
+          en: '**Agent Receives the Request**',
+          sr: '**Agent prima zahtev**',
+        },
+        body: {
+          en: 'An email arrives. The agent reads it: “Client requesting a limit increase.” It immediately knows the next step.',
+          sr: 'Email stigne. Agent ga pročita: „Klijent traži povećanje limita.“ Odmah zna šta sledi.',
+        },
+      },
+      {
+        emoji: '🔗',
+        label: {
+          en: '**Agent Utilizes Tools**',
+          sr: '**Agent koristi alatke**',
+        },
+        body: {
+          en: 'Via MCP, the agent simultaneously queries: core banking (balance, payment history), credit bureau (external score), and CRM (client profile). Done in seconds.',
+          sr: 'Preko MCP-a agent istovremeno povlači: core banking (stanje, istorija plaćanja), kreditni biro (eksterni skor) i CRM (profil klijenta). Gotovo za nekoliko sekundi.',
+        },
+      },
+      {
+        emoji: '🧠',
+        label: {
+          en: '**Agent Applies Skills**',
+          sr: '**Agent primenjuje veštine**',
+        },
+        body: {
+          en: 'The “Credit Assessment Skill” activates — your internal credit policy. Every criterion is evaluated: standing, limits, eligibility.',
+          sr: 'Aktivira se „Credit Assessment Skill“ — vaša interna kreditna politika. Svaki kriterijum se procenjuje: odnos, limiti, podobnost.',
+        },
+      },
+      {
+        emoji: '👤',
+        label: {
+          en: '**Agent Makes a Recommendation**',
+          sr: '**Agent daje preporuku**',
+        },
+        body: {
+          en: 'If approval is needed, a summary goes to the credit officer — all relevant data, a clear recommendation, and full rationale. Officer accepts or declines.',
+          sr: 'Ako je potrebno odobrenje, sažetak ide kreditnom službeniku — svi relevantni podaci, jasna preporuka i potpuno obrazloženje. Službenik prihvata ili odbija.',
+        },
+        badge: {
+          en: 'HUMAN IN THE LOOP',
+          sr: 'ČOVEK U PETLJI',
+        },
+        highlight: true,
+      },
+      {
+        emoji: '✅',
+        label: {
+          en: '**The Result**',
+          sr: '**Rezultat**',
+        },
+        body: {
+          en: 'Client receives a response in 2–4 minutes. Everything logged. Full audit trail. Nothing falls through the cracks.',
+          sr: 'Klijent dobija odgovor za 2–4 minuta. Sve je evidentirano. Kompletan revizijski trag. Ništa ne propada iz vida.',
+        },
+      },
+    ],
+  },
+  {
     id: 'm8b4N6pR2v',
     layout: 'single',
     section: 'Module 8',
@@ -926,5 +1000,42 @@ Each system exposes itself as an MCP server. The agent speaks to all of them thr
 In the same way that REST APIs standardised how web services talk to each other — MCP is standardising how AI agents talk to the world.
 
 For bank leadership, the strategic implication is clear: institutions that build their integrations on open standards now will not be locked into a single vendor's ecosystem later.`,
+  },
+  {
+    id: 'm8skA1b2c3',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'Skills',
+    title: 'Skills — Packaged, reusable procedures',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `In every serious bank, there are standardized procedures — for example, a procedure for loan approval. These procedures are written, tested, and aligned with regulations.
+
+When a new associate arrives, they don't reinvent the procedure — they apply the existing one. A Skill is exactly that, but for AI: a packaged procedure, tailored to a specific task, which the AI can "take off the shelf" and apply.`,
+  },
+  {
+    id: 'm8skD4e5f6',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'Skills',
+    title: 'Inside a Skill file',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `A Skill file is essentially a Markdown document — like a detailed work manual you give to an AI agent before it starts its task. The agent "reads" it, and from that moment on, knows exactly how to proceed.
+
+Here is what a summary of a Credit Assessment Skill looks like:`,
+    bullets: [
+      '**Overview** — The AI agent reads this first. It clearly states the purpose and, just as importantly, what is NOT its purpose (e.g., it does not make the final decision).',
+      '**When to Use** — The agent must know when to invoke this specific skill versus another. Without this, it might try to process mortgage loans using the same rules as consumer loans.',
+      '**Required Tools** — A list of all MCP (Model Context Protocol) connections that the agent is allowed to use within this skill. The agent cannot call a tool that isn\'t on this list.',
+      '**Step-by-Step Procedure** — The core of the file. Every step has clear IF/THEN rules — the agent does not improvise; it applies policy literally. You\'ll notice "STOP" written in several places — these are hard stops that the agent is not allowed to bypass.',
+      '**What the Agent Must NOT Do** — Negative rules are just as important as positive ones. This is the section where you define the boundaries of autonomy.',
+      '**Audit and Compliance** — Every skill in a regulated industry must have this. Every call, every result, every decision — everything is logged.',
+      '**Skill Metadata** — Version, owner, revision date. This is crucial because skills change when regulations or internal policies change — you need to know which version was active at the time of a specific decision.',
+    ],
   },
 ]
