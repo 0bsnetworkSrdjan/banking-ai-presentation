@@ -1571,6 +1571,45 @@ h1 {
   font-size: clamp(0.52rem, 0.14rem + 1.35cqh, 0.78rem);
 }
 
+/*
+ * Five-tile card-prose slides: 3×2 grid + readable type that fits the glass (EN + SR).
+ * Module 9 — “Designing for Safety”; Module 10 — “What Stays Human”.
+ */
+.slide-content__inner.slide-content__inner--card-prose-tile > .lead {
+  font-size: clamp(0.8rem, 0.34rem + 2.85cqh, 1.58rem);
+  line-height: 1.42;
+}
+
+.slide-content__inner.slide-content__inner--card-prose-tile {
+  gap: clamp(0.45rem, 1.1vh, 0.75rem);
+}
+
+.points.points--card-prose.points--card-prose-tile {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.35rem, 0.72cqh, 0.58rem);
+  align-content: start;
+}
+
+.points.points--card-prose.points--card-prose-tile li {
+  padding: clamp(0.48rem, 0.85cqh, 0.72rem) clamp(0.52rem, 1cqw, 0.78rem);
+  gap: clamp(0.22rem, 0.45cqh, 0.38rem);
+  line-height: 1.4;
+}
+
+.points.points--card-prose.points--card-prose-tile .point-card__heading {
+  font-size: clamp(0.72rem, 0.28rem + 2.15cqh, 1.12rem);
+  line-height: 1.2;
+}
+
+.points.points--card-prose.points--card-prose-tile .point-card__body {
+  font-size: clamp(0.62rem, 0.23rem + 1.85cqh, 0.95rem);
+  line-height: 1.45;
+}
+
+.slide-glass--body .points.points--card-prose.points--card-prose-tile li {
+  font-size: clamp(0.6rem, 0.22rem + 1.78cqh, 0.92rem);
+}
+
 /* Split “Inside a Skill file” — one section per slide, full-width card, larger type */
 .points.points--card-prose.points--skill-file-split {
   grid-template-columns: 1fr;
