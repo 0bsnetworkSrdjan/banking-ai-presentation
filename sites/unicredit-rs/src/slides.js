@@ -931,25 +931,28 @@ The question is never just "can it do this?" — but "should it do this autonomo
     bodyInnerClass: 'slide-content__inner--body-diagram-stack',
     body: 'How everything connects:',
     flowTimeline: {
-      layout: 'horizontal',
-      steps: [
-        { kind: 'text', label: 'User request' },
-        { kind: 'agent', label: '[ Agent / Orchestrator ]' },
-        { kind: 'text', label: 'Reasons about the goal' },
-        {
-          kind: 'tools',
-          title: 'Tools available',
-          items: [
-            'RAG (your documents)',
-            'Database queries',
-            'APIs & live data',
-            'Calculations & code',
-            'Workflow triggers',
-          ],
-        },
-        { kind: 'text', label: 'Synthesises results' },
-        { kind: 'text', label: 'Response or Action' },
-        { kind: 'review', label: 'Human review — where required' },
+      rows: [
+        [
+          { kind: 'text', label: 'User request' },
+          { kind: 'agent', label: '[ Agent / Orchestrator ]' },
+          { kind: 'text', label: 'Reasons about the goal' },
+        ],
+        [
+          {
+            kind: 'tools',
+            title: 'Tools available',
+            items: [
+              'RAG (your documents)',
+              'Database queries',
+              'APIs & live data',
+              'Calculations & code',
+              'Workflow triggers',
+            ],
+          },
+          { kind: 'text', label: 'Synthesises results' },
+          { kind: 'text', label: 'Response or Action' },
+          { kind: 'review', label: 'Human review — where required' },
+        ],
       ],
     },
     body2: `The frozen chef, handed the right recipes, the right ingredients, and a fully equipped kitchen — with a supervisor in the room for the dishes that matter.`,
@@ -985,21 +988,22 @@ Imagine every appliance in the kitchen needing its own unique, incompatible powe
     section: 'Module 8',
     chapter: '08',
     kicker: 'MCP',
-    title: 'What MCP Is',
+    title: 'What is MCP?',
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `MCP = Model Context Protocol
-An open standard, introduced by Anthropic in 2024, that defines a single, universal way for AI models to connect to external tools and data sources.
-Think of it as USB for AI agents:
-
-**Without MCP** | **With MCP**
-Custom integration per tool | One standard connection method
-Rebuild for every model update | Tool works with any MCP-compatible model
-Fragile, expensive to maintain | Plug in, and it works
-Siloed by vendor | Interoperable across platforms
-
-***Build the tool once. Any compatible agent can use it.***`,
+    body: `An open standard, introduced by Anthropic in 2024, that defines a single, universal way for AI models to connect to external tools and data sources.`,
+    bodyComparison: {
+      leftHeading: 'Without MCP',
+      rightHeading: 'With MCP',
+      rows: [
+        { left: 'Custom integration per tool', right: 'One standard connection method' },
+        { left: 'Rebuild for every model update', right: 'Tool works with any MCP-compatible model' },
+        { left: 'Fragile, expensive to maintain', right: 'Plug in, and it works' },
+        { left: 'Siloed by vendor', right: 'Interoperable across platforms' },
+      ],
+    },
+    body2: `***Build the tool once. Any compatible agent can use it.***`,
   },
   {
     id: 'mcp3Z4mQ7y',
@@ -1011,22 +1015,22 @@ Siloed by vendor | Interoperable across platforms
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `MCP is the connective layer between the agent and the outside world:
-[ Agent / Orchestrator ]
-         ↓
-   [ MCP Interface ]
-         ↓
-┌────────────────────────────────┐
-│  MCP Servers (tools/systems):  │
-│  • Internal document store     │
-│  • Core banking API            │
-│  • CRM / client data           │
-│  • Compliance & risk systems   │
-│  • Email & calendar            │
-│  • Market data feeds           │
-└────────────────────────────────┘
-
-Each system exposes itself as an MCP server. The agent speaks to all of them through the same standard interface — it doesn't need to know the specifics of each system underneath.`,
+    bodySurface: 'mcp-connect',
+    body: 'MCP is the connective layer between the agent and the outside world:',
+    mcpStack: {
+      agentLabel: 'Agent / Orchestrator',
+      layerLabel: 'MCP Interface',
+      serversTitle: 'MCP Servers (tools/systems)',
+      servers: [
+        'Internal document store',
+        'Core banking API',
+        'CRM / client data',
+        'Compliance & risk systems',
+        'Email & calendar',
+        'Market data feeds',
+      ],
+    },
+    body2: `Each system exposes itself as an MCP server. The agent speaks to all of them through the same standard interface — it doesn't need to know the specifics of each system underneath.`,
   },
   {
     id: 'mcp4A5nR6z',
@@ -1048,5 +1052,182 @@ Each system exposes itself as an MCP server. The agent speaks to all of them thr
 In the same way that REST APIs standardised how web services talk to each other — MCP is standardising how AI agents talk to the world.
 
 For bank leadership, the strategic implication is clear: institutions that build their integrations on open standards now will not be locked into a single vendor's ecosystem later.`,
+  },
+  {
+    id: 'm8skA1b2c3',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'Skills',
+    title: 'Skills — Packaged, reusable procedures',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `**Agent Skills** are a lightweight, open format for extending AI agent capabilities with specialized knowledge and workflows.
+
+    In every serious bank, there are standardized procedures — for example, a procedure for loan approval. These procedures are written, tested, and aligned with regulations.
+
+When a new associate arrives, they don't reinvent the procedure — they apply the existing one. A Skill is exactly that, but for a ***packaged procedure***, ***tailored to a specific task***, which the AI can "take off the shelf" and apply.`,
+  },
+  {
+    id: 'm8skD4e5f6',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'Skills',
+    title: 'Inside a Skill file (1/4)',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `A Skill file is essentially a Markdown document — like a detailed work manual you give to an AI agent before it starts its task. The agent "reads" it, and from that moment on, knows exactly how to proceed.
+
+Here is what a summary of a Credit Assessment Skill looks like — each section, one slide at a time:`,
+    pointsCardModifier: 'points--skill-file-split',
+    bullets: [
+      {
+        heading: 'Overview',
+        body: 'The AI agent reads this first. It clearly states the purpose and, just as importantly, ++what is NOT its purpose++ (e.g., it does not make the final decision).',
+      },
+    ],
+  },
+  {
+    id: 'm8skD4e5g1',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'Skills',
+    title: 'Inside a Skill file (2/4)',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    pointsCardModifier: 'points--skill-file-split points--skill-file-split--pair',
+    bullets: [
+      {
+        heading: 'When to Use',
+        body: 'The agent must know ++when to invoke this specific skill versus another++. Without this, it might try to process mortgage loans using the same rules as consumer loans.',
+      },
+      {
+        heading: 'Required Tools',
+        body: "A list of all ++MCP++ connections that the agent is allowed to use within this skill. The agent ++cannot call a tool that isn't on this list++.",
+      },
+    ],
+  },
+  {
+    id: 'm8skD4e5g2',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'Skills',
+    title: 'Inside a Skill file (3/4)',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    pointsCardModifier: 'points--skill-file-split points--skill-file-split--pair',
+    bullets: [
+      {
+        heading: 'Step-by-Step Procedure',
+        body: 'The core of the file. Every step has clear ++IF/THEN rules++ — the agent does not improvise; it applies policy literally. You\'ll notice ++"STOP"++ written in several places — these are ++hard stops++ that the agent is not allowed to bypass.',
+      },
+      {
+        heading: 'What the Agent Must NOT Do',
+        body: 'Negative rules are just as important as positive ones. This is the section where you define ++the boundaries of autonomy++.',
+      },
+    ],
+  },
+  {
+    id: 'm8skD4e5g3',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'Skills',
+    title: 'Inside a Skill file (4/4)',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    pointsCardModifier: 'points--skill-file-split points--skill-file-split--pair',
+    bullets: [
+      {
+        heading: 'Audit and Compliance',
+        body: 'Every skill in a regulated industry must have this. ++Every call, every result, every decision++ — everything is logged.',
+      },
+      {
+        heading: 'Skill Metadata',
+        body: 'Version, owner, revision date. This is crucial because skills change when regulations or internal policies change — you need to know ++which version was active++ at the time of a specific decision.',
+      },
+    ],
+  },
+  {
+    id: 'm8tWF4nP2x',
+    layout: 'timeline',
+    section: 'Module 8',
+    chapter: '08',
+    hideSectionChip: true,
+    kicker: 'Example',
+    title: 'Agentic Workflow — Tools, MCP & Skills',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.07,
+    timelineSteps: [
+      {
+        emoji: '📥',
+        label: {
+          en: '**Agent Receives the Request**',
+          sr: '**Agent prima zahtev**',
+        },
+        body: {
+          en: 'An email arrives. The agent reads it: “Client requesting a limit increase.” It immediately knows the next step.',
+          sr: 'Email stigne. Agent ga pročita: „Klijent traži povećanje limita.“ Odmah zna šta sledi.',
+        },
+      },
+      {
+        emoji: '🔗',
+        label: {
+          en: '**Agent Utilizes Tools**',
+          sr: '**Agent koristi alatke**',
+        },
+        body: {
+          en: 'Via MCP, the agent simultaneously queries: core banking (balance, payment history), credit bureau (external score), and CRM (client profile). Done in seconds.',
+          sr: 'Preko MCP-a agent istovremeno povlači: core banking (stanje, istorija plaćanja), kreditni biro (eksterni skor) i CRM (profil klijenta). Gotovo za nekoliko sekundi.',
+        },
+      },
+      {
+        emoji: '🧠',
+        label: {
+          en: '**Agent Applies Skills**',
+          sr: '**Agent primenjuje veštine**',
+        },
+        body: {
+          en: 'The “Credit Assessment Skill” activates — your internal credit policy. Every criterion is evaluated: standing, limits, eligibility.',
+          sr: 'Aktivira se „Credit Assessment Skill“ — vaša interna kreditna politika. Svaki kriterijum se procenjuje: odnos, limiti, podobnost.',
+        },
+      },
+      {
+        emoji: '👤',
+        label: {
+          en: '**Agent Makes a Recommendation**',
+          sr: '**Agent daje preporuku**',
+        },
+        body: {
+          en: 'If approval is needed, a summary goes to the credit officer — all relevant data, a clear recommendation, and full rationale. Officer accepts or declines.',
+          sr: 'Ako je potrebno odobrenje, sažetak ide kreditnom službeniku — svi relevantni podaci, jasna preporuka i potpuno obrazloženje. Službenik prihvata ili odbija.',
+        },
+        badge: {
+          en: 'HUMAN IN THE LOOP',
+          sr: 'ČOVEK U PETLJI',
+        },
+        highlight: true,
+      },
+      {
+        emoji: '✅',
+        label: {
+          en: '**The Result**',
+          sr: '**Rezultat**',
+        },
+        body: {
+          en: 'Client receives a response in 2–4 minutes. Everything logged. Full audit trail. Nothing falls through the cracks.',
+          sr: 'Klijent dobija odgovor za 2–4 minuta. Sve je evidentirano. Kompletan revizijski trag. Ništa ne propada iz vida.',
+        },
+      },
+    ],
   },
 ]

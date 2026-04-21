@@ -11,9 +11,33 @@ import {
 } from './SideBySideComparison'
 import { VectorSpaceSlide } from './VectorSpaceSlide'
 import { FlowTimelineDiagram } from './FlowTimelineDiagram'
+import { McpStackDiagram } from './McpStackDiagram'
 
 function L(slide, lang) {
   return slide.no_translate ? 'en' : lang
+}
+
+function isPointCardBullet(item) {
+  return item != null && typeof item === 'object' && !Array.isArray(item) && ('heading' in item || 'body' in item)
+}
+
+function PointCardContent({ item, lang }) {
+  const heading = item.heading != null ? t(item.heading, lang) : null
+  const body = item.body != null ? t(item.body, lang) : null
+  return (
+    <>
+      {heading ? (
+        <div className="point-card__heading">
+          <RichText>{heading}</RichText>
+        </div>
+      ) : null}
+      {body ? (
+        <p className="point-card__body">
+          <RichText>{body}</RichText>
+        </p>
+      ) : null}
+    </>
+  )
 }
 
 // ─── Layout renderers ──────────────────────────────────────────────────────
@@ -38,7 +62,7 @@ function HeaderGlass({ slide, styleClass, lang }) {
             <RichText>{title}</RichText>
           </h1>
         )}
-        {(slide.section || slide.chapter) && (
+        {(slide.section || slide.chapter) && !slide.hideSectionChip && (
           <div className="section-chip animated">
             {slide.section && <span>{t(slide.section, lg)}</span>}
             {slide.chapter && <span>{slide.chapter}</span>}
@@ -57,16 +81,33 @@ function BodyGlass({ slide, styleClass, lang }) {
   const bodyComparison = resolveBodyComparison(slide, lg)
   const bodyDataTable = resolveBodyDataTable(slide, lg)
   const flowTimeline = slide.flowTimeline
-  if (!body && !bullets?.length && !bodyComparison && !bodyDataTable && !flowTimeline) return null
+  const mcpStack = slide.mcpStack
+  if (!body && !bullets?.length && !bodyComparison && !bodyDataTable && !flowTimeline && !mcpStack)
+    return null
 
   const kicker = t(slide.kicker, lg)
   const title = t(slide.title, lg)
   const showChip = !kicker && !title && (slide.section || slide.chapter)
   const tableBeforeBody2 = !!(bodyComparison || bodyDataTable)
-  const innerClass = ['slide-content__inner', slide.bodyInnerClass].filter(Boolean).join(' ')
+  const hasDiagram = !!(flowTimeline || mcpStack)
+  const innerClass = [
+    'slide-content__inner',
+    hasDiagram ? 'slide-content__inner--body-diagram-stack' : '',
+    slide.bodyInnerClass,
+  ]
+    .filter(Boolean)
+    .join(' ')
+  const bodyGlassClass = [
+    'slide-glass',
+    'slide-glass--body',
+    slide.bodySurface === 'mcp-connect' ? 'slide-glass--body-mcp-connect' : '',
+    styleClass,
+  ]
+    .filter(Boolean)
+    .join(' ')
 
   return (
-    <div className={`slide-glass slide-glass--body ${styleClass}`}>
+    <div className={bodyGlassClass}>
       <div className={innerClass}>
         {showChip && (
           <div className="section-chip animated">
@@ -96,13 +137,14 @@ function BodyGlass({ slide, styleClass, lang }) {
           />
         )}
         {flowTimeline && <FlowTimelineDiagram timeline={flowTimeline} />}
+        {mcpStack && <McpStackDiagram key={`${slide.id}-${lg}`} stack={mcpStack} />}
         {body2 && (
           <p
             className={[
               'lead',
               'animated',
               tableBeforeBody2 ? 'lead--after-comparison' : '',
-              flowTimeline ? 'lead--after-diagram' : '',
+              hasDiagram ? 'lead--after-diagram' : '',
               slide.body2Class,
             ]
               .filter(Boolean)
@@ -112,16 +154,88 @@ function BodyGlass({ slide, styleClass, lang }) {
           </p>
         )}
         {bullets?.length > 0 && (
-          <ul className="points">
-            {bullets.map((b) => (
-              <li className="animated" key={b}>
-                <RichText>{b}</RichText>
+          <ul
+            className={[
+              'points',
+              bullets.some(isPointCardBullet) ? 'points--card-prose' : '',
+              slide.pointsCardModifier,
+            ]
+              .filter(Boolean)
+              .join(' ')}
+          >
+            {bullets.map((b, i) => (
+              <li className="animated" key={typeof b === 'string' ? b : `${slide.id}-pt-${i}`}>
+                {isPointCardBullet(b) ? <PointCardContent item={b} lang={lg} /> : <RichText>{b}</RichText>}
               </li>
             ))}
           </ul>
         )}
       </div>
     </div>
+  )
+}
+
+function TimelineLayout({ slide, styleClass, lang }) {
+  const lg = L(slide, lang)
+  const steps = Array.isArray(slide.timelineSteps) ? slide.timelineSteps : []
+
+  return (
+    <>
+      <HeaderGlass slide={slide} styleClass={styleClass} lang={lang} />
+      <div className={`slide-glass slide-glass--body ${styleClass}`}>
+        <div className="slide-content__inner slide-content__inner--timeline">
+          <ol className="slide-timeline" aria-label={t(slide.title, lg) || 'Workflow'}>
+            {steps.map((step, i) => {
+              const label = t(step.label, lg)
+              const body = t(step.body, lg)
+              const badge = step.badge != null ? t(step.badge, lg) : null
+              const highlight = Boolean(step.highlight)
+              return (
+                <li
+                  key={i}
+                  className={[
+                    'slide-timeline__step',
+                    'animated',
+                    highlight ? 'slide-timeline__step--hitl' : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                >
+                  <div className="slide-timeline__marker-col" aria-hidden="true">
+                    <span className="slide-timeline__num">{i + 1}</span>
+                    {i < steps.length - 1 && <span className="slide-timeline__connector" />}
+                  </div>
+                  <div className="slide-timeline__card">
+                    <div className="slide-timeline__head">
+                      {step.emoji ? (
+                        <span className="slide-timeline__emoji" aria-hidden="true">
+                          {step.emoji}
+                        </span>
+                      ) : null}
+                      {label && (
+                        <p className="slide-timeline__label">
+                          <RichText>{label}</RichText>
+                        </p>
+                      )}
+                      {badge && (
+                        <span className="slide-timeline__badge">
+                          <RichText>{badge}</RichText>
+                        </span>
+                      )}
+                    </div>
+                    {body && (
+                      <p className="slide-timeline__body">
+                        <RichText>{body}</RichText>
+                      </p>
+                    )}
+                  </div>
+                </li>
+              )
+            })}
+          </ol>
+        </div>
+      </div>
+    </>
   )
 }
 
@@ -642,11 +756,11 @@ export function SlideFrame({ slide, isActive, lang, tocRevealStep = 0 }) {
 
   return (
     <article
-      className={`slide ${isActive ? 'is-active' : ''} ${slide.tone}`}
+      className={`slide ${isActive ? 'is-active' : ''} ${slide.tone} ${layout === 'timeline' ? 'slide--timeline' : ''}`}
       aria-hidden={!isActive}
     >
       <motion.div
-        className={`slide-shell ${isFullCard ? 'slide-shell--centered' : 'slide-shell--stacked'}`}
+        className={`slide-shell ${isFullCard ? 'slide-shell--centered' : 'slide-shell--stacked'} ${layout === 'timeline' ? 'slide-shell--timeline' : ''}`}
         initial={{ opacity: 0.5, scale: 0.98 }}
         animate={{ opacity: isActive ? 1 : 0.44, scale: isActive ? 1 : 0.98 }}
         transition={{ duration: 0.48, ease: 'easeOut' }}
@@ -753,6 +867,8 @@ export function SlideFrame({ slide, isActive, lang, tocRevealStep = 0 }) {
             tocRevealStep={tocRevealStep}
           />
         )}
+
+        {layout === 'timeline' && <TimelineLayout slide={slide} styleClass={styleClass} lang={lang} />}
 
         {layout === 'four-quad' && <FourQuadLayout slide={slide} styleClass={styleClass} lang={lang} />}
 
