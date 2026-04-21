@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react'
+import { t } from '../i18n'
 
 /**
  * Flow timeline for “The Full Picture” — agent orchestration steps and tool palette.
@@ -56,32 +57,38 @@ function ToolsCard({ title, items }) {
   )
 }
 
-function renderStep(step, stepKey) {
+function renderStep(step, stepKey, lang) {
   switch (step.kind) {
     case 'text':
-      return <TextNode key={stepKey} label={step.label} />
+      return <TextNode key={stepKey} label={t(step.label, lang)} />
     case 'agent':
-      return <AgentNode key={stepKey} label={step.label} />
+      return <AgentNode key={stepKey} label={t(step.label, lang)} />
     case 'review':
-      return <ReviewNode key={stepKey} label={step.label} />
+      return <ReviewNode key={stepKey} label={t(step.label, lang)} />
     case 'tools':
-      return <ToolsCard key={stepKey} title={step.title} items={step.items} />
+      return (
+        <ToolsCard
+          key={stepKey}
+          title={t(step.title, lang)}
+          items={Array.isArray(step.items) ? step.items.map((it) => t(it, lang)) : step.items}
+        />
+      )
     default:
       return null
   }
 }
 
-function buildHorizontalParts(steps, rowKey) {
+function buildHorizontalParts(steps, rowKey, lang) {
   const parts = []
   steps.forEach((step, i) => {
     if (i > 0) parts.push(<Connector key={`${rowKey}-c-${i}`} horizontal />)
-    const el = renderStep(step, `${rowKey}-s-${i}`)
+    const el = renderStep(step, `${rowKey}-s-${i}`, lang)
     if (el) parts.push(el)
   })
   return parts
 }
 
-export function FlowTimelineDiagram({ timeline }) {
+export function FlowTimelineDiagram({ timeline, lang }) {
   const slotRef = useRef(null)
   const flowRef = useRef(null)
   const [scale, setScale] = useState(1)
@@ -123,7 +130,7 @@ export function FlowTimelineDiagram({ timeline }) {
             </div>
           ) : null}
           <div className="flow-timeline flow-timeline--horizontal flow-timeline__row-track">
-            {buildHorizontalParts(rowSteps, `r${ri}`)}
+            {buildHorizontalParts(rowSteps, `r${ri}`, lang)}
           </div>
         </div>
       ))}
@@ -134,13 +141,13 @@ export function FlowTimelineDiagram({ timeline }) {
       role="img"
       aria-label="Flow from user request to response"
     >
-      {buildHorizontalParts(steps, 'single')}
+      {buildHorizontalParts(steps, 'single', lang)}
     </div>
   ) : (
     <div className="flow-timeline" role="img" aria-label="Flow from user request to response">
       {steps.reduce((acc, step, i) => {
         if (i > 0) acc.push(<Connector key={`c-${i}`} horizontal={false} />)
-        acc.push(renderStep(step, `v-${i}`))
+        acc.push(renderStep(step, `v-${i}`, lang))
         return acc
       }, [])}
     </div>

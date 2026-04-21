@@ -1,10 +1,11 @@
 import { useLayoutEffect, useRef, useState } from 'react'
+import { t } from '../i18n'
 
 /**
  * Vertical stack diagram for “Where MCP Sits in the Architecture”.
  * Highlights MCP Interface as the connective layer between agent and backends.
  */
-export function McpStackDiagram({ stack }) {
+export function McpStackDiagram({ stack, lang }) {
   const slotRef = useRef(null)
   const diagramRef = useRef(null)
   const [scale, setScale] = useState(1)
@@ -31,8 +32,12 @@ export function McpStackDiagram({ stack }) {
   }, [stack])
 
   if (!stack) return null
-  const { agentLabel, layerLabel, serversTitle, servers } = stack
-  const serverList = Array.isArray(servers) ? servers : []
+  const agentLabel = t(stack.agentLabel, lang)
+  const layerLabel = t(stack.layerLabel, lang)
+  const layerCaption = t(stack.layerCaption, lang) ?? 'Connective layer'
+  const serversTitle = t(stack.serversTitle, lang)
+  const rawServers = Array.isArray(stack.servers) ? stack.servers : []
+  const serverList = rawServers.map((item) => t(item, lang))
 
   const ariaLabel = [agentLabel, layerLabel, serversTitle].filter(Boolean).join(', ')
 
@@ -60,7 +65,7 @@ export function McpStackDiagram({ stack }) {
         <div className="mcp-stack-diagram__layer-wrap animated">
           <div className="mcp-stack-diagram__layer">
             <span className="mcp-stack-diagram__layer-label">{layerLabel}</span>
-            <span className="mcp-stack-diagram__layer-caption">Connective layer</span>
+            <span className="mcp-stack-diagram__layer-caption">{layerCaption}</span>
           </div>
         </div>
         <div className="mcp-stack-diagram__arrow animated" aria-hidden="true">

@@ -136,8 +136,8 @@ function BodyGlass({ slide, styleClass, lang }) {
             ariaLabel="Methods compared"
           />
         )}
-        {flowTimeline && <FlowTimelineDiagram timeline={flowTimeline} />}
-        {mcpStack && <McpStackDiagram key={`${slide.id}-${lg}`} stack={mcpStack} />}
+        {flowTimeline && <FlowTimelineDiagram timeline={flowTimeline} lang={lg} />}
+        {mcpStack && <McpStackDiagram key={`${slide.id}-${lg}`} stack={mcpStack} lang={lg} />}
         {body2 && (
           <p
             className={[
@@ -444,7 +444,7 @@ function LeftSplitContent({ side, lang }) {
   )
 }
 
-function StatBlock({ stats }) {
+function StatBlock({ stats, lang }) {
   if (!stats?.length) return null
   const layoutClass = stats.length >= 2 ? 'stat-row stat-row--spread' : 'stat-row stat-row--stack'
 
@@ -453,10 +453,10 @@ function StatBlock({ stats }) {
       {stats.map((s, i) => (
         <div key={i} className="stat-unit animated">
           <span className="stat-num">
-            <RichText>{s.number}</RichText>
+            <RichText>{t(s.number, lang)}</RichText>
           </span>
           <span className="stat-desc">
-            <RichText>{s.label}</RichText>
+            <RichText>{t(s.label, lang)}</RichText>
           </span>
         </div>
       ))}
@@ -577,10 +577,10 @@ function IconGridLayout({ slide, styleClass, lang }) {
                 </div>
                 <div className="icon-grid__text">
                   <p className="icon-grid__label">
-                    <RichText>{item.label}</RichText>
+                    <RichText>{t(item.label, lg)}</RichText>
                   </p>
                   <p className="icon-grid__body">
-                    <RichText>{item.body}</RichText>
+                    <RichText>{t(item.body, lg)}</RichText>
                   </p>
                 </div>
               </li>
@@ -848,7 +848,7 @@ export function SlideFrame({ slide, isActive, lang, tocRevealStep = 0 }) {
               </div>
               <div className="slide-split-right-stack">
                 <div className={`slide-glass slide-glass--col slide-glass--split-rt ${styleClass}`}>
-                  <StatBlock stats={slide.rightTop?.stats} />
+                  <StatBlock stats={slide.rightTop?.stats} lang={L(slide, lang)} />
                 </div>
                 <div className={`slide-glass slide-glass--col slide-glass--split-rb ${styleClass}`}>
                   <ColContent side={slide.rightBottom} lang={L(slide, lang)} />

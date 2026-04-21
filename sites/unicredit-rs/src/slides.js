@@ -27,7 +27,7 @@ export const slides = [
   {
     id: 'pL4hW9nX2q',
     layout: 'title',
-    section: 'Introduction',
+    section: { en: 'Introduction', sr: 'Uvod' },
     tone: 'section-b',
     style: 'tinted',
     animation: 'blur-in',
@@ -48,57 +48,71 @@ export const slides = [
   {
     id: 'rT5kN8mJ1w',
     layout: 'title',
-    section: 'Introduction',
+    section: { en: 'Introduction', sr: 'Uvod' },
     tone: 'section-a',
     style: 'dark',
     animation: 'blur-in',
     anim_duration: 0.9,
     anim_stagger: 0.18,
-    title: 'AI Demystified',
-    subtitle:
-      'Masterclass on AI in Banking for UniCredit Srbija\n\nFrom buzzwords to real world business.\nPractical guide to Generative AI & LLMs for decision-makers',
+    title: { en: 'AI Demystified', sr: 'AI demistifikovan' },
+    subtitle: {
+      en: 'Masterclass on AI in Banking for UniCredit Srbija\n\nFrom buzzwords to real world business.\nPractical guide to Generative AI & LLMs for decision-makers',
+      sr: 'Masterclass o veštačkoj inteligenciji u bankarstvu za UniCredit Srbija\n\nOd pomodarskih fraza do stvarnog poslovanja.\nPraktičan vodič kroz generativni AI i LLM za donosioce odluka',
+    },
   },
   {
     id: 'bV2gK6sY9q',
     layout: 'two-col',
-    section: 'Introduction',
-    title: 'Your guides today',
+    section: { en: 'Introduction', sr: 'Uvod' },
+    title: { en: 'Your guides today', sr: 'Vaši vodiči danas' },
     tone: 'section-a',
     animation: 'fade-up',
     intro_variant: 'guides',
-    intro:
-      'Blockstruct GmbH, member of AI Factory Austria AI:AT hub\nAI Applications for Business. Zero Bullshit.\nEuropean Tech. Team in Austria, Serbia, UK, Montenegro, Croatia.\nClients in Austria, UK, Croatia, USA. We have worked for banks and governments. Cybersecurity tested.',
+    intro: {
+      en: 'Blockstruct GmbH, member of AI Factory Austria AI:AT hub\nAI Applications for Business. Zero Bullshit.\nEuropean Tech. Team in Austria, Serbia, UK, Montenegro, Croatia.\nClients in Austria, UK, Croatia, USA. We have worked for banks and governments. Cybersecurity tested.',
+      sr: 'Blockstruct GmbH, član AI Factory Austria AI:AT hub-a\nAI aplikacije za poslovanje. Bez blefa.\nEvropska tehnologija. Tim u Austriji, Srbiji, UK, Crnoj Gori, Hrvatskoj.\nKlijenti u Austriji, UK, Hrvatskoj, SAD. Radili smo za banke i državne institucije. Testirano sa aspekta sajber bezbednosti.',
+    },
     left: {
       title: 'Srđan Kuprešanin',
-      subtitle: 'Founder & CEO',
-      body:
-        'Mergers & Acquisitions advisory, Management Consulting, Cutting-edge Tech Architecture Design, Development and Implementation',
+      subtitle: { en: 'Founder & CEO', sr: 'Osnivač i direktor' },
+      body: {
+        en: 'Mergers & Acquisitions advisory, Management Consulting, Cutting-edge Tech Architecture Design, Development and Implementation',
+        sr: 'Savetovanje za spajanja i akvizicije, menadžment konsalting, dizajn najsavremenije tehnološke arhitekture, razvoj i implementacija',
+      },
     },
     right: {
       title: 'Nikola Zrnić',
-      subtitle: 'AI Solutions Engineer',
-      body: 'Electrotechnical engineering, Full stack software solutions development, AI applications.',
+      subtitle: { en: 'AI Solutions Engineer', sr: 'Inženjer AI rešenja' },
+      body: {
+        en: 'Electrotechnical engineering, Full stack software solutions development, AI applications.',
+        sr: 'Elektrotehnički inženjering, razvoj full-stack softverskih rešenja, AI aplikacije.',
+      },
     },
   },
   {
     id: 'nH8cF3pR7s',
     layout: 'two-col-split-right',
-    section: 'Introduction',
-    kicker: 'member of EU-wide AI technology ecosystem',
-    title: 'AI Factory Austria AI:AT Hub',
+    section: { en: 'Introduction', sr: 'Uvod' },
+    kicker: {
+      en: 'member of EU-wide AI technology ecosystem',
+      sr: 'član EU ekosistema AI tehnologije',
+    },
+    title: { en: 'AI Factory Austria AI:AT Hub', sr: 'AI Factory Austria AI:AT Hub' },
     tone: 'section-a',
     animation: 'stagger',
     anim_stagger: 0.12,
     left: {
-      body:
-        'Part of the European AI Factories initiative, funded by the European High Performance Computing Joint Undertaking (EuroHPC JU) — a €2.6B+ pan-European commitment to AI research, infrastructure and applications.',
+      body: {
+        en: 'Part of the European AI Factories initiative, funded by the European High Performance Computing Joint Undertaking (EuroHPC JU) — a €2.6B+ pan-European commitment to AI research, infrastructure and applications.',
+        sr: 'Deo evropske inicijative AI Factories, koju finansira European High Performance Computing Joint Undertaking (EuroHPC JU) — paneuropska posvećenost AI istraživanjima, infrastrukturi i aplikacijama u vrednosti većoj od 2,6 milijardi evra.',
+      },
       sections: [
         {
-          heading: 'Led jointly by:',
+          heading: { en: 'Led jointly by:', sr: 'Zajednički vode:' },
           bullets: ['AIT — Austrian Institute of Technology', 'ACA — Advanced Computing Austria'],
         },
         {
-          heading: 'Academic partners:',
+          heading: { en: 'Academic partners:', sr: 'Akademski partneri:' },
           body:
             'TU Wien · University of Vienna · BOKU University · TU Graz · JKU Linz · ISTA · Austrian Academy of Sciences · INiTS Vienna High-Tech Incubator',
         },
@@ -107,248 +121,355 @@ export const slides = [
     },
     rightTop: {
       stats: [
-        { number: '19', label: 'AI factories across Europe' },
-        { number: '€2.6B+', label: 'EU commitment' },
+        { number: '19', label: { en: 'AI factories across Europe', sr: 'AI fabrika širom Evrope' } },
+        { number: '€2.6B+', label: { en: 'EU commitment', sr: 'Posvećenost EU' } },
       ],
     },
     rightBottom: {
       title: 'Blockstruct at AI:AT',
-      body:
-        "One of the hub's business members, working at the intersection of AI research and real-world enterprise deployment. Today's masterclass was developed within this ecosystem framing.\n\nAccess to European network of supercomputers — some of the highest performance computing in the world. Direct access and involvement with the entire network of European research institutes and universities, as well as companies.",
+      body: {
+        en: "One of the hub's business members, working at the intersection of AI research and real-world enterprise deployment. Today's masterclass was developed within this ecosystem framing.\n\nAccess to European network of supercomputers — some of the highest performance computing in the world. Direct access and involvement with the entire network of European research institutes and universities, as well as companies.",
+        sr: 'Jedan od poslovnih članova hab-a, koji radi na preseku AI istraživanja i stvarne primene u preduzećima. Ova masterclass je razvijena upravo u okviru ovog ekosistema.\n\nPristup evropskoj mreži superkompjutera — jednih od najmoćnijih na svetu. Direktan pristup i saradnja sa celom mrežom evropskih istraživačkih instituta i univerziteta, kao i sa kompanijama.',
+      },
     },
   },
   {
     id: 'wC5pM8jQ2x',
     layout: 'icon-grid',
-    section: 'Introduction',
-    kicker: 'What you will leave with',
-    title: 'About This Masterclass',
+    section: { en: 'Introduction', sr: 'Uvod' },
+    kicker: { en: 'What you will leave with', sr: 'Šta ćete poneti sa sobom' },
+    title: { en: 'About This Masterclass', sr: 'O ovoj masterclass radionici' },
     tone: 'section-a',
     animation: 'stagger',
     anim_stagger: 0.1,
-    intro:
-      "By the end of this workshop, you won't be AI engineers. You'll be AI-literate decision-makers — which is frankly more useful.",
+    intro: {
+      en: "By the end of this workshop, you won't be AI engineers. You'll be AI-literate decision-makers — which is frankly more useful.",
+      sr: 'Do kraja ove radionice nećete biti AI inženjeri. Bićete donosioci odluka koji razumeju AI — što je, iskreno, još i korisnije.',
+    },
     iconItems: [
       {
         icon: 'brain',
-        label: 'Understand the Technology',
-        body: 'What LLMs actually are, how they learn, and what they genuinely can (and cannot) do.',
+        label: { en: 'Understand the Technology', sr: 'Razumete tehnologiju' },
+        body: {
+          en: 'What LLMs actually are, how they learn, and what they genuinely can (and cannot) do.',
+          sr: 'Šta su zapravo LLM modeli, kako uče i šta stvarno mogu (a šta ne mogu) da urade.',
+        },
       },
       {
         icon: 'layers',
-        label: 'Design Better Applications',
-        body: 'Identify where AI creates real value in your workflows, starting with sales and client relationships.',
+        label: { en: 'Design Better Applications', sr: 'Dizajnirate bolje aplikacije' },
+        body: {
+          en: 'Identify where AI creates real value in your workflows, starting with sales and client relationships.',
+          sr: 'Prepoznate gde AI stvara stvarnu vrednost u vašim procesima, počev od prodaje i odnosa sa klijentima.',
+        },
       },
       {
         icon: 'help-circle',
-        label: 'Ask Better Questions',
-        body: 'Have a mental framework to evaluate AI proposals, pilots / POC projects, and vendor claims.',
+        label: { en: 'Ask Better Questions', sr: 'Postavljate bolja pitanja' },
+        body: {
+          en: 'Have a mental framework to evaluate AI proposals, pilots / POC projects, and vendor claims.',
+          sr: 'Imate mentalni okvir za procenu AI predloga, pilot / POC projekata i tvrdnji dobavljača.',
+        },
       },
       {
         icon: 'gift',
-        label: 'Bonus',
-        body: 'Brainstorm, identify and start developing 2–3 "low hanging fruit" wins for your first POC projects.',
+        label: { en: 'Bonus', sr: 'Bonus' },
+        body: {
+          en: 'Brainstorm, identify and start developing 2–3 "low hanging fruit" wins for your first POC projects.',
+          sr: 'Zajedno osmislite, prepoznate i započnete razvoj 2–3 „nisko viseće voćke“ kao vaše prve POC projekte.',
+        },
       },
     ],
   },
   {
     id: 'kJ7nB4qW1v',
     layout: 'title',
-    section: 'Introduction',
-    kicker: 'UniCredit Bank Srbija · The Opportunity',
+    section: { en: 'Introduction', sr: 'Uvod' },
+    kicker: {
+      en: 'UniCredit Bank Srbija · The Opportunity',
+      sr: 'UniCredit Bank Srbija · Prilika',
+    },
     tone: 'section-b',
     style: 'dark',
     animation: 'blur-in',
     anim_duration: 0.9,
     anim_stagger: 0.18,
-    title: 'The Window Is Open.',
-    subtitle:
-      "While the Group focuses on its most significant strategic move in years, country offices have the opportunity to contribute to the definition of the Group's AI Application Agenda.\n\nUniCredit Bank Srbija could position itself as one of the Group's AI Centers of Excellence.",
+    title: { en: 'The Window Is Open.', sr: 'Prozor je otvoren.' },
+    subtitle: {
+      en: "While the Group focuses on its most significant strategic move in years, country offices have the opportunity to contribute to the definition of the Group's AI Application Agenda.\n\nUniCredit Bank Srbija could position itself as one of the Group's AI Centers of Excellence.",
+      sr: 'Dok se Grupa fokusira na svoj najznačajniji strateški potez u poslednjih nekoliko godina, nacionalne kancelarije imaju priliku da doprinesu definisanju Grupine Agende za primenu AI.\n\nUniCredit Bank Srbija može se pozicionirati kao jedan od Grupinih Centara izvrsnosti za AI.',
+    },
   },
   {
     id: 'hQ3mK7vN5p',
     layout: 'toc',
-    section: 'Introduction',
-    kicker: 'Twelve Modules',
-    title: "Today's Journey",
+    section: { en: 'Introduction', sr: 'Uvod' },
+    kicker: { en: 'Twelve Modules', sr: 'Dvanaest modula' },
+    title: { en: "Today's Journey", sr: 'Današnje putovanje' },
     tone: 'section-a',
     animation: 'stagger',
     anim_stagger: 0.07,
-    tocItems: [
-      '**What Is This Thing?** (the story of assembly robots)',
-      '**AI vs Human Intelligence** (Lizards and the Four Personalities — building the mental model for understanding LLMs)',
-      '**Vectors in Multidimensional Space — Excuse Me?** (How AI encodes information and meaning)',
-      '**The Frozen Chef** (Training, parameters, a snapshot in time and that is it)',
-      '**What AI Knows & How to Add More** (Embeddings, RAG, fine-tuning)',
-      '**Why Does AI Lie?** (Hallucinations and the split brain analogy)',
-      '**Talk to AI Like a Pro** (Prompt & context engineering, iterative improvement)',
-      '**AI That Acts, Not Just Answers** (Tools, MCP, Skills, Agents)',
-      '**Safe Application of AI** (Cybersecurity implications, prompt injection)',
-      '**The Big Picture** (Where we are, where we\'re going, and what stays human)',
-      '**Brainstorming: AI @ UniCredit Srbija** (Your candidates for AI applications)',
-      '**PoC Design Elaboration in Groups**',
-    ],
+    tocItems: {
+      en: [
+        '**What Is This Thing?** (the story of assembly robots)',
+        '**AI vs Human Intelligence** (Lizards and the Four Personalities — building the mental model for understanding LLMs)',
+        '**Vectors in Multidimensional Space — Excuse Me?** (How AI encodes information and meaning)',
+        '**The Frozen Chef** (Training, parameters, a snapshot in time and that is it)',
+        '**What AI Knows & How to Add More** (Embeddings, RAG, fine-tuning)',
+        '**Why Does AI Lie?** (Hallucinations and the split brain analogy)',
+        '**Talk to AI Like a Pro** (Prompt & context engineering, iterative improvement)',
+        '**AI That Acts, Not Just Answers** (Tools, MCP, Skills, Agents)',
+        '**Safe Application of AI** (Cybersecurity implications, prompt injection)',
+        '**The Big Picture** (Where we are, where we\'re going, and what stays human)',
+        '**Brainstorming: AI @ UniCredit Srbija** (Your candidates for AI applications)',
+        '**PoC Design Elaboration in Groups**',
+      ],
+      sr: [
+        '**Šta je ovo zapravo?** (priča o robotima na montažnoj traci)',
+        '**AI vs ljudska inteligencija** (Gušteri i četiri ličnosti — gradimo mentalni model za razumevanje LLM-ova)',
+        '**Vektori u višedimenzionalnom prostoru — molim?** (Kako AI kodira informacije i značenje)',
+        '**Zamrznuti kuvar** (Trening, parametri, trenutak u vremenu i ništa više)',
+        '**Šta AI zna i kako mu dodati više** (Embedingi, RAG, fine-tuning)',
+        '**Zašto AI laže?** (Halucinacije i analogija podeljenog mozga)',
+        '**Razgovarajte sa AI kao profesionalac** (Prompt & context engineering, iterativno unapređenje)',
+        '**AI koji deluje, a ne samo odgovara** (Tools, MCP, Skills, Agents)',
+        '**Bezbedna primena AI** (Posledice po sajber bezbednost, prompt injection)',
+        '**Šira slika** (Gde smo, kuda idemo i šta ostaje ljudsko)',
+        '**Brainstorming: AI @ UniCredit Srbija** (Vaši kandidati za AI aplikacije)',
+        '**Razrada PoC dizajna u grupama**',
+      ],
+    },
     /* Cumulative item counts after each reveal step (groups: 1–3, 4–5, 6–7, 8, 9, 10, 11–12) */
     tocRevealSteps: [3, 5, 7, 8, 9, 10, 12],
   },
   {
     id: 'yF6kD4nM9h',
     layout: 'title',
-    section: 'Module 1',
+    section: { en: 'Module 1', sr: 'Modul 1' },
     chapter: '01',
-    kicker: 'Module 1',
+    kicker: { en: 'Module 1', sr: 'Modul 1' },
     tone: 'section-b',
     style: 'dark',
     animation: 'blur-in',
     anim_duration: 0.9,
     anim_stagger: 0.18,
-    title: 'What Is This Thing?',
-    subtitle: 'Setting the mental model, and dispelling a few myths',
+    title: { en: 'What Is This Thing?', sr: 'Šta je ovo zapravo?' },
+    subtitle: {
+      en: 'Setting the mental model, and dispelling a few myths',
+      sr: 'Postavljamo mentalni model i razbijamo nekoliko mitova',
+    },
   },
   {
     id: 'm7nK4pQ9wR',
     layout: 'two-col',
-    section: 'Module 1',
+    section: { en: 'Module 1', sr: 'Modul 1' },
     chapter: '01',
-    title: 'What is this thing - robot for text assembly.',
+    title: {
+      en: 'What is this thing - robot for text assembly.',
+      sr: 'Šta je ovo zapravo — robot za sklapanje teksta.',
+    },
     tone: 'section-a',
     animation: 'stagger',
     anim_stagger: 0.1,
     left: {
       icon: 'robot-arm',
-      title: 'Factory assembly robots',
-      body:
-        'We are used to seeing industrial robots and understand them intuitively, because they are basically computer-controlled arms.\n\nWe have arms. Are they brain-controlled robots?\n\nAn industrial robot arm can do a lot of damage if allowed to act randomly.',
+      title: { en: 'Factory assembly robots', sr: 'Fabrički roboti na montažnoj traci' },
+      body: {
+        en: 'We are used to seeing industrial robots and understand them intuitively, because they are basically computer-controlled arms.\n\nWe have arms. Are they brain-controlled robots?\n\nAn industrial robot arm can do a lot of damage if allowed to act randomly.',
+        sr: 'Navikli smo da vidimo industrijske robote i intuitivno ih razumemo, jer su u suštini kompjuterski upravljane ruke.\n\nMi imamo ruke. Da li su one roboti kojima upravlja mozak?\n\nIndustrijska robotska ruka može da napravi veliku štetu ako joj se dozvoli da deluje nasumično.',
+      },
     },
     right: {
       icon: 'text-stream',
-      title: 'Text assembly robots',
-      body:
-        'We usually understand less about our text generating robots, but take a moment to listen to your own internal monologue.\n\nSimilarly to an industrial robot, a text assembly robot can do a lot of damage if allowed to act randomly.',
+      title: { en: 'Text assembly robots', sr: 'Roboti za sklapanje teksta' },
+      body: {
+        en: 'We usually understand less about our text generating robots, but take a moment to listen to your own internal monologue.\n\nSimilarly to an industrial robot, a text assembly robot can do a lot of damage if allowed to act randomly.',
+        sr: 'Obično manje razumemo naše robote za generisanje teksta, ali zastanite na trenutak i oslušnite sopstveni unutrašnji monolog.\n\nSlično industrijskom robotu, robot za sklapanje teksta može da napravi veliku štetu ako mu se dozvoli da deluje nasumično.',
+      },
     },
   },
   {
     id: 'pR2vL8kN4m',
     layout: 'title',
-    section: 'Module 2',
+    section: { en: 'Module 2', sr: 'Modul 2' },
     chapter: '02',
-    kicker: 'Module 2',
+    kicker: { en: 'Module 2', sr: 'Modul 2' },
     tone: 'section-b',
     style: 'dark',
     animation: 'blur-in',
     anim_duration: 0.9,
     anim_stagger: 0.18,
-    title: 'AI vs Human Intelligence',
-    subtitle:
-      'Lizards, the four personalities, and a mental model for understanding LLMs',
+    title: { en: 'AI vs Human Intelligence', sr: 'AI vs ljudska inteligencija' },
+    subtitle: {
+      en: 'Lizards, the four personalities, and a mental model for understanding LLMs',
+      sr: 'Gušteri, četiri ličnosti i mentalni model za razumevanje LLM-ova',
+    },
   },
   {
     id: 'cT8vB2pR5m',
     layout: 'four-quad',
-    section: 'Module 2',
+    section: { en: 'Module 2', sr: 'Modul 2' },
     chapter: '02',
-    pre_title:
-      'Neuroscientist. TED Talk Icon. Stroke Survivor. And, unexpectedly, one of the best frameworks for understanding human and artificial intelligence.',
-    title: 'The Four Personalities (Dr. Jill Bolte Taylor)',
+    pre_title: {
+      en: 'Neuroscientist. TED Talk Icon. Stroke Survivor. And, unexpectedly, one of the best frameworks for understanding human and artificial intelligence.',
+      sr: 'Neuronaučnica. Ikona TED predavanja. Preživela je moždani udar. I, neočekivano, autor jednog od najboljih okvira za razumevanje ljudske i veštačke inteligencije.',
+    },
+    title: {
+      en: 'The Four Personalities (Dr. Jill Bolte Taylor)',
+      sr: 'Četiri ličnosti (Dr. Jill Bolte Taylor)',
+    },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.09,
     quads: {
       topLeft: {
-        title: 'Left Thinking',
-        body:
-          'Serial. Analytical. Logical. Language. Patterns and details. Details about Details. Categorization, Linear Reasoning, Beginnings, Developments and Endings. Planning, Problem Solving. Productivity, Structure, Predictions.',
-        badge: 'Home of AI',
+        title: { en: 'Left Thinking', sr: 'Leva misaona' },
+        body: {
+          en: 'Serial. Analytical. Logical. Language. Patterns and details. Details about Details. Categorization, Linear Reasoning, Beginnings, Developments and Endings. Planning, Problem Solving. Productivity, Structure, Predictions.',
+          sr: 'Serijska. Analitička. Logička. Jezik. Obrasci i detalji. Detalji o detaljima. Kategorizacija, linearno rezonovanje, počeci, razvoji i završeci. Planiranje, rešavanje problema. Produktivnost, struktura, predviđanja.',
+        },
+        badge: { en: 'Home of AI', sr: 'Dom AI-ja' },
       },
       bottomLeft: {
-        title: 'Left Emotional',
-        body:
-          'Comparative. Defining, Separating, Self-Protecting. Emotional Pain & Trauma. Learned Behaviours. Rewards & Losses, Reinforcement. Judgement, Reactivity, Blame. Anxiety, Wishes, Hopes, Urges.',
+        title: { en: 'Left Emotional', sr: 'Leva emocionalna' },
+        body: {
+          en: 'Comparative. Defining, Separating, Self-Protecting. Emotional Pain & Trauma. Learned Behaviours. Rewards & Losses, Reinforcement. Judgement, Reactivity, Blame. Anxiety, Wishes, Hopes, Urges.',
+          sr: 'Uporedna. Definiše, razdvaja, štiti sebe. Emocionalni bol i traume. Naučena ponašanja. Nagrade i gubici, pojačavanje. Osuđivanje, reaktivnost, okrivljavanje. Anksioznost, želje, nade, porivi.',
+        },
       },
       topRight: {
-        title: 'Right Thinking',
-        body:
-          'Peaceful, Open, Holistic, Big Picture-Oriented, Expansive, Interconnecting, Meaning-assigning, "Transcendent", Wise.',
+        title: { en: 'Right Thinking', sr: 'Desna misaona' },
+        body: {
+          en: 'Peaceful, Open, Holistic, Big Picture-Oriented, Expansive, Interconnecting, Meaning-assigning, "Transcendent", Wise.',
+          sr: 'Mirna, otvorena, holistička, usmerena na širu sliku, ekspanzivna, povezujuća, daje smisao, „transcendentna“, mudra.',
+        },
       },
       bottomRight: {
-        title: 'Right Emotional',
-        body:
-          'Present, Sensory, Empathetic, Experiential (in the moment). Empathy, Joy, Compassion, Connection, Intuition.',
+        title: { en: 'Right Emotional', sr: 'Desna emocionalna' },
+        body: {
+          en: 'Present, Sensory, Empathetic, Experiential (in the moment). Empathy, Joy, Compassion, Connection, Intuition.',
+          sr: 'Prisutna, čulna, empatična, iskustvena (u trenutku). Empatija, radost, saosećanje, povezanost, intuicija.',
+        },
       },
     },
   },
   {
     id: 'hK3nP9qW5x',
     layout: 'bullets-only',
-    section: 'Module 2',
+    section: { en: 'Module 2', sr: 'Modul 2' },
     chapter: '02',
-    kicker: 'Human cognition',
-    title: 'Human Thinking is a self-improving reflective fluid',
+    kicker: { en: 'Human cognition', sr: 'Ljudska kognicija' },
+    title: {
+      en: 'Human Thinking is a self-improving reflective fluid',
+      sr: 'Ljudsko mišljenje je samopoboljšavajući refleksivni fluid',
+    },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.1,
     bodyInnerClass: 'slide-content__inner--bullets-3x2',
     pointsGridClass: 'points--grid-3x2',
     bullets: [
-      'Human cognition = parallel, embodied, adaptive',
-      'Multiple brain regions collaborate (analytical, emotional, sensory, intuitive)',
-      'Continuous input: vision, sound, movement, touch, internal state',
-      'Thought is recursive → we reflect, question, adjust in real time',
-      'Decisions shaped by context + memory + emotion + feedback loops',
-      'Brain constantly updates its model of reality',
+      {
+        en: 'Human cognition = parallel, embodied, adaptive',
+        sr: 'Ljudska kognicija = paralelna, utelovljena, prilagodljiva',
+      },
+      {
+        en: 'Multiple brain regions collaborate (analytical, emotional, sensory, intuitive)',
+        sr: 'Više regiona mozga sarađuje (analitički, emocionalni, čulni, intuitivni)',
+      },
+      {
+        en: 'Continuous input: vision, sound, movement, touch, internal state',
+        sr: 'Neprekidan ulaz: vid, zvuk, pokret, dodir, unutrašnje stanje',
+      },
+      {
+        en: 'Thought is recursive → we reflect, question, adjust in real time',
+        sr: 'Mišljenje je rekurzivno → razmišljamo, preispitujemo, prilagođavamo u realnom vremenu',
+      },
+      {
+        en: 'Decisions shaped by context + memory + emotion + feedback loops',
+        sr: 'Odluke oblikuju kontekst + sećanje + emocija + povratne petlje',
+      },
+      {
+        en: 'Brain constantly updates its model of reality',
+        sr: 'Mozak neprekidno ažurira svoj model stvarnosti',
+      },
     ],
   },
   {
     id: 'qW3sN7gH1z',
     layout: 'two-col',
-    section: 'Module 2',
+    section: { en: 'Module 2', sr: 'Modul 2' },
     chapter: '02',
-    kicker: 'The Core Mechanism',
-    title: 'LLMs Are Serial Processors on Steroids',
+    kicker: { en: 'The Core Mechanism', sr: 'Ključni mehanizam' },
+    title: {
+      en: 'LLMs Are Serial Processors on Steroids',
+      sr: 'LLM-ovi su serijski procesori na steroidima',
+    },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
     twoColPaneClass: 'slide-two-pane--serial-processors',
     left: {
-      title: 'One mechanism',
-      body: `They do one thing, extraordinarily well:
+      title: { en: 'One mechanism', sr: 'Jedan mehanizam' },
+      body: {
+        en: `They do one thing, extraordinarily well:
 
 ***Predict the most likely next token, given everything they have received.***
 
 Everything LLMs do emerges from that one process — answering questions, writing poetry, interpreting a contract, drafting a sales pitch — performed at massive scale.`,
+        sr: `Rade jednu stvar, i to izuzetno dobro:
+
+***Predviđaju najverovatniji sledeći token, na osnovu svega što su primili.***
+
+Sve što LLM radi proizlazi iz tog jednog procesa — odgovaranje na pitanja, pisanje poezije, tumačenje ugovora, priprema prodajnog nastupa — sprovedenog u ogromnom obimu.`,
+      },
     },
     right: {
-      title: 'At global scale',
-      body: `The world's most sophisticated autocomplete; one that has read every fiction and non-fiction book, research paper, forum discussion, manual, contract, and every other piece of text ever written, transcribed, or published and digitised on the internet.
+      title: { en: 'At global scale', sr: 'U globalnim razmerama' },
+      body: {
+        en: `The world's most sophisticated autocomplete; one that has read every fiction and non-fiction book, research paper, forum discussion, manual, contract, and every other piece of text ever written, transcribed, or published and digitised on the internet.
 
 ***Not magic. Not remotely human. Still, genuinely remarkable when applied carefully.***`,
+        sr: `Najsofisticiraniji autocomplete na svetu; onaj koji je pročitao svaku beletristiku i stručnu knjigu, naučni rad, diskusiju na forumu, priručnik, ugovor i svaki drugi tekst koji je ikada napisan, transkribovan ili objavljen i digitalizovan na internetu.
+
+***Nije magija. Ni izbliza nije ljudski. Pa ipak, zaista izvanredno kada se pažljivo koristi.***`,
+      },
     },
   },
   {
     id: 'zK2nL8pQ5w',
     layout: 'title',
-    section: 'Module 2',
+    section: { en: 'Module 2', sr: 'Modul 2' },
     chapter: '02',
     tone: 'section-b',
     style: 'tinted',
     animation: 'blur-in',
     anim_duration: 1.1,
     anim_stagger: 0.22,
-    title: 'So, how can we make the best use of these serial text processors?',
+    title: {
+      en: 'So, how can we make the best use of these serial text processors?',
+      sr: 'Pa, kako da najbolje iskoristimo ove serijske procesore teksta?',
+    },
   },
   {
     id: 'jP9mK6fL2w',
     layout: 'title',
-    section: 'Module 3',
+    section: { en: 'Module 3', sr: 'Modul 3' },
     chapter: '03',
-    kicker: 'Module 3',
+    kicker: { en: 'Module 3', sr: 'Modul 3' },
     tone: 'section-b',
     style: 'dark',
     animation: 'blur-in',
     anim_duration: 0.9,
     anim_stagger: 0.18,
-    title: 'Vectors in Multidimensional Space — Excuse Me?',
-    subtitle: 'How AI encodes knowledge and meaning, illustrated.',
+    title: {
+      en: 'Vectors in Multidimensional Space — Excuse Me?',
+      sr: 'Vektori u višedimenzionalnom prostoru — Molim?',
+    },
+    subtitle: {
+      en: 'How AI encodes knowledge and meaning, illustrated.',
+      sr: 'Kako AI kodira znanje i značenje, ilustrovano.',
+    },
   },
   {
     id: 'vS3bX7qN9k',
@@ -367,28 +488,32 @@ Everything LLMs do emerges from that one process — answering questions, writin
   {
     id: 'gH8kP3nL9w',
     layout: 'title',
-    section: 'Module 4',
+    section: { en: 'Module 4', sr: 'Modul 4' },
     chapter: '04',
-    kicker: 'Module 4',
+    kicker: { en: 'Module 4', sr: 'Modul 4' },
     tone: 'section-b',
     style: 'dark',
     animation: 'blur-in',
     anim_duration: 0.9,
     anim_stagger: 0.18,
-    title: 'The Frozen Chef',
-    subtitle: 'Training, Parameters & Why Models Stop Learning',
+    title: { en: 'The Frozen Chef', sr: 'Zaleđeni kuvar' },
+    subtitle: {
+      en: 'Training, Parameters & Why Models Stop Learning',
+      sr: 'Trening, parametri i zašto modeli prestaju da uče',
+    },
   },
   {
     id: 'vK2nQ9wR4m',
     layout: 'single',
-    section: 'Module 4',
+    section: { en: 'Module 4', sr: 'Modul 4' },
     chapter: '04',
-    kicker: 'Building blocks',
-    title: 'Building the Brain',
+    kicker: { en: 'Building blocks', sr: 'Gradivni blokovi' },
+    title: { en: 'Building the Brain', sr: 'Gradimo mozak' },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `A model starts as pure noise.
+    body: {
+      en: `A model starts as pure noise.
 
 Billions of numerical values — called parameters — organised into layers
 Each layer transforms input: characters → words → concepts → reasoning
@@ -396,18 +521,31 @@ At the start of training, every parameter is randomly initialised
 The architecture is a human design choice — training only changes the numbers inside it
 
 ***A kitchen full of equipment. A chef who has never eaten a single meal.***`,
+      sr: `Model počinje kao čisti šum.
+
+Milijarde numeričkih vrednosti — nazvanih parametri — organizovane u slojeve
+Svaki sloj transformiše ulaz: karakteri → reči → koncepti → rezonovanje
+Na početku treninga svaki parametar je nasumično inicijalizovan
+Arhitektura je ljudski dizajnerski izbor — trening menja samo brojeve unutar nje
+
+***Kuhinja puna opreme. Kuvar koji nikada nije pojeo nijedan obrok.***`,
+    },
   },
   {
     id: 'bL5xP7hJ8n',
     layout: 'single',
-    section: 'Module 4',
+    section: { en: 'Module 4', sr: 'Modul 4' },
     chapter: '04',
-    kicker: 'Training',
-    title: 'Training — Learning by Predicting',
+    kicker: { en: 'Training', sr: 'Trening' },
+    title: {
+      en: 'Training — Learning by Predicting',
+      sr: 'Trening — učenje kroz predviđanje',
+    },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `One deceptively simple task, repeated trillions of times:
+    body: {
+      en: `One deceptively simple task, repeated trillions of times:
 
 Show the model text → ask it to predict the next word
 Measure the error → send it backwards through the layers (backpropagation)
@@ -415,6 +553,15 @@ Nudge every parameter slightly toward a better answer
 Repeat — across books, articles, code, science, law, and much of the internet
 
 The result? Not memorisation — but distilled understanding, compressed into billions of numbers.`,
+      sr: `Jedan naizgled jednostavan zadatak, ponavljan bilionima puta:
+
+Pokažeš modelu tekst → zatražiš da predvidi sledeću reč
+Izmeriš grešku → pošalješ je unazad kroz slojeve (backpropagation)
+Svaki parametar lagano pomeriš ka boljem odgovoru
+Ponoviš — kroz knjige, članke, kod, nauku, pravo i veći deo interneta
+
+Rezultat? Ne memorisanje — već destilovano razumevanje, sažeto u milijarde brojeva.`,
+    },
   },
   {
     id: 'nN4kP8wR2x',
@@ -432,40 +579,71 @@ The result? Not memorisation — but distilled understanding, compressed into bi
   {
     id: 'cM3wT6nK2y',
     layout: 'single',
-    section: 'Module 4',
+    section: { en: 'Module 4', sr: 'Modul 4' },
     chapter: '04',
-    kicker: 'Refinement',
-    title: 'From Raw Model to Useful Assistant',
+    kicker: { en: 'Refinement', sr: 'Rafiniranje' },
+    title: {
+      en: 'From Raw Model to Useful Assistant',
+      sr: 'Od sirovog modela do korisnog asistenta',
+    },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: 'A pre-trained model is powerful but impractical. Refinement makes it deployable:',
+    body: {
+      en: 'A pre-trained model is powerful but impractical. Refinement makes it deployable:',
+      sr: 'Prethodno istreniran model je moćan, ali neupotrebljiv u praksi. Rafiniranje ga čini primenljivim:',
+    },
     bodyComparison: {
-      leftHeading: 'Technique',
-      rightHeading: 'What it does',
+      leftHeading: { en: 'Technique', sr: 'Tehnika' },
+      rightHeading: { en: 'What it does', sr: 'Šta radi' },
       rows: [
-        { left: '**Instruction fine-tuning**', right: 'Teaches it to behave like an assistant' },
-        { left: '**RLHF**', right: 'Human raters guide it toward helpful, safe responses' },
         {
-          left: '**System instructions**',
-          right: 'Deployers set rules and persona — without retraining',
+          left: { en: '**Instruction fine-tuning**', sr: '**Fino podešavanje po instrukcijama**' },
+          right: {
+            en: 'Teaches it to behave like an assistant',
+            sr: 'Uči ga da se ponaša kao asistent',
+          },
         },
-        { left: '**Alignment & safety testing**', right: 'Red-teaming, benchmarks, sign-off' },
-        { left: '**When this is done**', right: 'The model is frozen.' },
+        {
+          left: { en: '**RLHF**', sr: '**RLHF**' },
+          right: {
+            en: 'Human raters guide it toward helpful, safe responses',
+            sr: 'Ljudski ocenjivači ga usmeravaju ka korisnim i bezbednim odgovorima',
+          },
+        },
+        {
+          left: { en: '**System instructions**', sr: '**Sistemska uputstva**' },
+          right: {
+            en: 'Deployers set rules and persona — without retraining',
+            sr: 'Oni koji ga primenjuju postavljaju pravila i ličnost — bez ponovnog treniranja',
+          },
+        },
+        {
+          left: { en: '**Alignment & safety testing**', sr: '**Alignment i bezbednosno testiranje**' },
+          right: {
+            en: 'Red-teaming, benchmarks, sign-off',
+            sr: 'Red-teaming, benchmarks, odobravanje',
+          },
+        },
+        {
+          left: { en: '**When this is done**', sr: '**Kada je ovo završeno**' },
+          right: { en: 'The model is frozen.', sr: 'Model je zamrznut.' },
+        },
       ],
     },
   },
   {
     id: 'dN8jR4qV5z',
     layout: 'single',
-    section: 'Module 4',
+    section: { en: 'Module 4', sr: 'Modul 4' },
     chapter: '04',
-    kicker: 'Deployment',
-    title: 'The Frozen Chef',
+    kicker: { en: 'Deployment', sr: 'Primena' },
+    title: { en: 'The Frozen Chef', sr: 'Zaleđeni kuvar' },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `After deployment: the model does not learn. Not even a little.
+    body: {
+      en: `After deployment: the model does not learn. Not even a little.
 
 ❌ Unaware of anything after its training cut-off
 ❌ Cannot learn from user corrections or feedback
@@ -475,49 +653,85 @@ The result? Not memorisation — but distilled understanding, compressed into bi
 This is intentional — a model that silently updated from live interactions would be nearly impossible to audit, certify, or govern.
 
 ***The intelligence is real. The knowledge has an expiry date.***`,
+      sr: `Nakon primene: model ne uči. Ni najmanje.
+
+❌ Ne zna ništa što se desilo posle prestanka treninga
+❌ Ne može da uči iz korisničkih ispravki ili povratnih informacija
+❌ Ne poboljšava se upotrebom
+❌ Ne pamti ništa između razgovora
+
+Ovo je namerno — model koji bi se tiho ažurirao iz aktivnih interakcija bilo bi gotovo nemoguće revidirati, sertifikovati ili nadzirati.
+
+***Inteligencija je stvarna. Znanje ima rok trajanja.***`,
+    },
   },
   {
     id: 'pQ7wN4kL9x',
     layout: 'title',
-    section: 'Module 5',
+    section: { en: 'Module 5', sr: 'Modul 5' },
     chapter: '05',
-    kicker: 'Module 5',
+    kicker: { en: 'Module 5', sr: 'Modul 5' },
     tone: 'section-b',
     style: 'dark',
     animation: 'blur-in',
     anim_duration: 0.9,
     anim_stagger: 0.18,
-    title: 'What AI Knows — and How to Add More',
-    subtitle: 'Embeddings, RAG, fine-tuning',
+    title: {
+      en: 'What AI Knows — and How to Add More',
+      sr: 'Šta AI zna — i kako mu dodati još',
+    },
+    subtitle: {
+      en: 'Embeddings, RAG, fine-tuning',
+      sr: 'Embedinzi, RAG, fino podešavanje',
+    },
   },
   {
     id: 'rK2mT8hJ3v',
     layout: 'two-col',
-    section: 'Module 5',
+    section: { en: 'Module 5', sr: 'Modul 5' },
     chapter: '05',
-    kicker: 'The gap',
-    title: 'The Knowledge Problem',
+    kicker: { en: 'The gap', sr: 'Jaz' },
+    title: { en: 'The Knowledge Problem', sr: 'Problem znanja' },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
     left: {
-      body: `A frozen model only knows what it learned during training.
+      body: {
+        en: `A frozen model only knows what it learned during training.
 In banking, that's rarely enough:
 
 ❌ No knowledge of your internal documents, policies, or data
 ❌ No awareness of events after its training cut-off
 ❌ No understanding of your specific products, clients, or processes`,
+        sr: `Zamrznuti model zna samo ono što je naučio tokom treninga.
+U bankarstvu, to retko kad je dovoljno:
+
+❌ Ne poznaje vaše interne dokumente, politike ili podatke
+❌ Ne zna ništa o događajima posle prestanka treninga
+❌ Ne razume vaše specifične proizvode, klijente ili procese`,
+      },
     },
     right: {
-      body: `So how do we close the gap?
+      body: {
+        en: `So how do we close the gap?
 
 Two distinct problems — two distinct solutions:`,
+        sr: `Pa kako da premostimo jaz?
+
+Dva različita problema — dva različita rešenja:`,
+      },
       bodyComparison: {
-        leftHeading: 'Problem',
-        rightHeading: 'Solution',
+        leftHeading: { en: 'Problem', sr: 'Problem' },
+        rightHeading: { en: 'Solution', sr: 'Rešenje' },
         rows: [
-          { left: '**What it knows**', right: 'Embeddings + RAG' },
-          { left: '**How it behaves**', right: 'Fine-tuning' },
+          {
+            left: { en: '**What it knows**', sr: '**Šta zna**' },
+            right: { en: 'Embeddings + RAG', sr: 'Embedinzi + RAG' },
+          },
+          {
+            left: { en: '**How it behaves**', sr: '**Kako se ponaša**' },
+            right: { en: 'Fine-tuning', sr: 'Fino podešavanje' },
+          },
         ],
       },
     },
@@ -525,379 +739,655 @@ Two distinct problems — two distinct solutions:`,
   {
     id: 'sL3nU9jK4w',
     layout: 'two-col',
-    section: 'Module 5',
+    section: { en: 'Module 5', sr: 'Modul 5' },
     chapter: '05',
-    kicker: 'Meaning',
-    title: 'Embeddings — How AI Understands Meaning',
+    kicker: { en: 'Meaning', sr: 'Značenje' },
+    title: {
+      en: 'Embeddings — How AI Understands Meaning',
+      sr: 'Embedinzi — kako AI razume značenje',
+    },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
     left: {
-      title: 'From text to vectors',
-      body:
-        'Before we can feed a model new knowledge, it needs to be able to find it.\n\nEvery piece of text — a policy document, a client note, a regulation — gets converted into a vector: a list of numbers representing its meaning.',
+      title: { en: 'From text to vectors', sr: 'Od teksta do vektora' },
+      body: {
+        en: 'Before we can feed a model new knowledge, it needs to be able to find it.\n\nEvery piece of text — a policy document, a client note, a regulation — gets converted into a vector: a list of numbers representing its meaning.',
+        sr: 'Pre nego što modelu damo novo znanje, on mora biti u stanju da ga pronađe.\n\nSvaki deo teksta — dokument o politikama, beleška o klijentu, propis — pretvara se u vektor: niz brojeva koji predstavlja njegovo značenje.',
+      },
       bullets: [
-        'Similar meanings → similar vectors → stored close together in a vector database',
-        'When a user asks a question, the question is also converted to a vector — and the database finds the most semantically relevant content',
+        {
+          en: 'Similar meanings → similar vectors → stored close together in a vector database',
+          sr: 'Slična značenja → slični vektori → smešteni blizu jedni drugih u vektorskoj bazi',
+        },
+        {
+          en: 'When a user asks a question, the question is also converted to a vector — and the database finds the most semantically relevant content',
+          sr: 'Kada korisnik postavi pitanje, i pitanje se pretvara u vektor — a baza pronalazi semantički najrelevantniji sadržaj',
+        },
       ],
     },
     right: {
-      title: 'Why it matters',
-      body: `***Not a keyword search. A meaning search.***
+      title: { en: 'Why it matters', sr: 'Zašto je to važno' },
+      body: {
+        en: `***Not a keyword search. A meaning search.***
 
 This is what makes it possible to ask "What is our policy on early loan repayment?" and retrieve the right paragraph — even if it never uses those exact words.`,
+        sr: `***Ne pretraga po ključnim rečima. Pretraga po značenju.***
+
+To je ono što omogućava da pitate „Koja je naša politika o prevremenoj otplati kredita?“ i dobijete pravi pasus — čak i ako ne sadrži baš te reči.`,
+      },
     },
   },
   {
     id: 'tM4oV0kL5x',
     layout: 'two-col',
-    section: 'Module 5',
+    section: { en: 'Module 5', sr: 'Modul 5' },
     chapter: '05',
-    kicker: 'Retrieval',
-    title: 'RAG — Giving the Model What It Needs, Just in Time',
+    kicker: { en: 'Retrieval', sr: 'Pronalaženje' },
+    title: {
+      en: 'RAG — Giving the Model What It Needs, Just in Time',
+      sr: 'RAG — dajemo modelu ono što mu treba, tačno na vreme',
+    },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
     left: {
-      title: 'How it works',
-      body: '**RAG** = Retrieval-Augmented Generation',
+      title: { en: 'How it works', sr: 'Kako radi' },
+      body: {
+        en: '**RAG** = Retrieval-Augmented Generation',
+        sr: '**RAG** = Retrieval-Augmented Generation (generisanje potpomognuto pronalaženjem)',
+      },
       bullets: [
-        'User asks a question',
-        'System searches the vector database for relevant content',
-        'That content is inserted into the context alongside the question',
-        'The model answers — grounded in your documents, not just its training',
+        { en: 'User asks a question', sr: 'Korisnik postavlja pitanje' },
+        {
+          en: 'System searches the vector database for relevant content',
+          sr: 'Sistem pretražuje vektorsku bazu za relevantan sadržaj',
+        },
+        {
+          en: 'That content is inserted into the context alongside the question',
+          sr: 'Taj sadržaj se ubacuje u kontekst zajedno sa pitanjem',
+        },
+        {
+          en: 'The model answers — grounded in your documents, not just its training',
+          sr: 'Model odgovara — oslonjen na vaše dokumente, a ne samo na svoj trening',
+        },
       ],
     },
     right: {
-      title: 'What you gain',
-      body: `✅ Answers based on current, internal knowledge
+      title: { en: 'What you gain', sr: 'Šta dobijate' },
+      body: {
+        en: `✅ Answers based on current, internal knowledge
 ✅ Responses that can cite their source
 ✅ No retraining required — update the database, not the model
 
 The model's brain stays frozen. You just hand it the right documents before it speaks.`,
+        sr: `✅ Odgovore zasnovane na trenutnom, internom znanju
+✅ Odgovore koji mogu da navedu izvor
+✅ Nema potrebe za ponovnim treniranjem — ažurirate bazu, a ne model
+
+Mozak modela ostaje zamrznut. Jednostavno mu uručite prave dokumente pre nego što progovori.`,
+      },
     },
   },
   {
     id: 'uN5pW1mM6y',
     layout: 'two-col',
-    section: 'Module 5',
+    section: { en: 'Module 5', sr: 'Modul 5' },
     chapter: '05',
-    kicker: 'Behaviour',
-    title: 'Fine-Tuning — Changing How It Behaves',
+    kicker: { en: 'Behaviour', sr: 'Ponašanje' },
+    title: {
+      en: 'Fine-Tuning — Changing How It Behaves',
+      sr: 'Fino podešavanje — menjamo kako se ponaša',
+    },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
     left: {
-      title: 'Concept',
-      body: `RAG adds knowledge. Fine-tuning shapes behaviour.
+      title: { en: 'Concept', sr: 'Koncept' },
+      body: {
+        en: `RAG adds knowledge. Fine-tuning shapes behaviour.
 
 Fine-tuning means continuing the training process on a curated, domain-specific dataset — adjusting the model's parameters for a specific purpose.`,
+        sr: `RAG dodaje znanje. Fino podešavanje oblikuje ponašanje.
+
+Fino podešavanje znači nastavak procesa treniranja na pažljivo odabranom skupu podataka specifičnom za datu oblast — prilagođavanje parametara modela za određenu namenu.`,
+      },
     },
     right: {
-      title: 'Typical use cases',
-      body: `**Tone & style** — Always respond formally, in German
+      title: { en: 'Typical use cases', sr: 'Tipični slučajevi upotrebe' },
+      body: {
+        en: `**Tone & style** — Always respond formally, in German
 **Domain fluency** — Deeply familiar with credit risk terminology
 **Task specialisation** — Trained specifically on loan assessment workflows
 **Reducing hallucination** — Reinforced on verified, accurate domain content
 
 **Important:** Fine-tuning is expensive, requires expertise, and needs to be redone when the model updates. It is not a substitute for RAG — most organisations use both.`,
+        sr: `**Ton i stil** — uvek odgovara formalno, na nemačkom
+**Vladanje oblašću** — duboko poznaje terminologiju kreditnog rizika
+**Specijalizacija zadatka** — istreniran specifično za procese procene kredita
+**Smanjenje halucinacija** — ojačan verifikovanim, tačnim sadržajem iz oblasti
+
+**Važno:** Fino podešavanje je skupo, zahteva ekspertizu i mora se ponoviti kada model bude ažuriran. Nije zamena za RAG — većina organizacija koristi oboje.`,
+      },
     },
   },
   {
     id: 'vO6qX2nN7z',
     layout: 'single',
-    section: 'Module 5',
+    section: { en: 'Module 5', sr: 'Modul 5' },
     chapter: '05',
-    kicker: 'Summary',
-    title: 'Putting It Together',
+    kicker: { en: 'Summary', sr: 'Rezime' },
+    title: { en: 'Putting It Together', sr: 'Spajamo sve u celinu' },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
     bodyDataTable: {
-      columns: ['Method', 'Adds', 'Best for', 'Requires retraining?'],
+      columns: [
+        { en: 'Method', sr: 'Metoda' },
+        { en: 'Adds', sr: 'Dodaje' },
+        { en: 'Best for', sr: 'Najbolja za' },
+        { en: 'Requires retraining?', sr: 'Zahteva ponovno treniranje?' },
+      ],
       rows: [
-        ['**RAG**', 'Current, specific knowledge', 'Policies, documents, live data', '❌ No'],
         [
-          '**Fine-tuning**',
-          'Behaviour, tone, domain fluency',
-          'Style, specialisation, task focus',
-          '✅ Yes',
+          { en: '**RAG**', sr: '**RAG**' },
+          { en: 'Current, specific knowledge', sr: 'Aktuelno, specifično znanje' },
+          {
+            en: 'Policies, documents, live data',
+            sr: 'Politike, dokumenta, podaci u realnom vremenu',
+          },
+          { en: '❌ No', sr: '❌ Ne' },
         ],
-        ['**System instructions**', 'Rules & persona', 'Guardrails, context setting', '❌ No'],
+        [
+          { en: '**Fine-tuning**', sr: '**Fino podešavanje**' },
+          {
+            en: 'Behaviour, tone, domain fluency',
+            sr: 'Ponašanje, ton, vladanje oblašću',
+          },
+          {
+            en: 'Style, specialisation, task focus',
+            sr: 'Stil, specijalizacija, fokus na zadatak',
+          },
+          { en: '✅ Yes', sr: '✅ Da' },
+        ],
+        [
+          { en: '**System instructions**', sr: '**Sistemska uputstva**' },
+          { en: 'Rules & persona', sr: 'Pravila i ličnost' },
+          {
+            en: 'Guardrails, context setting',
+            sr: 'Ograde ponašanja, postavka konteksta',
+          },
+          { en: '❌ No', sr: '❌ Ne' },
+        ],
       ],
     },
-    body2: `A well-deployed AI in banking is not just a frozen model — it's a frozen model with the right documents in hand, the right instructions on the desk, and the right behaviour trained in.`,
+    body2: {
+      en: `A well-deployed AI in banking is not just a frozen model — it's a frozen model with the right documents in hand, the right instructions on the desk, and the right behaviour trained in.`,
+      sr: `Dobro implementiran AI u bankarstvu nije samo zamrznuti model — to je zamrznuti model sa pravim dokumentima u ruci, pravim uputstvima na stolu i pravim ponašanjem koje je uvežbano.`,
+    },
   },
   {
     id: 'fL7xQ3nK8w',
     layout: 'title',
-    section: 'Module 6',
+    section: { en: 'Module 6', sr: 'Modul 6' },
     chapter: '06',
-    kicker: 'Module 6',
+    kicker: { en: 'Module 6', sr: 'Modul 6' },
     tone: 'section-b',
     style: 'dark',
     animation: 'blur-in',
     anim_duration: 0.9,
     anim_stagger: 0.18,
-    title: 'Why Does AI Lie?',
-    subtitle: 'Hallucinations and the split brain analogy',
+    title: { en: 'Why Does AI Lie?', sr: 'Zašto AI laže?' },
+    subtitle: {
+      en: 'Hallucinations and the split brain analogy',
+      sr: 'Halucinacije i analogija sa podeljenim mozgom',
+    },
   },
   {
     id: 'dR9mP2vH5n',
     layout: 'two-col',
-    section: 'Module 6',
+    section: { en: 'Module 6', sr: 'Modul 6' },
     chapter: '06',
-    kicker: 'Split-brain research · Sperry & Gazzaniga',
-    title: 'Split-Brain Research: The “Interpreter” Effect',
+    kicker: {
+      en: 'Split-brain research · Sperry & Gazzaniga',
+      sr: 'Istraživanje podeljenog mozga · Sperry & Gazzaniga',
+    },
+    title: {
+      en: 'Split-Brain Research: The “Interpreter” Effect',
+      sr: 'Istraživanje podeljenog mozga: efekat „tumača“',
+    },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.1,
     left: {
-      title: 'Setup & key experiment',
+      title: { en: 'Setup & key experiment', sr: 'Postavka i ključni eksperiment' },
       bullets: [
-        '**Setup (corpus callosotomy)** — The hemispheres are disconnected → no shared information between sides.',
-        '**Roles** — **Right:** perception & action (no speech). **Left:** language, reasoning, explanation.',
-        '**Key experiment** — A stimulus reaches only the right hemisphere (or the left hand): the patient acts correctly, but when asked *why*, the left hemisphere has no access to the true cause.',
+        {
+          en: '**Setup (corpus callosotomy)** — The hemispheres are disconnected → no shared information between sides.',
+          sr: '**Postavka (corpus callosotomy)** — Hemisfere su razdvojene → nema razmene informacija između strana.',
+        },
+        {
+          en: '**Roles** — **Right:** perception & action (no speech). **Left:** language, reasoning, explanation.',
+          sr: '**Uloge** — **Desna:** percepcija i radnja (bez govora). **Leva:** jezik, rezonovanje, objašnjavanje.',
+        },
+        {
+          en: '**Key experiment** — A stimulus reaches only the right hemisphere (or the left hand): the patient acts correctly, but when asked *why*, the left hemisphere has no access to the true cause.',
+          sr: '**Ključni eksperiment** — Stimulans dopire samo do desne hemisfere (ili leve ruke): pacijent postupa ispravno, ali kada se upita *zašto*, leva hemisfera nema pristup stvarnom razlogu.',
+        },
       ],
     },
     right: {
-      title: 'Interpretation & bridge',
+      title: { en: 'Interpretation & bridge', sr: 'Tumačenje i most' },
       bullets: [
-        '**The interpreter** — The left hemisphere rarely says “I don’t know.” It invents a coherent story (e.g. “to clean the chicken coop”) — Gazzaniga’s **interpreter**.',
-        '**Human reasoning** — Often post-hoc storytelling: the brain favours coherence when information is missing; “rational” explanations can be narrative, not direct access to reality.',
-        '**Bridge to AI** — We don’t always know why we act — but unlike LLMs we integrate across systems and can update over time.',
+        {
+          en: '**The interpreter** — The left hemisphere rarely says “I don’t know.” It invents a coherent story (e.g. “to clean the chicken coop”) — Gazzaniga’s **interpreter**.',
+          sr: '**Tumač** — Leva hemisfera retko kaže „ne znam“. Ona izmišlja koherentnu priču (npr. „da očistim kokošinjac“) — Gazzanigin **tumač**.',
+        },
+        {
+          en: '**Human reasoning** — Often post-hoc storytelling: the brain favours coherence when information is missing; “rational” explanations can be narrative, not direct access to reality.',
+          sr: '**Ljudsko rezonovanje** — Često naknadno pričanje priča: mozak daje prednost koherentnosti kada nedostaju informacije; „racionalna“ objašnjenja mogu biti narativ, a ne neposredan pristup stvarnosti.',
+        },
+        {
+          en: '**Bridge to AI** — We don’t always know why we act — but unlike LLMs we integrate across systems and can update over time.',
+          sr: '**Most ka AI-ju** — Ne znamo uvek zašto delamo — ali za razliku od LLM-ova, mi integrišemo informacije kroz različite sisteme i možemo da se menjamo vremenom.',
+        },
       ],
     },
   },
   {
     id: 'hL9mQ4nK2x',
     layout: 'two-col',
-    section: 'Module 6',
+    section: { en: 'Module 6', sr: 'Modul 6' },
     chapter: '06',
-    kicker: 'Hallucinations',
-    title: 'Some more reasons to lie.',
+    kicker: { en: 'Hallucinations', sr: 'Halucinacije' },
+    title: { en: 'Some more reasons to lie.', sr: 'Još nekoliko razloga za laganje.' },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.1,
     left: {
-      title: 'Patterns & grounding',
+      title: { en: 'Patterns & grounding', sr: 'Obrasci i oslonac' },
       bullets: [
-        '**LLMs don’t know what they don’t know.** — Without retrieval or tools, answers come from internal patterns, not live verification — confident tone doesn’t mean correct facts.',
-        '**Objective mismatch** — Training is next-token *prediction*, not truth. If something *sounds* right from statistical patterns, the model may output it even when it’s false.',
+        {
+          en: '**LLMs don’t know what they don’t know.** — Without retrieval or tools, answers come from internal patterns, not live verification — confident tone doesn’t mean correct facts.',
+          sr: '**LLM-ovi ne znaju šta ne znaju.** — Bez pronalaženja ili alata, odgovori dolaze iz internih obrazaca, a ne iz aktuelne provere — samouveren ton ne znači i tačne činjenice.',
+        },
+        {
+          en: '**Objective mismatch** — Training is next-token *prediction*, not truth. If something *sounds* right from statistical patterns, the model may output it even when it’s false.',
+          sr: '**Neslaganje u cilju** — Trening je *predviđanje* sledećeg tokena, a ne istine. Ako nešto *zvuči* tačno na osnovu statističkih obrazaca, model to može izgovoriti čak i kada je netačno.',
+        },
       ],
     },
     right: {
-      title: 'Prompts & behaviour',
+      title: { en: 'Prompts & behaviour', sr: 'Promptovi i ponašanje' },
       bullets: [
-        '**Pressure to be helpful** — Instruction tuning and RLHF reward complete answers and discourage “I don’t know” too often — that can tip the model toward fabrication instead of uncertainty.',
-        '**Prompt ambiguity** — Vague or underspecified questions force the model to guess intent; plausible but wrong interpretations are a major hallucination driver.',
+        {
+          en: '**Pressure to be helpful** — Instruction tuning and RLHF reward complete answers and discourage “I don’t know” too often — that can tip the model toward fabrication instead of uncertainty.',
+          sr: '**Pritisak da bude koristan** — Fino podešavanje po instrukcijama i RLHF nagrađuju potpune odgovore i obeshrabruju preterano „ne znam“ — to može navesti model na izmišljanje umesto priznavanja nesigurnosti.',
+        },
+        {
+          en: '**Prompt ambiguity** — Vague or underspecified questions force the model to guess intent; plausible but wrong interpretations are a major hallucination driver.',
+          sr: '**Nejasnoća prompta** — Nejasna ili nedovoljno precizirana pitanja teraju model da pogađa nameru; verovatna ali pogrešna tumačenja su glavni pokretač halucinacija.',
+        },
       ],
     },
   },
   {
     id: 'kW8nR3pL9v',
     layout: 'title',
-    section: 'Module 7',
+    section: { en: 'Module 7', sr: 'Modul 7' },
     chapter: '07',
-    kicker: 'Module 7',
+    kicker: { en: 'Module 7', sr: 'Modul 7' },
     tone: 'section-b',
     style: 'dark',
     animation: 'blur-in',
     anim_duration: 0.9,
     anim_stagger: 0.18,
-    title: 'Talk to AI Like a Pro',
-    subtitle: 'Prompt & context engineering, iterative improvement',
+    title: {
+      en: 'Talk to AI Like a Pro',
+      sr: 'Razgovarajte sa AI-jem kao profesionalac',
+    },
+    subtitle: {
+      en: 'Prompt & context engineering, iterative improvement',
+      sr: 'Prompt i kontekst inženjering, iterativno unapređenje',
+    },
   },
   {
     id: 'm4tQ7nJ2x',
     layout: 'toc',
-    section: 'Module 7',
+    section: { en: 'Module 7', sr: 'Modul 7' },
     chapter: '07',
-    kicker: 'Techniques',
-    title: 'Prompt Engineering (1/2)',
+    kicker: { en: 'Techniques', sr: 'Tehnike' },
+    title: { en: 'Prompt Engineering (1/2)', sr: 'Prompt inženjering (1/2)' },
     tone: 'section-a',
     animation: 'stagger',
     anim_stagger: 0.06,
     tocSpacious: true,
     tocItems: [
-      '**Clear and specific instructions** — Precisely define the task to reduce ambiguity and improve output quality.',
-      '**Role prompting (persona assignment)** — Instruct the model to adopt a specific role to shape tone and expertise.',
-      '**Few-shot prompting** — Provide examples to guide the model toward the desired pattern or format.',
-      '**Zero-shot prompting** — Give only the instruction and rely on the model’s general knowledge to perform the task.',
-      '**Chain-of-thought prompting** — Encourage step-by-step reasoning for more accurate handling of complex problems.',
+      {
+        en: '**Clear and specific instructions** — Precisely define the task to reduce ambiguity and improve output quality.',
+        sr: '**Jasna i konkretna uputstva** — Precizno definišite zadatak kako biste smanjili nejasnoće i poboljšali kvalitet izlaza.',
+      },
+      {
+        en: '**Role prompting (persona assignment)** — Instruct the model to adopt a specific role to shape tone and expertise.',
+        sr: '**Prompt kroz ulogu (dodeljivanje personaliteta)** — Dajte modelu određenu ulogu da biste oblikovali ton i ekspertizu.',
+      },
+      {
+        en: '**Few-shot prompting** — Provide examples to guide the model toward the desired pattern or format.',
+        sr: '**Prompt s par primera (few-shot)** — Dajte primere kako biste model usmerili ka željenom obrascu ili formatu.',
+      },
+      {
+        en: '**Zero-shot prompting** — Give only the instruction and rely on the model’s general knowledge to perform the task.',
+        sr: '**Prompt bez primera (zero-shot)** — Dajte samo uputstvo i oslonite se na opšte znanje modela da obavi zadatak.',
+      },
+      {
+        en: '**Chain-of-thought prompting** — Encourage step-by-step reasoning for more accurate handling of complex problems.',
+        sr: '**Prompt lancem razmišljanja (chain-of-thought)** — Podstičite rezonovanje korak po korak za tačnije rešavanje složenih problema.',
+      },
     ],
   },
   {
     id: 'zK4nW8pL2q',
     layout: 'toc',
-    section: 'Module 7',
+    section: { en: 'Module 7', sr: 'Modul 7' },
     chapter: '07',
-    kicker: 'Techniques',
-    title: 'Prompt Engineering (2/2)',
+    kicker: { en: 'Techniques', sr: 'Tehnike' },
+    title: { en: 'Prompt Engineering (2/2)', sr: 'Prompt inženjering (2/2)' },
     tone: 'section-a',
     animation: 'stagger',
     anim_stagger: 0.06,
     tocSpacious: true,
     tocStart: 6,
     tocItems: [
-      '**Instruction decomposition** — Break complex tasks into smaller, explicit steps within the prompt.',
-      '**Output format specification** — Explicitly define how the response should be structured (e.g., JSON, table).',
-      '**Self-consistency prompting** — Generate multiple reasoning paths and select the most consistent answer.',
-      '**Meta-prompting (prompt refinement loop)** — Ask the model to clarify your intent with questions and then generate an optimized version of your prompt.',
-      '**Critique and refine (self-reflection prompting)** — Instruct the model to review and improve its own output.',
+      {
+        en: '**Instruction decomposition** — Break complex tasks into smaller, explicit steps within the prompt.',
+        sr: '**Razlaganje instrukcija** — Podelite složene zadatke na manje, eksplicitne korake unutar prompta.',
+      },
+      {
+        en: '**Output format specification** — Explicitly define how the response should be structured (e.g., JSON, table).',
+        sr: '**Specifikacija izlaznog formata** — Eksplicitno definišite kako odgovor treba da bude strukturiran (npr. JSON, tabela).',
+      },
+      {
+        en: '**Self-consistency prompting** — Generate multiple reasoning paths and select the most consistent answer.',
+        sr: '**Prompt samo-konzistentnosti** — Generišite više putanja rezonovanja i izaberite najkonzistentniji odgovor.',
+      },
+      {
+        en: '**Meta-prompting (prompt refinement loop)** — Ask the model to clarify your intent with questions and then generate an optimized version of your prompt.',
+        sr: '**Meta-prompting (petlja rafinisanja prompta)** — Tražite od modela da pitanjima razjasni vašu nameru, a zatim generiše optimizovanu verziju vašeg prompta.',
+      },
+      {
+        en: '**Critique and refine (self-reflection prompting)** — Instruct the model to review and improve its own output.',
+        sr: '**Kritika i poboljšanje (prompt samo-refleksije)** — Uputite model da pregleda i unapredi sopstveni izlaz.',
+      },
     ],
   },
   {
     id: 'n8xK2pQ5wR',
     layout: 'two-col',
-    section: 'Module 7',
+    section: { en: 'Module 7', sr: 'Modul 7' },
     chapter: '07',
-    kicker: 'Context',
-    title: 'From Prompt Engineering → Context Engineering',
-    intro:
-      '**👉 Shift:** from “write a good prompt” → “design good operating environment”',
+    kicker: { en: 'Context', sr: 'Kontekst' },
+    title: {
+      en: 'From Prompt Engineering → Context Engineering',
+      sr: 'Od prompt inženjeringa → ka kontekst inženjeringu',
+    },
+    intro: {
+      en: '**👉 Shift:** from “write a good prompt” → “design good operating environment”',
+      sr: '**👉 Pomak:** od „napiši dobar prompt“ → ka „dizajniraj dobro radno okruženje“',
+    },
     tone: 'section-a',
     animation: 'stagger',
     anim_stagger: 0.1,
     twoColLowerLarge: true,
     left: {
-      title: 'Prompt Engineering',
-      body:
-        '**Prompt Engineering** = asking better questions\n\nCrafting instructions to guide the model\n\nWorks for one-off tasks',
+      title: { en: 'Prompt Engineering', sr: 'Prompt inženjering' },
+      body: {
+        en: '**Prompt Engineering** = asking better questions\n\nCrafting instructions to guide the model\n\nWorks for one-off tasks',
+        sr: '**Prompt inženjering** = postavljanje boljih pitanja\n\nOblikovanje uputstava kojima se vodi model\n\nRadi za jednokratne zadatke',
+      },
     },
     right: {
-      title: 'Context Engineering',
-      body:
-        '**Context Engineering** = designing the full input system\n\nCombine: instructions + data + memory + tools\n\nMakes outputs reliable, repeatable, automatable',
+      title: { en: 'Context Engineering', sr: 'Kontekst inženjering' },
+      body: {
+        en: '**Context Engineering** = designing the full input system\n\nCombine: instructions + data + memory + tools\n\nMakes outputs reliable, repeatable, automatable',
+        sr: '**Kontekst inženjering** = dizajniranje celokupnog ulaznog sistema\n\nKombinuje: uputstva + podatke + memoriju + alate\n\nČini izlaze pouzdanim, ponovljivim, pogodnim za automatizaciju',
+      },
     },
   },
   {
     id: 'v3nL9mT4jH',
     layout: 'toc',
-    section: 'Module 7',
+    section: { en: 'Module 7', sr: 'Modul 7' },
     chapter: '07',
-    kicker: 'Context',
-    title: 'What “Context” Actually Includes',
+    kicker: { en: 'Context', sr: 'Kontekst' },
+    title: {
+      en: 'What “Context” Actually Includes',
+      sr: 'Šta „kontekst“ zapravo obuhvata',
+    },
     tone: 'section-a',
     animation: 'stagger',
     anim_stagger: 0.06,
     tocLarge: true,
     tocItems: [
-      '**Instructions** — Task, role, constraints',
-      '**Business Data** — Customer data, transactions, documents',
-      '**Memory / State** — Previous steps, conversation, workflow status',
-      '**Tools & Actions** — APIs, databases, internal systems',
-      '**Guardrails** — Policies, compliance rules, validation',
-      '**👉 Output quality** = function of all context, not just the prompt',
+      {
+        en: '**Instructions** — Task, role, constraints',
+        sr: '**Uputstva** — Zadatak, uloga, ograničenja',
+      },
+      {
+        en: '**Business Data** — Customer data, transactions, documents',
+        sr: '**Poslovni podaci** — Podaci o klijentima, transakcije, dokumenta',
+      },
+      {
+        en: '**Memory / State** — Previous steps, conversation, workflow status',
+        sr: '**Memorija / stanje** — Prethodni koraci, razgovor, status radnog toka',
+      },
+      {
+        en: '**Tools & Actions** — APIs, databases, internal systems',
+        sr: '**Alati i radnje** — API-jevi, baze podataka, interni sistemi',
+      },
+      {
+        en: '**Guardrails** — Policies, compliance rules, validation',
+        sr: '**Ograde** — Politike, pravila usklađenosti, validacija',
+      },
+      {
+        en: '**👉 Output quality** = function of all context, not just the prompt',
+        sr: '**👉 Kvalitet izlaza** = funkcija celokupnog konteksta, a ne samo prompta',
+      },
     ],
   },
   {
     id: 'b6wR8kP2nY',
     layout: 'two-col',
-    section: 'Module 7',
+    section: { en: 'Module 7', sr: 'Modul 7' },
     chapter: '07',
-    kicker: 'Example',
-    title: 'Banking Example (Before vs After)',
+    kicker: { en: 'Example', sr: 'Primer' },
+    title: {
+      en: 'Banking Example (Before vs After)',
+      sr: 'Bankarski primer (Pre i posle)',
+    },
     tone: 'section-a',
     animation: 'stagger',
     anim_stagger: 0.1,
     left: {
-      title: 'Prompt Engineering mindset',
-      body:
-        '**“Summarize this loan application”**\n\n→ Inconsistent, missing context, not auditable',
+      title: { en: 'Prompt Engineering mindset', sr: 'Pristup prompt inženjeringa' },
+      body: {
+        en: '**“Summarize this loan application”**\n\n→ Inconsistent, missing context, not auditable',
+        sr: '**„Sažmi ovaj zahtev za kredit“**\n\n→ Nekonzistentno, bez konteksta, ne može se revidirati',
+      },
     },
     right: {
-      title: 'Context Engineering approach',
-      body:
-        '**Inject:** customer profile, credit policy, risk thresholds\n\n**Track:** workflow state (application stage)\n\n**Connect:** scoring API + document extraction\n\n**Enforce:** compliance rules (e.g., KYC, risk flags)',
+      title: { en: 'Context Engineering approach', sr: 'Pristup kontekst inženjeringa' },
+      body: {
+        en: '**Inject:** customer profile, credit policy, risk thresholds\n\n**Track:** workflow state (application stage)\n\n**Connect:** scoring API + document extraction\n\n**Enforce:** compliance rules (e.g., KYC, risk flags)',
+        sr: '**Ubacite:** profil klijenta, politiku kredita, pragove rizika\n\n**Pratite:** stanje radnog toka (fazu zahteva)\n\n**Povežite:** API za skorovanje + ekstrakciju dokumenata\n\n**Sprovedite:** pravila usklađenosti (npr. KYC, oznake rizika)',
+      },
       bullets: [
-        '**👉 Result:** Consistent decisions',
-        'Traceable reasoning',
-        'Ready for automation at scale',
+        {
+          en: '**👉 Result:** Consistent decisions',
+          sr: '**👉 Rezultat:** Konzistentne odluke',
+        },
+        { en: 'Traceable reasoning', sr: 'Rezonovanje koje se može pratiti' },
+        {
+          en: 'Ready for automation at scale',
+          sr: 'Spremno za automatizaciju u velikim razmerama',
+        },
       ],
     },
   },
   {
     id: 'm8pQ2wR9k',
     layout: 'title',
-    section: 'Module 8',
+    section: { en: 'Module 8', sr: 'Modul 8' },
     chapter: '08',
-    kicker: 'Module 8',
+    kicker: { en: 'Module 8', sr: 'Modul 8' },
     tone: 'section-b',
     style: 'dark',
     animation: 'blur-in',
     anim_duration: 0.9,
     anim_stagger: 0.18,
-    title: 'Agents & Tools — AI That Can Act',
-    subtitle: 'AI That Acts, Not Just Answers — Tools, MCP, Skills, Agents',
+    title: {
+      en: 'Agents & Tools — AI That Can Act',
+      sr: 'Agenti i alati — AI koji može da dela',
+    },
+    subtitle: {
+      en: 'AI That Acts, Not Just Answers — Tools, MCP, Skills, Agents',
+      sr: 'AI koji dela, a ne samo odgovara — alati, MCP, Skills, agenti',
+    },
   },
   {
     id: 'm8b1K3nL8x',
     layout: 'single',
-    section: 'Module 8',
+    section: { en: 'Module 8', sr: 'Modul 8' },
     chapter: '08',
-    kicker: 'Agents',
-    title: 'Beyond Answering — AI That Does',
+    kicker: { en: 'Agents', sr: 'Agenti' },
+    title: {
+      en: 'Beyond Answering — AI That Does',
+      sr: 'Više od odgovaranja — AI koji dela',
+    },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `**So far:** a model that reads, reasons, and responds.
+    body: {
+      en: `**So far:** a model that reads, reasons, and responds.
 **Next:** a model that can **act**.
 
 **Standard LLM Chat:** Input in -> text out. That's all that happens.
 
 **An agent** starts from the same model, but is also given:`,
+      sr: `**Do sada:** model koji čita, rezonuje i odgovara.
+**Sledeće:** model koji može da **dela**.
+
+**Standardni LLM chat:** Ulaz unutra -> tekst napolju. To je sve što se dešava.
+
+**Agent** kreće od istog modela, ali dobija i:`,
+    },
     pointsGridClass: 'points--triple-equal',
     bullets: [
-      '**A goal** — Not just a question: something concrete to work toward.',
-      '**Tools** — Capabilities it can **choose** to invoke when they help.',
-      '**Multi-step chains** — Plan, execute, and revise — reasoning across several steps.',
+      {
+        en: '**A goal** — Not just a question: something concrete to work toward.',
+        sr: '**Cilj** — Ne samo pitanje: nešto konkretno ka čemu treba raditi.',
+      },
+      {
+        en: '**Tools** — Capabilities it can **choose** to invoke when they help.',
+        sr: '**Alate** — Mogućnosti koje može **da izabere** i pozove kada mu pomažu.',
+      },
+      {
+        en: '**Multi-step chains** — Plan, execute, and revise — reasoning across several steps.',
+        sr: '**Višeslojne lance** — Planiraj, izvrši i revidiraj — rezonovanje kroz više koraka.',
+      },
     ],
-    blockquote: `***The difference between a brilliant advisor who can only talk — and one who can also pick up the phone, pull the file, and send the email.***`,
+    blockquote: {
+      en: `***The difference between a brilliant advisor who can only talk — and one who can also pick up the phone, pull the file, and send the email.***`,
+      sr: `***Razlika između briljantnog savetnika koji samo može da priča — i onog koji može i da podigne slušalicu, izvuče dosije i pošalje mejl.***`,
+    },
   },
   {
     id: 'm8b2L4mP9y',
     layout: 'two-col',
-    section: 'Module 8',
+    section: { en: 'Module 8', sr: 'Modul 8' },
     chapter: '08',
-    kicker: 'Definitions',
-    title: 'What Are Tools?',
+    kicker: { en: 'Definitions', sr: 'Definicije' },
+    title: { en: 'What Are Tools?', sr: 'Šta su alati?' },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
     twoColRatio: '1-2',
     left: {
-      body: `Tools are functions the model can choose to call.
+      body: {
+        en: `Tools are functions the model can choose to call.
 
 The model doesn't execute them itself — it decides when and why to use them, and receives the result back into its context.`,
+        sr: `Alati su funkcije koje model može da izabere da pozove.
+
+Model ih ne izvršava sam — on odlučuje kada i zašto da ih koristi, a rezultat dobija nazad u svoj kontekst.`,
+      },
     },
     right: {
       bodyComparison: {
-        leftHeading: 'Tool type',
-        rightHeading: 'Example in banking',
+        leftHeading: { en: 'Tool type', sr: 'Tip alata' },
+        rightHeading: { en: 'Example in banking', sr: 'Primer u bankarstvu' },
         rows: [
-          { left: '**Search / RAG**', right: 'Retrieve relevant policy or client documents' },
-          { left: '**Database query**', right: "Look up a client's transaction history" },
-          { left: '**API call**', right: 'Check current exchange rates or market data' },
-          { left: '**Calculator / code**', right: 'Run a precise financial calculation' },
-          { left: '**Write / send**', right: 'Draft an email, fill a form, log a case note' },
-          { left: '**Trigger workflow**', right: 'Initiate a compliance check or approval process' },
+          {
+            left: { en: '**Search / RAG**', sr: '**Pretraga / RAG**' },
+            right: {
+              en: 'Retrieve relevant policy or client documents',
+              sr: 'Pronalazi relevantne politike ili dokumente o klijentima',
+            },
+          },
+          {
+            left: { en: '**Database query**', sr: '**Upit u bazu podataka**' },
+            right: {
+              en: "Look up a client's transaction history",
+              sr: 'Pregleda istoriju transakcija klijenta',
+            },
+          },
+          {
+            left: { en: '**API call**', sr: '**API poziv**' },
+            right: {
+              en: 'Check current exchange rates or market data',
+              sr: 'Proverava aktuelne kurseve ili tržišne podatke',
+            },
+          },
+          {
+            left: { en: '**Calculator / code**', sr: '**Kalkulator / kod**' },
+            right: {
+              en: 'Run a precise financial calculation',
+              sr: 'Sprovodi preciznu finansijsku kalkulaciju',
+            },
+          },
+          {
+            left: { en: '**Write / send**', sr: '**Pisanje / slanje**' },
+            right: {
+              en: 'Draft an email, fill a form, log a case note',
+              sr: 'Sastavlja mejl, popunjava formu, evidentira belešku o slučaju',
+            },
+          },
+          {
+            left: { en: '**Trigger workflow**', sr: '**Pokretanje radnog toka**' },
+            right: {
+              en: 'Initiate a compliance check or approval process',
+              sr: 'Pokreće proveru usklađenosti ili proces odobravanja',
+            },
+          },
         ],
       },
-      body2: `***Tools turn language into action.***`,
+      body2: {
+        en: `***Tools turn language into action.***`,
+        sr: `***Alati pretvaraju jezik u radnju.***`,
+      },
     },
   },
   {
     id: 'm8b3M5nQ1z',
     layout: 'single',
-    section: 'Module 8',
+    section: { en: 'Module 8', sr: 'Modul 8' },
     chapter: '08',
-    kicker: 'Orchestration',
-    title: 'How an Agent Thinks',
+    kicker: { en: 'Orchestration', sr: 'Orkestracija' },
+    title: { en: 'How an Agent Thinks', sr: 'Kako agent razmišlja' },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `A simple example: "Summarise the credit risk for client X before tomorrow's meeting"
+    body: {
+      en: `A simple example: "Summarise the credit risk for client X before tomorrow's meeting"
 The agent doesn't just answer — it works:
 
 🔍 Retrieves the client's file from the document store (RAG)
@@ -908,94 +1398,136 @@ The agent doesn't just answer — it works:
 ✍️ Produces a structured briefing — ready for the meeting
 
 Each step informs the next. The model decides the sequence.`,
+      sr: `Jednostavan primer: „Sažmi kreditni rizik za klijenta X pre sutrašnjeg sastanka“
+Agent ne samo da odgovara — on radi:
+
+🔍 Pronalazi dosije klijenta iz baze dokumenata (RAG)
+📊 Pretražuje bazu za skorašnje obrasce transakcija
+🧮 Pokreće kalkulaciju skora rizika
+🌐 Proverava aktuelne tržišne uslove putem API-ja
+🧠 Rezonuje na osnovu svih pronađenih informacija
+✍️ Priprema strukturiran brifing — spreman za sastanak
+
+Svaki korak informiše naredni. Model odlučuje o redosledu.`,
+    },
   },
   {
     id: 'm8b4N6pR2v',
     layout: 'single',
-    section: 'Module 8',
+    section: { en: 'Module 8', sr: 'Modul 8' },
     chapter: '08',
-    kicker: 'Governance',
-    title: 'Guardrails — Why Control Matters',
+    kicker: { en: 'Governance', sr: 'Upravljanje' },
+    title: {
+      en: 'Guardrails — Why Control Matters',
+      sr: 'Ograde — zašto je kontrola važna',
+    },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: 'More capability = more responsibility. Agents operating in banking contexts must be carefully constrained:',
+    body: {
+      en: 'More capability = more responsibility. Agents operating in banking contexts must be carefully constrained:',
+      sr: 'Više mogućnosti = više odgovornosti. Agenti koji rade u bankarskom kontekstu moraju biti pažljivo ograničeni:',
+    },
     bodyComparison: {
-      leftHeading: 'Control',
-      rightHeading: 'What it means',
+      leftHeading: { en: 'Control', sr: 'Kontrola' },
+      rightHeading: { en: 'What it means', sr: 'Šta to znači' },
       rows: [
         {
-          left: '**Human-in-the-loop**',
-          right: 'Certain actions require approval before execution.',
+          left: { en: '**Human-in-the-loop**', sr: '**Čovek u petlji**' },
+          right: {
+            en: 'Certain actions require approval before execution.',
+            sr: 'Određene radnje zahtevaju odobrenje pre izvršenja.',
+          },
         },
         {
-          left: '**Tool boundaries**',
-          right: 'The agent can only access what it is explicitly permitted to.',
+          left: { en: '**Tool boundaries**', sr: '**Granice alata**' },
+          right: {
+            en: 'The agent can only access what it is explicitly permitted to.',
+            sr: 'Agent može da pristupi samo onome što mu je eksplicitno dozvoljeno.',
+          },
         },
         {
-          left: '**Audit trails**',
-          right: 'Every tool call and decision step should be logged.',
+          left: { en: '**Audit trails**', sr: '**Revizioni tragovi**' },
+          right: {
+            en: 'Every tool call and decision step should be logged.',
+            sr: 'Svaki poziv alata i korak u odluci treba da budu zabeleženi.',
+          },
         },
         {
-          left: '**Failure handling**',
-          right: 'What happens when a tool returns unexpected results?',
+          left: { en: '**Failure handling**', sr: '**Rukovanje greškama**' },
+          right: {
+            en: 'What happens when a tool returns unexpected results?',
+            sr: 'Šta se dešava kada alat vrati neočekivane rezultate?',
+          },
         },
       ],
     },
-    body2: `An agent with access to client data, communication channels, and workflow systems is not a chatbot. It requires governance like any other operational system.
+    body2: {
+      en: `An agent with access to client data, communication channels, and workflow systems is not a chatbot. It requires governance like any other operational system.
 
 The question is never just "can it do this?" — but "should it do this autonomously?"`,
+      sr: `Agent sa pristupom podacima klijenata, komunikacionim kanalima i sistemima radnih tokova nije chatbot. Zahteva upravljanje kao i svaki drugi operativni sistem.
+
+Pitanje nikada nije samo „da li ovo može da uradi?“ — već „da li treba ovo da radi samostalno?“`,
+    },
   },
   {
     id: 'm8b5O7qS3w',
     layout: 'single',
-    section: 'Module 8',
+    section: { en: 'Module 8', sr: 'Modul 8' },
     chapter: '08',
-    kicker: 'Arc',
-    title: 'To summarize Agents',
+    kicker: { en: 'Arc', sr: 'Luk' },
+    title: { en: 'To summarize Agents', sr: 'Rezime o agentima' },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
     bodyInnerClass: 'slide-content__inner--body-diagram-stack',
-    body: 'How everything connects:',
+    body: { en: 'How everything connects:', sr: 'Kako se sve povezuje:' },
     flowTimeline: {
       rows: [
         [
-          { kind: 'text', label: 'User request' },
-          { kind: 'agent', label: '[ Agent / Orchestrator ]' },
-          { kind: 'text', label: 'Reasons about the goal' },
+          { kind: 'text', label: { en: 'User request', sr: 'Zahtev korisnika' } },
+          { kind: 'agent', label: { en: '[ Agent / Orchestrator ]', sr: '[ Agent / orkestrator ]' } },
+          { kind: 'text', label: { en: 'Reasons about the goal', sr: 'Rezonuje o cilju' } },
         ],
         [
           {
             kind: 'tools',
-            title: 'Tools available',
+            title: { en: 'Tools available', sr: 'Dostupni alati' },
             items: [
-              'RAG (your documents)',
-              'Database queries',
-              'APIs & live data',
-              'Calculations & code',
-              'Workflow triggers',
+              { en: 'RAG (your documents)', sr: 'RAG (vaši dokumenti)' },
+              { en: 'Database queries', sr: 'Upiti u bazu podataka' },
+              { en: 'APIs & live data', sr: 'API-jevi i podaci u realnom vremenu' },
+              { en: 'Calculations & code', sr: 'Kalkulacije i kod' },
+              { en: 'Workflow triggers', sr: 'Pokretači radnih tokova' },
             ],
           },
-          { kind: 'text', label: 'Synthesises results' },
-          { kind: 'text', label: 'Response or Action' },
-          { kind: 'review', label: 'Human review — where required' },
+          { kind: 'text', label: { en: 'Synthesises results', sr: 'Sintetiše rezultate' } },
+          { kind: 'text', label: { en: 'Response or Action', sr: 'Odgovor ili radnja' } },
+          {
+            kind: 'review',
+            label: { en: 'Human review — where required', sr: 'Ljudska provera — tamo gde je potrebna' },
+          },
         ],
       ],
     },
-    body2: `The frozen chef, handed the right recipes, the right ingredients, and a fully equipped kitchen — with a supervisor in the room for the dishes that matter.`,
+    body2: {
+      en: `The frozen chef, handed the right recipes, the right ingredients, and a fully equipped kitchen — with a supervisor in the room for the dishes that matter.`,
+      sr: `Zaleđeni kuvar, kome su predati pravi recepti, pravi sastojci i potpuno opremljena kuhinja — uz nadzornika u prostoriji za jela koja su važna.`,
+    },
   },
   {
     id: 'mcp1X2kN9w',
     layout: 'single',
-    section: 'Module 8',
+    section: { en: 'Module 8', sr: 'Modul 8' },
     chapter: '08',
-    kicker: 'MCP',
-    title: 'The Problem Before MCP',
+    kicker: { en: 'MCP', sr: 'MCP' },
+    title: { en: 'The Problem Before MCP', sr: 'Problem pre MCP-a' },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `**MCP — Giving Agents a Standard Language**
+    body: {
+      en: `**MCP — Giving Agents a Standard Language**
 
 Every tool connection was built by hand.
 As agents became more capable, teams wanted to connect them to more systems:
@@ -1009,68 +1541,114 @@ Core banking systems
 The problem: every integration was custom-built. Different syntax, different authentication, different error handling — for every model, for every tool, for every vendor.
 
 Imagine every appliance in the kitchen needing its own unique, incompatible power socket.`,
+      sr: `**MCP — dajemo agentima standardni jezik**
+
+Svaka konekcija ka alatu bila je ručno napravljena.
+Kako su agenti postajali sposobniji, timovi su hteli da ih povežu sa više sistema:
+
+CRM platforme
+Interne baze podataka
+Skladišta dokumenata
+Kalendari, mejlovi, alati za komunikaciju
+Sistemi osnovnog bankarstva
+
+Problem: svaka integracija bila je posebno izrađena. Drugačija sintaksa, drugačija autentifikacija, drugačije rukovanje greškama — za svaki model, za svaki alat, za svakog dobavljača.
+
+Zamislite da svaki uređaj u kuhinji mora imati svoju jedinstvenu, nekompatibilnu utičnicu.`,
+    },
   },
   {
     id: 'mcp2Y3lP8x',
     layout: 'single',
-    section: 'Module 8',
+    section: { en: 'Module 8', sr: 'Modul 8' },
     chapter: '08',
-    kicker: 'MCP',
-    title: 'What is MCP?',
+    kicker: { en: 'MCP', sr: 'MCP' },
+    title: { en: 'What is MCP?', sr: 'Šta je MCP?' },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `An open standard, introduced by Anthropic in 2024, that defines a single, universal way for AI models to connect to external tools and data sources.`,
+    body: {
+      en: `An open standard, introduced by Anthropic in 2024, that defines a single, universal way for AI models to connect to external tools and data sources.`,
+      sr: `Otvoreni standard, koji je Anthropic predstavio 2024. godine, a koji definiše jedinstven, univerzalan način na koji AI modeli komuniciraju sa eksternim alatima i izvorima podataka.`,
+    },
     bodyComparison: {
-      leftHeading: 'Without MCP',
-      rightHeading: 'With MCP',
+      leftHeading: { en: 'Without MCP', sr: 'Bez MCP-a' },
+      rightHeading: { en: 'With MCP', sr: 'Sa MCP-om' },
       rows: [
-        { left: 'Custom integration per tool', right: 'One standard connection method' },
-        { left: 'Rebuild for every model update', right: 'Tool works with any MCP-compatible model' },
-        { left: 'Fragile, expensive to maintain', right: 'Plug in, and it works' },
-        { left: 'Siloed by vendor', right: 'Interoperable across platforms' },
+        {
+          left: { en: 'Custom integration per tool', sr: 'Posebna integracija za svaki alat' },
+          right: { en: 'One standard connection method', sr: 'Jedan standardan način povezivanja' },
+        },
+        {
+          left: { en: 'Rebuild for every model update', sr: 'Ponovna izrada za svako ažuriranje modela' },
+          right: {
+            en: 'Tool works with any MCP-compatible model',
+            sr: 'Alat radi sa bilo kojim MCP-kompatibilnim modelom',
+          },
+        },
+        {
+          left: { en: 'Fragile, expensive to maintain', sr: 'Krhko, skupo za održavanje' },
+          right: { en: 'Plug in, and it works', sr: 'Priključite i radi' },
+        },
+        {
+          left: { en: 'Siloed by vendor', sr: 'Izolovano po dobavljaču' },
+          right: { en: 'Interoperable across platforms', sr: 'Interoperabilno kroz platforme' },
+        },
       ],
     },
-    body2: `***Build the tool once. Any compatible agent can use it.***`,
+    body2: {
+      en: `***Build the tool once. Any compatible agent can use it.***`,
+      sr: `***Napravite alat jednom. Bilo koji kompatibilan agent može ga koristiti.***`,
+    },
   },
   {
     id: 'mcp3Z4mQ7y',
     layout: 'single',
-    section: 'Module 8',
+    section: { en: 'Module 8', sr: 'Modul 8' },
     chapter: '08',
-    kicker: 'MCP',
-    title: 'Where MCP Sits in the Architecture',
+    kicker: { en: 'MCP', sr: 'MCP' },
+    title: {
+      en: 'Where MCP Sits in the Architecture',
+      sr: 'Gde se MCP nalazi u arhitekturi',
+    },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
     bodySurface: 'mcp-connect',
-    body: 'MCP is the connective layer between the agent and the outside world:',
+    body: {
+      en: 'MCP is the connective layer between the agent and the outside world:',
+      sr: 'MCP je povezni sloj između agenta i spoljnog sveta:',
+    },
     mcpStack: {
-      agentLabel: 'Agent / Orchestrator',
-      layerLabel: 'MCP Interface',
-      serversTitle: 'MCP Servers (tools/systems)',
+      agentLabel: { en: 'Agent / Orchestrator', sr: 'Agent / orkestrator' },
+      layerLabel: { en: 'MCP Interface', sr: 'MCP interfejs' },
+      serversTitle: { en: 'MCP Servers (tools/systems)', sr: 'MCP serveri (alati/sistemi)' },
       servers: [
-        'Internal document store',
-        'Core banking API',
-        'CRM / client data',
-        'Compliance & risk systems',
-        'Email & calendar',
-        'Market data feeds',
+        { en: 'Internal document store', sr: 'Interno skladište dokumenata' },
+        { en: 'Core banking API', sr: 'API osnovnog bankarstva' },
+        { en: 'CRM / client data', sr: 'CRM / podaci o klijentima' },
+        { en: 'Compliance & risk systems', sr: 'Sistemi usklađenosti i rizika' },
+        { en: 'Email & calendar', sr: 'Mejl i kalendar' },
+        { en: 'Market data feeds', sr: 'Tokovi tržišnih podataka' },
       ],
     },
-    body2: `Each system exposes itself as an MCP server. The agent speaks to all of them through the same standard interface — it doesn't need to know the specifics of each system underneath.`,
+    body2: {
+      en: `Each system exposes itself as an MCP server. The agent speaks to all of them through the same standard interface — it doesn't need to know the specifics of each system underneath.`,
+      sr: `Svaki sistem se izlaže kao MCP server. Agent sa svima njima komunicira kroz isti standardni interfejs — ne mora da poznaje specifičnosti svakog sistema u pozadini.`,
+    },
   },
   {
     id: 'mcp4A5nR6z',
     layout: 'single',
-    section: 'Module 8',
+    section: { en: 'Module 8', sr: 'Modul 8' },
     chapter: '08',
-    kicker: 'MCP',
-    title: 'Why It Matters for Banking',
+    kicker: { en: 'MCP', sr: 'MCP' },
+    title: { en: 'Why It Matters for Banking', sr: 'Zašto je to važno za bankarstvo' },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `MCP turns AI integration from a bespoke engineering project into an infrastructure decision.
+    body: {
+      en: `MCP turns AI integration from a bespoke engineering project into an infrastructure decision.
 
 ✅ Faster deployment — connect new systems without rebuilding agent logic
 ✅ Vendor flexibility — swap the underlying model without rewiring all your tools
@@ -1080,118 +1658,180 @@ Imagine every appliance in the kitchen needing its own unique, incompatible powe
 In the same way that REST APIs standardised how web services talk to each other — MCP is standardising how AI agents talk to the world.
 
 For bank leadership, the strategic implication is clear: institutions that build their integrations on open standards now will not be locked into a single vendor's ecosystem later.`,
+      sr: `MCP pretvara integraciju AI-ja iz posebno izrađenog inženjerskog projekta u odluku o infrastrukturi.
+
+✅ Brže uvođenje — povežite nove sisteme bez prepravki logike agenta
+✅ Fleksibilnost prema dobavljačima — zamenite osnovni model bez prevezivanja svih alata
+✅ Mogućnost revizije — standardizovani sloj je lakše pratiti i kontrolisati
+✅ Zamah ekosistema — MCP se brzo usvaja kroz platforme, alate i dobavljače
+
+Na isti način na koji su REST API-ji standardizovali komunikaciju veb servisa — MCP standardizuje kako AI agenti komuniciraju sa svetom.
+
+Za rukovodstvo banke, strateška posledica je jasna: institucije koje sada grade svoje integracije na otvorenim standardima neće kasnije biti zaključane u ekosistem jednog dobavljača.`,
+    },
   },
   {
     id: 'm8skA1b2c3',
     layout: 'single',
-    section: 'Module 8',
+    section: { en: 'Module 8', sr: 'Modul 8' },
     chapter: '08',
-    kicker: 'Skills',
-    title: 'Skills — Packaged, reusable procedures',
+    kicker: { en: 'Skills', sr: 'Veštine' },
+    title: {
+      en: 'Skills — Packaged, reusable procedures',
+      sr: 'Veštine — upakovane, ponovo upotrebljive procedure',
+    },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `**Agent Skills** are a lightweight, open format for extending AI agent capabilities with specialized knowledge and workflows.
+    body: {
+      en: `**Agent Skills** are a lightweight, open format for extending AI agent capabilities with specialized knowledge and workflows.
 
     In every serious bank, there are standardized procedures — for example, a procedure for loan approval. These procedures are written, tested, and aligned with regulations.
 
 When a new associate arrives, they don't reinvent the procedure — they apply the existing one. A Skill is exactly that, but for a ***packaged procedure***, ***tailored to a specific task***, which the AI can "take off the shelf" and apply.`,
+      sr: `**Veštine agenata** su lagani, otvoreni format za proširenje mogućnosti AI agenta specijalizovanim znanjem i radnim tokovima.
+
+    U svakoj ozbiljnoj banci postoje standardizovane procedure — na primer, procedura za odobravanje kredita. Te procedure su napisane, testirane i usklađene sa propisima.
+
+Kada novi saradnik dođe, ne izmišlja proceduru iznova — primenjuje postojeću. Veština je upravo to, ali u obliku ***upakovane procedure***, ***prilagođene određenom zadatku***, koju AI može da „uzme s police“ i primeni.`,
+    },
   },
   {
     id: 'm8skD4e5f6',
     layout: 'single',
-    section: 'Module 8',
+    section: { en: 'Module 8', sr: 'Modul 8' },
     chapter: '08',
-    kicker: 'Skills',
-    title: 'Inside a Skill file (1/4)',
+    kicker: { en: 'Skills', sr: 'Veštine' },
+    title: {
+      en: 'Inside a Skill file (1/4)',
+      sr: 'Unutar fajla veštine (1/4)',
+    },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `A Skill file is essentially a Markdown document — like a detailed work manual you give to an AI agent before it starts its task. The agent "reads" it, and from that moment on, knows exactly how to proceed.
+    body: {
+      en: `A Skill file is essentially a Markdown document — like a detailed work manual you give to an AI agent before it starts its task. The agent "reads" it, and from that moment on, knows exactly how to proceed.
 
 Here is what a summary of a Credit Assessment Skill looks like — each section, one slide at a time:`,
+      sr: `Fajl veštine je u suštini Markdown dokument — poput detaljnog radnog priručnika koji dajete AI agentu pre nego što počne svoj zadatak. Agent ga „čita“ i od tog trenutka tačno zna kako da postupa.
+
+Evo kako izgleda sažetak veštine procene kredita — svaki odeljak, po jedan slajd:`,
+    },
     pointsCardModifier: 'points--skill-file-split',
     bullets: [
       {
-        heading: 'Overview',
-        body: 'The AI agent reads this first. It clearly states the purpose and, just as importantly, ++what is NOT its purpose++ (e.g., it does not make the final decision).',
+        heading: { en: 'Overview', sr: 'Pregled' },
+        body: {
+          en: 'The AI agent reads this first. It clearly states the purpose and, just as importantly, ++what is NOT its purpose++ (e.g., it does not make the final decision).',
+          sr: 'AI agent ovo prvo čita. Jasno navodi svrhu i, što je jednako važno, ++šta NIJE njegova svrha++ (npr. ne donosi konačnu odluku).',
+        },
       },
     ],
   },
   {
     id: 'm8skD4e5g1',
     layout: 'single',
-    section: 'Module 8',
+    section: { en: 'Module 8', sr: 'Modul 8' },
     chapter: '08',
-    kicker: 'Skills',
-    title: 'Inside a Skill file (2/4)',
+    kicker: { en: 'Skills', sr: 'Veštine' },
+    title: {
+      en: 'Inside a Skill file (2/4)',
+      sr: 'Unutar fajla veštine (2/4)',
+    },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
     pointsCardModifier: 'points--skill-file-split points--skill-file-split--pair',
     bullets: [
       {
-        heading: 'When to Use',
-        body: 'The agent must know ++when to invoke this specific skill versus another++. Without this, it might try to process mortgage loans using the same rules as consumer loans.',
+        heading: { en: 'When to Use', sr: 'Kada se koristi' },
+        body: {
+          en: 'The agent must know ++when to invoke this specific skill versus another++. Without this, it might try to process mortgage loans using the same rules as consumer loans.',
+          sr: 'Agent mora da zna ++kada da pokrene baš ovu veštinu, a kada neku drugu++. Bez toga, mogao bi da pokuša da obrađuje hipotekarne kredite po istim pravilima kao potrošačke.',
+        },
       },
       {
-        heading: 'Required Tools',
-        body: "A list of all ++MCP++ connections that the agent is allowed to use within this skill. The agent ++cannot call a tool that isn't on this list++.",
+        heading: { en: 'Required Tools', sr: 'Potrebni alati' },
+        body: {
+          en: "A list of all ++MCP++ connections that the agent is allowed to use within this skill. The agent ++cannot call a tool that isn't on this list++.",
+          sr: 'Spisak svih ++MCP++ veza koje agentu smeju da se koriste u okviru ove veštine. Agent ++ne može da pozove alat koji nije na tom spisku++.',
+        },
       },
     ],
   },
   {
     id: 'm8skD4e5g2',
     layout: 'single',
-    section: 'Module 8',
+    section: { en: 'Module 8', sr: 'Modul 8' },
     chapter: '08',
-    kicker: 'Skills',
-    title: 'Inside a Skill file (3/4)',
+    kicker: { en: 'Skills', sr: 'Veštine' },
+    title: {
+      en: 'Inside a Skill file (3/4)',
+      sr: 'Unutar fajla veštine (3/4)',
+    },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
     pointsCardModifier: 'points--skill-file-split points--skill-file-split--pair',
     bullets: [
       {
-        heading: 'Step-by-Step Procedure',
-        body: 'The core of the file. Every step has clear ++IF/THEN rules++ — the agent does not improvise; it applies policy literally. You\'ll notice ++"STOP"++ written in several places — these are ++hard stops++ that the agent is not allowed to bypass.',
+        heading: { en: 'Step-by-Step Procedure', sr: 'Procedura korak po korak' },
+        body: {
+          en: 'The core of the file. Every step has clear ++IF/THEN rules++ — the agent does not improvise; it applies policy literally. You\'ll notice ++"STOP"++ written in several places — these are ++hard stops++ that the agent is not allowed to bypass.',
+          sr: 'Srž fajla. Svaki korak ima jasna ++AKO/ONDA pravila++ — agent ne improvizuje; doslovno primenjuje politiku. Na nekoliko mesta ćete primetiti ++„STOP“++ — to su ++čvrste prepreke++ koje agent ne sme da zaobiđe.',
+        },
       },
       {
-        heading: 'What the Agent Must NOT Do',
-        body: 'Negative rules are just as important as positive ones. This is the section where you define ++the boundaries of autonomy++.',
+        heading: { en: 'What the Agent Must NOT Do', sr: 'Šta agent NE sme da radi' },
+        body: {
+          en: 'Negative rules are just as important as positive ones. This is the section where you define ++the boundaries of autonomy++.',
+          sr: 'Negativna pravila su jednako važna kao i pozitivna. Ovo je odeljak u kojem se definišu ++granice autonomije++.',
+        },
       },
     ],
   },
   {
     id: 'm8skD4e5g3',
     layout: 'single',
-    section: 'Module 8',
+    section: { en: 'Module 8', sr: 'Modul 8' },
     chapter: '08',
-    kicker: 'Skills',
-    title: 'Inside a Skill file (4/4)',
+    kicker: { en: 'Skills', sr: 'Veštine' },
+    title: {
+      en: 'Inside a Skill file (4/4)',
+      sr: 'Unutar fajla veštine (4/4)',
+    },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
     pointsCardModifier: 'points--skill-file-split points--skill-file-split--pair',
     bullets: [
       {
-        heading: 'Audit and Compliance',
-        body: 'Every skill in a regulated industry must have this. ++Every call, every result, every decision++ — everything is logged.',
+        heading: { en: 'Audit and Compliance', sr: 'Revizija i usklađenost' },
+        body: {
+          en: 'Every skill in a regulated industry must have this. ++Every call, every result, every decision++ — everything is logged.',
+          sr: 'Svaka veština u regulisanoj industriji mora ovo da ima. ++Svaki poziv, svaki rezultat, svaka odluka++ — sve se beleži.',
+        },
       },
       {
-        heading: 'Skill Metadata',
-        body: 'Version, owner, revision date. This is crucial because skills change when regulations or internal policies change — you need to know ++which version was active++ at the time of a specific decision.',
+        heading: { en: 'Skill Metadata', sr: 'Metapodaci veštine' },
+        body: {
+          en: 'Version, owner, revision date. This is crucial because skills change when regulations or internal policies change — you need to know ++which version was active++ at the time of a specific decision.',
+          sr: 'Verzija, vlasnik, datum izmene. Ovo je ključno jer se veštine menjaju kada se menjaju propisi ili interne politike — morate znati ++koja je verzija bila aktivna++ u trenutku donošenja određene odluke.',
+        },
       },
     ],
   },
   {
     id: 'm8tWF4nP2x',
     layout: 'timeline',
-    section: 'Module 8',
+    section: { en: 'Module 8', sr: 'Modul 8' },
     chapter: '08',
     hideSectionChip: true,
-    kicker: 'Example',
-    title: 'Agentic Workflow — Tools, MCP & Skills',
+    kicker: { en: 'Example', sr: 'Primer' },
+    title: {
+      en: 'Agentic Workflow — Tools, MCP & Skills',
+      sr: 'Agentski radni tok — alati, MCP i veštine',
+    },
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.07,
