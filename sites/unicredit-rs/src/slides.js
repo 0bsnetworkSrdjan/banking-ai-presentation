@@ -283,10 +283,12 @@ export const slides = [
     section: 'Module 2',
     chapter: '02',
     kicker: 'Human cognition',
-    title: 'Human Thinking is a self-building reflective fluid of loops and branches',
+    title: 'Human Thinking is a self-improving reflective fluid',
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.1,
+    bodyInnerClass: 'slide-content__inner--bullets-3x2',
+    pointsGridClass: 'points--grid-3x2',
     bullets: [
       'Human cognition = parallel, embodied, adaptive',
       'Multiple brain regions collaborate (analytical, emotional, sensory, intuitive)',
@@ -306,6 +308,7 @@ export const slides = [
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
+    twoColPaneClass: 'slide-two-pane--serial-processors',
     left: {
       title: 'One mechanism',
       body: `They do one thing, extraordinarily well:
@@ -667,6 +670,31 @@ Fine-tuning means continuing the training process on a curated, domain-specific 
     },
   },
   {
+    id: 'hL9mQ4nK2x',
+    layout: 'two-col',
+    section: 'Module 6',
+    chapter: '06',
+    kicker: 'Hallucinations',
+    title: 'Some more reasons to lie.',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.1,
+    left: {
+      title: 'Patterns & grounding',
+      bullets: [
+        '**LLMs don’t know what they don’t know.** — Without retrieval or tools, answers come from internal patterns, not live verification — confident tone doesn’t mean correct facts.',
+        '**Objective mismatch** — Training is next-token *prediction*, not truth. If something *sounds* right from statistical patterns, the model may output it even when it’s false.',
+      ],
+    },
+    right: {
+      title: 'Prompts & behaviour',
+      bullets: [
+        '**Pressure to be helpful** — Instruction tuning and RLHF reward complete answers and discourage “I don’t know” too often — that can tip the model toward fabrication instead of uncertainty.',
+        '**Prompt ambiguity** — Vague or underspecified questions force the model to guess intent; plausible but wrong interpretations are a major hallucination driver.',
+      ],
+    },
+  },
+  {
     id: 'kW8nR3pL9v',
     layout: 'title',
     section: 'Module 7',
@@ -924,7 +952,7 @@ The question is never just "can it do this?" — but "should it do this autonomo
     section: 'Module 8',
     chapter: '08',
     kicker: 'Arc',
-    title: 'The Full Picture',
+    title: 'To summarize Agents',
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,

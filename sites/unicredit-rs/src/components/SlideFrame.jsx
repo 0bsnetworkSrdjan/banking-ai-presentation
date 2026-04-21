@@ -159,6 +159,7 @@ function BodyGlass({ slide, styleClass, lang }) {
               'points',
               bullets.some(isPointCardBullet) ? 'points--card-prose' : '',
               slide.pointsCardModifier,
+              slide.pointsGridClass,
             ]
               .filter(Boolean)
               .join(' ')}
@@ -823,6 +824,7 @@ export function SlideFrame({ slide, isActive, lang, tocRevealStep = 0 }) {
                 slide.intro_variant === 'guides' && 'slide-two-pane--guides-bios',
                 slide.twoColLowerLarge && 'slide-two-pane--lower-col-large',
                 slide.twoColRatio === '1-2' && 'slide-two-pane--ratio-1-2',
+                slide.twoColPaneClass,
               ]
                 .filter(Boolean)
                 .join(' ')}
