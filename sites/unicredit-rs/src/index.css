@@ -552,6 +552,17 @@ body {
   align-items: stretch;
 }
 
+/* ~1/3 · 2/3 column widths (opt-in: slide.twoColRatio === '1-2') */
+.slide-two-pane--ratio-1-2 > .slide-glass--col:first-child {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.slide-two-pane--ratio-1-2 > .slide-glass--col:last-child {
+  flex: 2 1 0;
+  min-width: 0;
+}
+
 /* Image pane — NOT a glass element, just a shaped container */
 .slide-image-pane {
   flex: 0 0 44%;
@@ -700,6 +711,20 @@ body {
 .slide-glass--col .slide-content__inner {
   padding: clamp(0.75rem, 0.5rem + 1.8cqh, 2.2rem);
   gap: clamp(0.35rem, 0.8cqh, 1rem);
+}
+
+/* Larger copy in the lower column pair only (opt-in: slide.twoColLowerLarge) */
+.slide-two-pane--lower-col-large .slide-glass--col h2 {
+  font-size: clamp(1.18rem, 0.4rem + 3.75cqh, 3.25rem);
+}
+
+.slide-two-pane--lower-col-large .slide-glass--col .lead {
+  font-size: clamp(0.84rem, 0.36rem + 3.05cqh, 1.88rem);
+  line-height: 1.46;
+}
+
+.slide-two-pane--lower-col-large .slide-glass--col .points li {
+  font-size: clamp(0.78rem, 0.3rem + 2.55cqh, 1.45rem);
 }
 
 /* Single full-width body card (bullets, emphasis, etc.) */
@@ -894,8 +919,32 @@ body {
   font-weight: 800;
 }
 
+/* 3+ columns: dividers + neutral styling for middle columns */
+.slide-data-table--multi thead th:not(:last-child) {
+  border-right: 1px solid var(--sd-line-soft);
+}
+
+.slide-data-table--multi tbody td:not(:last-child) {
+  border-right: 1px solid var(--sd-line-soft);
+}
+
+.slide-data-table--multi thead th:nth-child(n + 2):not(:last-child) {
+  color: #3a4a42;
+  background: rgba(255, 255, 255, 0.52);
+}
+
+.slide-data-table--multi tbody td:nth-child(n + 2):not(:last-child) {
+  background: transparent;
+  color: var(--text-main);
+  font-weight: 600;
+}
+
 .slide-glass--body .lead.lead--after-comparison {
   margin-top: clamp(0.65rem, 1.4cqh, 1rem);
+}
+
+.slide-glass--col .lead.lead--after-comparison {
+  margin-top: clamp(0.55rem, 1.1cqh, 0.9rem);
 }
 
 /* Agent orchestration flow (Module 8 — “The Full Picture”) */
@@ -1011,6 +1060,92 @@ body {
 
 .flow-timeline__tools-list li {
   padding-left: 0.12rem;
+}
+
+/* Horizontal flow (The Full Picture — fits the content width; JS scale still applies) */
+.flow-timeline--horizontal {
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: center;
+  max-width: none;
+  width: max-content;
+  margin-inline: auto;
+  margin-top: 0;
+  gap: 0;
+}
+
+.flow-timeline--horizontal .flow-timeline__node {
+  width: auto;
+  min-width: 4.75rem;
+  max-width: 9.5rem;
+  flex: 0 1 auto;
+  align-self: center;
+  text-align: center;
+  padding: 0.38rem 0.5rem;
+  font-size: clamp(0.62rem, 0.22rem + 1.85cqh, 0.88rem);
+  line-height: 1.32;
+}
+
+.flow-timeline--horizontal .flow-timeline__node--agent {
+  max-width: 10.5rem;
+  font-size: clamp(0.64rem, 0.24rem + 1.9cqh, 0.9rem);
+}
+
+.flow-timeline--horizontal .flow-timeline__node--review {
+  max-width: 10rem;
+  font-size: clamp(0.62rem, 0.22rem + 1.85cqh, 0.86rem);
+}
+
+.flow-timeline--horizontal .flow-timeline__tools {
+  width: auto;
+  min-width: 7.5rem;
+  max-width: 11rem;
+  flex: 0 1 auto;
+  align-self: center;
+  padding: 0.4rem 0.5rem 0.5rem;
+}
+
+.flow-timeline--horizontal .flow-timeline__tools-title {
+  margin: 0 0 0.28rem;
+  font-size: clamp(0.6rem, 0.2rem + 1.72cqh, 0.82rem);
+}
+
+.flow-timeline--horizontal .flow-timeline__tools-list {
+  font-size: clamp(0.55rem, 0.18rem + 1.55cqh, 0.76rem);
+  gap: 0.12rem;
+  padding-left: 0.95rem;
+}
+
+.flow-timeline__arrow--horizontal {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  padding: 0 0.08rem;
+  flex: 0 0 auto;
+}
+
+.flow-timeline__arrow-line--horizontal {
+  width: clamp(0.35rem, 0.85cqw, 0.62rem);
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    rgba(100, 110, 250, 0.35),
+    rgba(100, 110, 250, 0.85)
+  );
+}
+
+.flow-timeline__arrow-line--horizontal::after {
+  left: auto;
+  right: -4px;
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
+  border-left: 5px solid rgba(100, 110, 250, 0.88);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-right: none;
 }
 
 /* MCP architecture stack (Module 8 — “Where MCP Sits in the Architecture”) */
@@ -1343,6 +1478,26 @@ h1 {
 
 .slide-glass--body .points.points--card-prose li {
   font-size: clamp(0.52rem, 0.14rem + 1.35cqh, 0.78rem);
+}
+
+/* Three equal columns — agent ingredients, short definitional cards */
+.points.points--triple-equal {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.45rem, 0.95cqh, 0.72rem);
+  align-content: start;
+}
+
+.points.points--triple-equal li {
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(0.66rem, 0.25rem + 2.05cqh, 1.05rem);
+  letter-spacing: 0.01em;
+  line-height: 1.42;
+  padding: clamp(0.58rem, 1cqh, 0.78rem) clamp(0.68rem, 1.35cqw, 0.92rem);
+}
+
+.slide-content__inner > .points + .emphasis-panel {
+  margin-top: 0.35rem;
 }
 
 /* ─── Progress rail ─────────────────────────────────────────────────────────── */
@@ -1921,6 +2076,30 @@ h1 {
   color: var(--color-primary);
 }
 
+/* Roomier TOC (e.g. Prompt Engineering technique lists) */
+.toc-list--spacious {
+  gap: clamp(0.75rem, 1.35cqh, 1.35rem);
+  font-size: clamp(0.92rem, 0.4rem + 2.95cqh, 1.52rem);
+  line-height: 1.52;
+  padding-left: 1.5rem;
+}
+
+.toc-list--spacious .toc-list__item {
+  padding-block: 0.08rem;
+}
+
+/* Large TOC body copy (opt-in: slide.tocLarge) */
+.toc-list--large {
+  gap: clamp(0.7rem, 1.2cqh, 1.25rem);
+  font-size: clamp(1rem, 0.48rem + 3.65cqh, 2rem);
+  line-height: 1.52;
+  padding-left: 1.6rem;
+}
+
+.toc-list--large .toc-list__item {
+  padding-block: 0.1rem;
+}
+
 /* ─── four-quad ─────────────────────────────────────────────────────────── */
 
 .slide-four-quad {
@@ -2029,6 +2208,23 @@ h1 {
 
 .vs-canvas-wrap:active {
   cursor: grabbing;
+}
+
+/* ── Embedded HTML slide (iframe) — full glass like vector-space ─────────── */
+
+.slide-layout--embed {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+
+.slide-layout--embed .slide-embed__iframe {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  border: 0;
+  display: block;
 }
 
 .vs-labels {

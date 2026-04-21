@@ -1,0 +1,1265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Neural Network · How an LLM is built</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg-image: url('./background.jpg');
+    --color-mint-300: #aacdaa;
+    --color-accent-light-blue: #b8c4ff;
+    --color-primary: #646efa;
+    --ink: #e0e8ff;
+  }
+  html { font-size: clamp(15px, 1.65vmin + 0.42vw, 28px); }
+  html, body, #app { margin:0; width:100%; height:100%; overflow:hidden; }
+  body {
+    font-family: 'Manrope', system-ui, sans-serif;
+    color: var(--ink);
+    background-image:
+      linear-gradient(120deg, rgba(238,247,237,0.22), rgba(255,255,255,0.10) 50%, rgba(243,247,255,0.22)),
+      var(--bg-image);
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* Full-bleed stage (standalone). When embedded in the deck, parent slide glass is the only frame. */
+  #app {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  html.nn--embed,
+  html.nn--embed body {
+    background: transparent !important;
+    background-image: none !important;
+  }
+
+  /* ── Canvas mount ─────────────────────────────────────────────────────── */
+  .nn-canvas-wrap {
+    position: absolute;
+    inset: 0;
+    cursor: grab;
+    isolation: isolate;
+    z-index: 1;
+  }
+  .nn-canvas-wrap:active { cursor: grabbing; }
+  .nn-canvas-wrap canvas { background: transparent; }
+
+  /* ── Title overlay (fades on first interaction) ───────────────────────── */
+  .nn-title-overlay {
+    position: absolute; inset: 0;
+    z-index: 22;
+    pointer-events: none;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: clamp(2.5rem, 6vh, 4.75rem) clamp(2rem, 6vw, 5rem) clamp(9rem, 24vh, 15rem);
+    text-align: center;
+    background:
+      radial-gradient(circle at 50% 14%, rgba(8,14,24,0.62) 0%, rgba(8,14,24,0.22) 30%, transparent 58%),
+      linear-gradient(180deg, rgba(8,14,24,0.18) 0%, transparent 42%);
+    transition: opacity 280ms ease, visibility 280ms ease;
+  }
+  .nn-title-overlay.is-hidden { opacity: 0; visibility: hidden; }
+  .nn-title-inner { width: min(100%, 62rem); }
+  .kicker {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(0.78rem, 0.92vw, 0.98rem);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-mint-300);
+    margin: 0 0 1.1rem;
+  }
+  h1 {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.4rem, 4.2vw, 3.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.018em;
+    color: #ffffff;
+    margin: 0 0 1.1rem;
+    text-wrap: balance;
+  }
+  .subtitle {
+    font-size: clamp(1.08rem, 1.45vw, 1.35rem);
+    line-height: 1.45;
+    color: color-mix(in srgb, var(--color-accent-light-blue) 88%, white);
+    margin: 0 auto 1.6rem;
+    max-width: 58ch;
+    font-weight: 500;
+  }
+  .nn-title-meta {
+    margin: 0;
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(0.7rem, 0.8vw, 0.86rem);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(224, 232, 255, 0.42);
+  }
+
+  /* ── Stage banner — big current-beat label at top-center ──────────────── */
+  .nn-stage {
+    position: absolute;
+    top: 22px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(4,8,18,0.5);
+    backdrop-filter: blur(14px);
+    font-family: 'Space Mono', monospace;
+    text-align: center;
+  }
+  .nn-stage .top-line {
+    display: flex; align-items: baseline; gap: 14px;
+    font-size: 13px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+  .nn-stage .num { color: rgba(224,232,255,0.4); }
+  .nn-stage .label { color: var(--color-mint-300); font-weight: 700; }
+  .nn-stage .mode {
+    font-size: 9px; letter-spacing: 0.2em;
+    color: rgba(224,232,255,0.5);
+  }
+  .nn-stage .mode b { color: var(--color-accent-light-blue); font-weight: 700; }
+  .nn-stage.train .label { color: #ff6b9d; }
+  .nn-stage.train .mode b { color: #ff6b9d; }
+
+  /* ── Floating beat caption, mid-upper ─────────────────────────────────── */
+  .nn-caption {
+    position: absolute;
+    left: 50%;
+    top: 110px;
+    transform: translateX(-50%);
+    z-index: 20;
+    pointer-events: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-mint-300);
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    background: rgba(4,8,18,0.4);
+    border: 1px solid rgba(170,205,170,0.22);
+    backdrop-filter: blur(12px);
+    opacity: 0;
+    transition: opacity 500ms ease, top 500ms;
+    white-space: nowrap;
+  }
+  .nn-caption.is-visible { opacity: 1; }
+
+  /* ── Input prompt panel (top-left) ────────────────────────────────────── */
+  .nn-prompt {
+    position: absolute;
+    left: 24px; top: 22px;
+    z-index: 20;
+    pointer-events: none;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(4,8,18,0.48);
+    backdrop-filter: blur(14px);
+    font-family: 'Space Mono', monospace;
+  }
+  .nn-prompt .title {
+    font-size: 8px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: rgba(224,232,255,0.45);
+    margin-bottom: 8px;
+  }
+  .nn-prompt .tokens { display: flex; flex-wrap: wrap; gap: 4px; max-width: 280px; }
+  .nn-prompt .tk {
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.04);
+    color: rgba(224,232,255,0.55);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 350ms, transform 350ms, background 350ms, color 350ms, border-color 350ms, box-shadow 350ms;
+  }
+  .nn-prompt .tk.is-in { opacity: 1; transform: translateY(0); }
+  .nn-prompt .tk.is-active {
+    border-color: rgba(100,110,250,0.7);
+    background: rgba(100,110,250,0.22);
+    color: #ffffff;
+    box-shadow: 0 0 14px rgba(100,110,250,0.4);
+  }
+
+  /* ── Attention hot-pair badge (shown during attention beat) ───────────── */
+  .att-badge {
+    position: absolute;
+    right: 24px;
+    top: 22px;
+    z-index: 20;
+    pointer-events: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(100,110,250,0.35);
+    background: rgba(100,110,250,0.12);
+    backdrop-filter: blur(14px);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #fff;
+    opacity: 0;
+    transition: opacity 350ms;
+    min-width: 220px;
+  }
+  .att-badge.is-visible { opacity: 1; }
+  .att-badge .lbl {
+    display: block;
+    font-size: 8px;
+    color: var(--color-accent-light-blue);
+    margin-bottom: 6px;
+    letter-spacing: 0.22em;
+  }
+  .att-badge .pair { display: flex; gap: 8px; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+  .att-badge .pair span { color: #fff; font-weight: 700; }
+  .att-badge .pair .sc { color: var(--color-mint-300); }
+  .att-badge .pair .bar {
+    flex: 1;
+    height: 3px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .att-badge .pair .bar .fill {
+    height: 100%;
+    background: linear-gradient(90deg, #646efa, #aacdaa);
+    border-radius: 2px;
+  }
+
+  /* ── Layer-progress gauge (shown during forward pass) ─────────────────── */
+  .fwd-gauge {
+    position: absolute;
+    left: 24px; bottom: 78px;
+    z-index: 20;
+    pointer-events: none;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(4,8,18,0.48);
+    backdrop-filter: blur(14px);
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    min-width: 200px;
+    opacity: 0;
+    transition: opacity 400ms;
+  }
+  .fwd-gauge.is-visible { opacity: 1; }
+  .fwd-gauge .t { color: rgba(224,232,255,0.4); margin-bottom: 8px; font-size: 8px; }
+  .fwd-gauge .row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .fwd-gauge .row .v { color: var(--color-mint-300); font-weight: 700; }
+  .fwd-gauge .bar { height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; margin-top: 4px; }
+  .fwd-gauge .bar .fill { height: 100%; background: linear-gradient(90deg, #646efa, #aacdaa); border-radius: 2px; width: 0%; transition: width 150ms; }
+
+  /* ── Output probability panel (right middle) ──────────────────────────── */
+  .nn-output {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    pointer-events: none;
+    width: min(280px, 26vw);
+    padding: 16px 16px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(4,8,18,0.52);
+    backdrop-filter: blur(14px);
+    opacity: 0;
+    transition: opacity 500ms ease;
+    font-family: 'Space Mono', monospace;
+  }
+  .nn-output.is-visible { opacity: 1; }
+  .nn-output .out-head {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(224,232,255,0.45);
+    margin-bottom: 14px;
+  }
+  .nn-output .out-row {
+    display: grid;
+    grid-template-columns: 70px 1fr 38px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .nn-output .out-word { color: var(--ink); text-align: right; }
+  .nn-output .out-bar-wrap {
+    height: 6px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .nn-output .out-bar {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, rgba(100,110,250,0.7), rgba(170,205,170,0.8));
+    border-radius: 2px;
+    transition: width 700ms cubic-bezier(.2,.7,.25,1);
+  }
+  .nn-output .out-pct {
+    font-size: 9px;
+    color: rgba(224,232,255,0.7);
+    text-align: left;
+  }
+  .nn-output .out-row.is-top .out-word { color: #fff; font-weight: 700; }
+  .nn-output .out-row.is-top .out-bar { background: linear-gradient(90deg, #646efa, #aacdaa); box-shadow: 0 0 12px rgba(100,110,250,0.55); }
+  .nn-output .out-row.is-top .out-pct { color: var(--color-mint-300); }
+
+  /* ── Scrubber / timeline (bottom) ──────────────────────────────────────── */
+  .nn-timeline {
+    position: absolute;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 20;
+    display: flex; align-items: center; gap: 14px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(4,8,18,0.48);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(224,232,255,0.7);
+  }
+  .nn-timeline button {
+    all: unset;
+    cursor: pointer;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--ink);
+    font-size: 10px;
+    transition: background 200ms;
+  }
+  .nn-timeline button:hover { background: rgba(255,255,255,0.2); }
+  .nn-timeline .track {
+    position: relative;
+    width: min(44vw, 540px);
+    height: 4px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .nn-timeline .track .fill {
+    position: absolute; top: 0; left: 0; bottom: 0;
+    background: linear-gradient(90deg, rgba(100,110,250,0.7), rgba(170,205,170,0.9));
+    border-radius: 2px;
+    width: 0;
+  }
+  .nn-timeline .track .beat-tick {
+    position: absolute;
+    top: -10px;
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    color: rgba(224,232,255,0.35);
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+  .nn-timeline .track .beat-mark {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: rgba(255,255,255,0.25);
+  }
+  .nn-timeline .time {
+    color: rgba(224,232,255,0.55);
+    min-width: 6ch;
+  }
+
+  /* ── Tweaks ──────────────────────────────────────────────────────────── */
+  .tweaks {
+    position: absolute;
+    right: 24px;
+    bottom: 22px;
+    z-index: 30;
+    padding: 14px 16px 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(4,8,18,0.66);
+    backdrop-filter: blur(20px);
+    font-family: 'Space Mono', monospace;
+    color: var(--ink);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    width: 220px;
+    display: none;
+  }
+  .tweaks.is-visible { display: block; }
+  .tweaks .tweaks-title {
+    color: rgba(224,232,255,0.6);
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .tweaks .tweaks-title .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--color-mint-300);
+    box-shadow: 0 0 8px var(--color-mint-300);
+  }
+  .tweaks .tweak-row { margin-bottom: 10px; }
+  .tweaks .tweak-row:last-child { margin-bottom: 0; }
+  .tweaks label {
+    display: block;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    color: rgba(224,232,255,0.5);
+    margin-bottom: 6px;
+  }
+  .tweaks .seg {
+    display: flex; gap: 4px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 6px;
+    padding: 3px;
+  }
+  .tweaks .seg button {
+    all: unset;
+    flex: 1;
+    padding: 5px 4px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    color: rgba(224,232,255,0.6);
+    transition: background 180ms, color 180ms;
+  }
+  .tweaks .seg button:hover { color: #fff; }
+  .tweaks .seg button.is-on {
+    background: rgba(100,110,250,0.3);
+    color: #fff;
+  }
+  .tweaks input[type=range] { width: 100%; accent-color: var(--color-primary); }
+  .tweaks .toggle {
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer;
+  }
+  .tweaks .toggle .switch {
+    width: 28px; height: 14px; border-radius: 999px;
+    background: rgba(255,255,255,0.12);
+    position: relative;
+    transition: background 200ms;
+  }
+  .tweaks .toggle .switch::after {
+    content: '';
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #fff;
+    transition: left 200ms;
+  }
+  .tweaks .toggle.is-on .switch { background: var(--color-primary); }
+  .tweaks .toggle.is-on .switch::after { left: 16px; }
+</style>
+</head>
+<body>
+<script>
+document.documentElement.classList.toggle('nn--embed', window.parent !== window);
+</script>
+<div id="__errBox" style="position:fixed;left:8px;top:8px;z-index:9999;color:#f66;font:11px monospace;background:rgba(0,0,0,.8);padding:8px;max-width:90vw;white-space:pre-wrap;display:none;border-radius:4px"></div>
+<script>
+window.addEventListener('error', e => { const b=document.getElementById('__errBox'); b.style.display='block'; b.textContent+='\n'+(e.error?.stack||e.message); });
+window.addEventListener('unhandledrejection', e => { const b=document.getElementById('__errBox'); b.style.display='block'; b.textContent+='\nPROMISE: '+(e.reason?.stack||e.reason); });
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "fidelity": "cloud",
+  "orbitSpeed": 0.35,
+  "showLabels": true,
+  "autoplay": true
+}/*EDITMODE-END*/;
+window.__TWEAKS = Object.assign({}, TWEAK_DEFAULTS);
+</script>
+
+<div id="app">
+      <div class="nn-canvas-wrap" id="canvasWrap">
+        <!-- title overlay -->
+        <div class="nn-title-overlay" id="titleOverlay">
+          <div class="nn-title-inner">
+            <p class="kicker">Module 02 · How LLMs Work</p>
+            <h1>Inside a Language Model</h1>
+            <p class="subtitle">A sentence enters as tokens, flows through dozens of layers of attention and transformation, and re-emerges as a distribution over possible next words.</p>
+            <p class="nn-title-meta">12 Layers Shown · 4 Beats · 75 Seconds</p>
+          </div>
+        </div>
+
+        <!-- stage banner top-center -->
+        <div class="nn-stage" id="stageLabel">
+          <div class="top-line">
+            <span class="num">01</span>
+            <span class="label">TOKENIZE</span>
+          </div>
+          <div class="mode"><b>→ INFERENCE</b></div>
+        </div>
+
+        <!-- beat caption just beneath stage -->
+        <div class="nn-caption is-visible" id="beatCaption">EMBEDDING · TOKENS ARE MAPPED TO HIGH-DIMENSIONAL VECTORS</div>
+
+        <!-- input prompt (top-left) -->
+        <div class="nn-prompt" id="promptPanel">
+          <div class="title">PROMPT</div>
+          <div class="tokens">
+            <div class="tk" data-i="0">The</div>
+            <div class="tk" data-i="1">capital</div>
+            <div class="tk" data-i="2">of</div>
+            <div class="tk" data-i="3">France</div>
+            <div class="tk" data-i="4">is</div>
+            <div class="tk" data-i="5">___</div>
+          </div>
+        </div>
+
+        <!-- attention badge (top-right, only during attention beat) -->
+        <div class="att-badge" id="attBadge">
+          <span class="lbl">STRONGEST ATTENTION</span>
+          <div class="pair"><span>capital</span><div class="bar"><div class="fill" style="width:100%"></div></div><span class="sc">0.84</span></div>
+          <div class="pair"><span>France</span> <div class="bar"><div class="fill" style="width:78%"></div></div><span class="sc">0.76</span></div>
+          <div class="pair"><span>is → ___</span><div class="bar"><div class="fill" style="width:62%"></div></div><span class="sc">0.58</span></div>
+        </div>
+
+        <!-- forward pass gauge (bottom-left) -->
+        <div class="fwd-gauge" id="fwdGauge">
+          <div class="t">TRANSFORMER · FORWARD PASS</div>
+          <div class="row"><span>LAYER</span><span class="v" id="gLayer">01 / 12</span></div>
+          <div class="row"><span>PARAMS TOUCHED</span><span class="v" id="gParams">0%</span></div>
+          <div class="bar"><div class="fill" id="gFill"></div></div>
+        </div>
+
+        <!-- output distribution -->
+        <div class="nn-output" id="outputPanel">
+          <div class="out-head">NEXT-TOKEN · P(word | context)</div>
+          <div class="out-row is-top" data-w="Paris"> <span class="out-word">Paris</span>  <div class="out-bar-wrap"><div class="out-bar"></div></div>  <span class="out-pct">.87</span></div>
+          <div class="out-row"         data-w="Lyon">  <span class="out-word">Lyon</span>   <div class="out-bar-wrap"><div class="out-bar"></div></div>  <span class="out-pct">.04</span></div>
+          <div class="out-row"         data-w="Rome">  <span class="out-word">Rome</span>   <div class="out-bar-wrap"><div class="out-bar"></div></div>  <span class="out-pct">.02</span></div>
+          <div class="out-row"         data-w="London"><span class="out-word">London</span> <div class="out-bar-wrap"><div class="out-bar"></div></div>  <span class="out-pct">.01</span></div>
+          <div class="out-row"         data-w="Berlin"><span class="out-word">Berlin</span> <div class="out-bar-wrap"><div class="out-bar"></div></div>  <span class="out-pct">.01</span></div>
+          <div class="out-row"         data-w="...">   <span class="out-word">…</span>      <div class="out-bar-wrap"><div class="out-bar"></div></div>  <span class="out-pct">.05</span></div>
+        </div>
+
+        <!-- tweaks panel -->
+        <div class="tweaks" id="tweaksPanel">
+          <div class="tweaks-title">TWEAKS <span class="dot"></span></div>
+          <div class="tweak-row">
+            <label>FIDELITY</label>
+            <div class="seg" data-seg="fidelity">
+              <button data-val="cloud" class="is-on">CLOUD</button>
+              <button data-val="diagram">DIAGRAM</button>
+              <button data-val="blueprint">WIRE</button>
+            </div>
+          </div>
+          <div class="tweak-row">
+            <label>ORBIT SPEED <span id="orbitVal" style="color:var(--color-accent-light-blue)">0.35</span></label>
+            <input type="range" id="orbitRange" min="0" max="1.2" step="0.05" value="0.35" />
+          </div>
+          <div class="tweak-row">
+            <div class="toggle is-on" id="toggleLabels"><span>LABELS</span><span class="switch"></span></div>
+          </div>
+          <div class="tweak-row">
+            <div class="toggle is-on" id="toggleAutoplay"><span>AUTOPLAY</span><span class="switch"></span></div>
+          </div>
+        </div>
+
+        <!-- timeline -->
+        <div class="nn-timeline" id="timeline">
+          <button id="playBtn" title="Play / pause">▶</button>
+          <div class="track" id="trackEl">
+            <div class="fill" id="trackFill"></div>
+            <span class="beat-mark" style="left:0%"></span>
+            <span class="beat-mark" style="left:20%"></span>
+            <span class="beat-mark" style="left:47%"></span>
+            <span class="beat-mark" style="left:80%"></span>
+            <span class="beat-mark" style="left:100%"></span>
+            <span class="beat-tick"  style="left:0%">01</span>
+            <span class="beat-tick"  style="left:20%">02</span>
+            <span class="beat-tick"  style="left:47%">03</span>
+            <span class="beat-tick"  style="left:80%">04</span>
+          </div>
+          <span class="time" id="timeLabel">00 / 75</span>
+        </div>
+      </div>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+try {
+
+// ──────────────────────────────────────────────────────────────────────────
+// Config
+const NUM_LAYERS      = 12;
+const LAYER_GAP       = 0.95;       // tightened
+const LAYER_W         = 3.0;
+const LAYER_H         = 2.0;
+
+const COLOR_IN  = 0x4ade80;   // green
+const COLOR_ATT = 0x646efa;   // blue
+const COLOR_MID = 0xaacdaa;   // mint
+const COLOR_OUT = 0xff7828;   // orange
+const COLOR_RED = 0xff6b9d;   // training flash
+
+const TOKEN_WORDS = ['The','capital','of','France','is','___'];
+
+const BEATS = [
+  { t: 0,  label: 'TOKENIZE',     mode: '→ INFERENCE', caption: 'EMBEDDING · TOKENS MAPPED TO HIGH-DIMENSIONAL VECTORS' },
+  { t: 15, label: 'ATTENTION',    mode: '→ INFERENCE', caption: 'SELF-ATTENTION · EACH TOKEN LOOKS AT EVERY OTHER TOKEN' },
+  { t: 35, label: 'FORWARD PASS', mode: '→ INFERENCE', caption: '12 LAYERS SHOWN · ~175 BILLION PARAMETERS TOTAL' },
+  { t: 60, label: 'PREDICT',      mode: '→ INFERENCE', caption: 'NEXT-TOKEN PROBABILITY DISTRIBUTION' },
+];
+const DURATION = 75;
+const TRAIN_FLASH = { start: 52, end: 55 };
+
+// ──────────────────────────────────────────────────────────────────────────
+// Three.js setup
+const container = document.getElementById('canvasWrap');
+const W = () => container.clientWidth  || 1;
+const H = () => container.clientHeight || 1;
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(W(), H());
+renderer.setClearColor(0x000000, 0);
+container.appendChild(renderer.domElement);
+renderer.domElement.style.position = 'absolute';
+renderer.domElement.style.inset = '0';
+renderer.domElement.style.zIndex = '1';
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, W()/H(), 0.01, 400);
+// angle: above & from the side so all 12 layers + each layer's 6×4 grid are readable
+camera.position.set(10, 4.2, 11);
+window.__scene = scene; window.__camera = camera; window.__renderer = renderer; window.__THREE = THREE;
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.autoRotate = true;
+controls.autoRotateSpeed = window.__TWEAKS.orbitSpeed;
+controls.minDistance = 4;
+controls.maxDistance = 28;
+controls.target.set(0, 0, 0);
+
+// Lights
+scene.add(new THREE.AmbientLight(0xb0c0e0, 0.95));
+const keyLight = new THREE.PointLight(0x6080ff, 2.2, 40); keyLight.position.set(0, 4, 6); scene.add(keyLight);
+const fillLight = new THREE.PointLight(0x40ffb0, 0.7, 30); fillLight.position.set(0, -5, 3); scene.add(fillLight);
+const rimLight = new THREE.PointLight(0xff9060, 0.5, 30); rimLight.position.set(-8, 2, -6); scene.add(rimLight);
+
+// Stars
+const starCount = 1400;
+const starPos = new Float32Array(starCount * 3);
+for (let i=0;i<starCount*3;i++) starPos[i] = (Math.random()-0.5) * 220;
+const starGeo = new THREE.BufferGeometry();
+starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({
+  color: 0xffffff, size: 0.04, transparent: true, opacity: 0.38,
+})));
+
+// Grid
+const grid = new THREE.GridHelper(32, 32, 0x0d1c38, 0x060e1e);
+grid.position.y = -3;
+grid.material.opacity = 0.45;
+grid.material.transparent = true;
+scene.add(grid);
+
+// Faint axes
+function addAxis(dir, col, len = 8) {
+  const pts = [new THREE.Vector3(...dir.map(v=>v*-len)), new THREE.Vector3(...dir.map(v=>v*len))];
+  const geo = new THREE.BufferGeometry().setFromPoints(pts);
+  const mat = new THREE.LineBasicMaterial({ color: col, transparent: true, opacity: 0.08 });
+  scene.add(new THREE.Line(geo, mat));
+}
+addAxis([1,0,0], 0xff4040);
+addAxis([0,1,0], 0x40ff60);
+addAxis([0,0,1], 0x4060ff);
+
+// ──────────────────────────────────────────────────────────────────────────
+// Network geometry
+
+const LAYER_X = (i) => (i - (NUM_LAYERS - 1) / 2) * LAYER_GAP;
+
+// Layer planes + frames
+const layerObjs = [];
+for (let li = 0; li < NUM_LAYERS; li++) {
+  const x = LAYER_X(li);
+  const pGeo = new THREE.PlaneGeometry(LAYER_W, LAYER_H);
+  const pMat = new THREE.MeshBasicMaterial({
+    color: 0x4060a0,
+    transparent: true,
+    opacity: 0.04,
+    side: THREE.DoubleSide,
+    depthWrite: false,
+  });
+  const plane = new THREE.Mesh(pGeo, pMat);
+  plane.rotation.y = Math.PI / 2;
+  plane.position.set(x, 0, 0);
+  scene.add(plane);
+
+  const w = LAYER_W / 2, h = LAYER_H / 2;
+  const corners = [
+    new THREE.Vector3(x, -h, -w),
+    new THREE.Vector3(x,  h, -w),
+    new THREE.Vector3(x,  h,  w),
+    new THREE.Vector3(x, -h,  w),
+    new THREE.Vector3(x, -h, -w),
+  ];
+  const fGeo = new THREE.BufferGeometry().setFromPoints(corners);
+  const fMat = new THREE.LineBasicMaterial({ color: 0x8aa0ff, transparent: true, opacity: 0.22 });
+  const frame = new THREE.Line(fGeo, fMat);
+  scene.add(frame);
+
+  layerObjs.push({ plane, pMat, frame, fMat });
+}
+
+// Nodes (6x4 grid per layer)
+const NODE_COLS = 6, NODE_ROWS = 4;
+const nodes = [];
+for (let li = 0; li < NUM_LAYERS; li++) {
+  const x = LAYER_X(li);
+  const layerColor = li === 0 ? COLOR_IN
+                   : li === NUM_LAYERS - 1 ? COLOR_OUT
+                   : COLOR_MID;
+  for (let r = 0; r < NODE_ROWS; r++) {
+    for (let c = 0; c < NODE_COLS; c++) {
+      const y = (r - (NODE_ROWS-1)/2) * (LAYER_H / NODE_ROWS * 0.8);
+      const z = (c - (NODE_COLS-1)/2) * (LAYER_W / NODE_COLS * 0.8);
+      const geo = new THREE.SphereGeometry(0.07, 14, 14);
+      const mat = new THREE.MeshPhongMaterial({
+        color: layerColor,
+        emissive: layerColor,
+        emissiveIntensity: 0.35,
+        transparent: true,
+        opacity: 0.85,
+        shininess: 90,
+      });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.position.set(x, y, z);
+      scene.add(mesh);
+      nodes.push({ mesh, mat, layer: li, r, c, basePos: mesh.position.clone() });
+    }
+  }
+}
+
+// Connections — sparse sample between adjacent layers
+const conns = [];
+const CONN_DENSITY = 0.22;
+for (let li = 0; li < NUM_LAYERS - 1; li++) {
+  const layerA = nodes.filter(n => n.layer === li);
+  const layerB = nodes.filter(n => n.layer === li + 1);
+  for (const a of layerA) {
+    for (const b of layerB) {
+      if (Math.random() > CONN_DENSITY) continue;
+      const geo = new THREE.BufferGeometry().setFromPoints([a.basePos, b.basePos]);
+      const mat = new THREE.LineBasicMaterial({
+        color: 0x6080c0, transparent: true, opacity: 0.05,
+      });
+      const line = new THREE.Line(geo, mat);
+      scene.add(line);
+      conns.push({ line, mat, layerFrom: li });
+    }
+  }
+}
+
+// Token embedding particle clouds (6 tokens)
+const tokenClouds = [];
+const PARTICLES_PER_TOKEN = 70;
+for (let ti = 0; ti < TOKEN_WORDS.length; ti++) {
+  const positions = new Float32Array(PARTICLES_PER_TOKEN * 3);
+  const targets   = new Float32Array(PARTICLES_PER_TOKEN * 3);
+  const starts    = new Float32Array(PARTICLES_PER_TOKEN * 3);
+  const layer0 = nodes.filter(n => n.layer === 0);
+  const yCenter = (ti - (TOKEN_WORDS.length-1)/2) * 0.36;
+  const startX = LAYER_X(0) - 3.6 - Math.random() * 0.4;
+  for (let p = 0; p < PARTICLES_PER_TOKEN; p++) {
+    const sx = startX + (Math.random()-0.5) * 0.3;
+    const sy = yCenter + (Math.random()-0.5) * 0.25;
+    const sz = (Math.random()-0.5) * 0.3;
+    starts[p*3+0]   = sx; starts[p*3+1]   = sy; starts[p*3+2]   = sz;
+    positions[p*3+0]= sx; positions[p*3+1]= sy; positions[p*3+2]= sz;
+    const near = layer0[Math.floor(Math.random()*layer0.length)].basePos;
+    targets[p*3+0] = near.x + (Math.random()-0.5) * 0.25;
+    targets[p*3+1] = near.y + (Math.random()-0.5) * 0.25;
+    targets[p*3+2] = near.z + (Math.random()-0.5) * 0.25;
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geo.setAttribute('target',   new THREE.BufferAttribute(targets, 3));
+  geo.setAttribute('start',    new THREE.BufferAttribute(starts, 3));
+  const mat = new THREE.PointsMaterial({
+    color: COLOR_IN,
+    size: 0.07,
+    transparent: true,
+    opacity: 0.9,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+  });
+  const points = new THREE.Points(geo, mat);
+  scene.add(points);
+  tokenClouds.push({ points, geo, mat, tokenIndex: ti, centerTarget: null });
+}
+// Compute each cloud's centerTarget (average of target positions)
+for (const tc of tokenClouds) {
+  const tgt = tc.geo.getAttribute('target');
+  let sx=0, sy=0, sz=0;
+  for (let p=0; p<tgt.count; p++) { sx += tgt.getX(p); sy += tgt.getY(p); sz += tgt.getZ(p); }
+  tc.centerTarget = new THREE.Vector3(sx/tgt.count, sy/tgt.count, sz/tgt.count);
+}
+
+// Attention arcs between token centers (for the ATTENTION beat)
+const attentionArcs = [];
+(function makeAttention() {
+  const pairs = [
+    [1,3, 0.9],  // capital <-> France
+    [3,5, 0.82], // France <-> ___
+    [4,5, 0.68], // is <-> ___
+    [1,5, 0.55], // capital <-> ___
+    [0,1, 0.42], // The <-> capital
+    [2,3, 0.38], // of <-> France
+  ];
+  for (const [ai, bi, s] of pairs) {
+    const aC = tokenClouds[ai].centerTarget;
+    const bC = tokenClouds[bi].centerTarget;
+    // Arc bowing outward (to -X) so arcs are visible from the default camera
+    const mid = new THREE.Vector3().addVectors(aC, bC).multiplyScalar(0.5);
+    mid.x -= 0.9 + Math.random() * 0.5;
+    mid.y += (Math.random() - 0.5) * 0.6;
+    const pts = [];
+    const N = 36;
+    for (let i = 0; i <= N; i++) {
+      const t = i / N;
+      pts.push(new THREE.Vector3(
+        (1-t)*(1-t)*aC.x + 2*(1-t)*t*mid.x + t*t*bC.x,
+        (1-t)*(1-t)*aC.y + 2*(1-t)*t*mid.y + t*t*bC.y,
+        (1-t)*(1-t)*aC.z + 2*(1-t)*t*mid.z + t*t*bC.z,
+      ));
+    }
+    const geo = new THREE.BufferGeometry().setFromPoints(pts);
+    // LineBasic — thicker appearance via additive blend
+    const mat = new THREE.LineBasicMaterial({
+      color: COLOR_ATT,
+      transparent: true,
+      opacity: 0,
+      blending: THREE.AdditiveBlending,
+    });
+    const line = new THREE.Line(geo, mat);
+    scene.add(line);
+    attentionArcs.push({ line, mat, strength: s, ai, bi });
+  }
+})();
+
+// Pulse orb — large glowing ball that visibly travels through layers during forward pass
+const pulseGeo = new THREE.SphereGeometry(0.42, 24, 24);
+const pulseMat = new THREE.MeshBasicMaterial({
+  color: 0xaacdaa, transparent: true, opacity: 0,
+  blending: THREE.AdditiveBlending, depthWrite: false,
+});
+const pulse = new THREE.Mesh(pulseGeo, pulseMat);
+pulse.position.set(LAYER_X(0), 0, 0);
+scene.add(pulse);
+
+// Output beam — glow off the right side
+const beamGeo = new THREE.ConeGeometry(0.6, 1.8, 24, 1, true);
+const beamMat = new THREE.MeshBasicMaterial({
+  color: COLOR_OUT, transparent: true, opacity: 0,
+  side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false,
+});
+const beam = new THREE.Mesh(beamGeo, beamMat);
+beam.position.set(LAYER_X(NUM_LAYERS-1) + 1.8, 0, 0);
+beam.rotation.z = -Math.PI / 2;
+scene.add(beam);
+
+// Softer halo around the whole network (subtle ambient)
+const haloGeo = new THREE.SphereGeometry(0.18, 16, 16);
+const haloMat = new THREE.MeshBasicMaterial({ color: 0x646efa, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false });
+const attHalo = new THREE.Mesh(haloGeo, haloMat);
+attHalo.scale.set(12, 7, 7);
+scene.add(attHalo);
+
+// ──────────────────────────────────────────────────────────────────────────
+// Playback
+
+let playing = window.__TWEAKS.autoplay;
+let currentTime = 0;
+let lastFrameAt = performance.now();
+
+const playBtn     = document.getElementById('playBtn');
+const trackEl     = document.getElementById('trackEl');
+const trackFill   = document.getElementById('trackFill');
+const timeLabel   = document.getElementById('timeLabel');
+const stageLabel  = document.getElementById('stageLabel');
+const beatCaption = document.getElementById('beatCaption');
+const promptPanel = document.getElementById('promptPanel');
+const attBadge    = document.getElementById('attBadge');
+const fwdGauge    = document.getElementById('fwdGauge');
+const outputPanel = document.getElementById('outputPanel');
+const titleOverlay= document.getElementById('titleOverlay');
+const tweaksPanel = document.getElementById('tweaksPanel');
+const gLayer      = document.getElementById('gLayer');
+const gParams     = document.getElementById('gParams');
+const gFill       = document.getElementById('gFill');
+
+playBtn.addEventListener('click', () => setPlaying(!playing));
+trackEl.addEventListener('click', (e) => {
+  const rect = trackEl.getBoundingClientRect();
+  const t = ((e.clientX - rect.left) / rect.width) * DURATION;
+  currentTime = Math.max(0, Math.min(DURATION, t));
+});
+
+function setPlaying(v) { playing = v; playBtn.textContent = v ? '❚❚' : '▶'; }
+setPlaying(window.__TWEAKS.autoplay);
+
+// Dismiss title overlay
+let dismissed = false;
+function dismissTitle() {
+  if (dismissed) return; dismissed = true;
+  titleOverlay.classList.add('is-hidden');
+  tweaksPanel.classList.add('is-visible');
+}
+container.addEventListener('pointerdown', dismissTitle);
+container.addEventListener('wheel', dismissTitle, { passive: true });
+setTimeout(dismissTitle, 3800);
+
+// Beat helpers
+function getBeatIndex(t) {
+  let idx = 0;
+  for (let i = 0; i < BEATS.length; i++) if (t >= BEATS[i].t) idx = i;
+  return idx;
+}
+let lastBeat = -1;
+function setStage(idx, override) {
+  const b = override || BEATS[idx];
+  stageLabel.classList.toggle('train', b.isTrain === true);
+  stageLabel.innerHTML =
+    `<div class="top-line"><span class="num">${String((override && override.numStr) || idx+1).padStart(2,'0')}</span><span class="label">${b.label}</span></div>` +
+    `<div class="mode"><b>${b.mode}</b></div>`;
+  beatCaption.textContent = b.caption;
+  beatCaption.classList.add('is-visible');
+}
+setStage(0);
+
+function setLabelsVisible(v) {
+  [stageLabel, beatCaption, promptPanel, attBadge, fwdGauge, outputPanel].forEach(el => {
+    if (el) el.style.display = v ? '' : 'none';
+  });
+}
+
+// ──────────────────────────────────────────────────────────────────────────
+// Render state at time t
+
+const outRows = outputPanel.querySelectorAll('.out-row');
+const outTargets = [87, 4, 2, 1, 1, 5];
+
+function renderState(t) {
+  const pct = t / DURATION;
+  trackFill.style.width = (pct * 100) + '%';
+  timeLabel.textContent = String(Math.floor(t)).padStart(2,'0') + ' / ' + DURATION;
+
+  // Detect training flash window to override stage
+  const inTrain = t >= TRAIN_FLASH.start && t <= TRAIN_FLASH.end;
+  const bi = getBeatIndex(t);
+  const stageKey = inTrain ? 'train' : bi;
+  if (stageKey !== lastBeat) {
+    if (inTrain) {
+      setStage(2, { label: '← TRAINING', mode: 'GRADIENTS FLOW BACKWARD', caption: 'TRAINING · GRADIENTS UPDATE ~175B PARAMETERS', isTrain: true, numStr: '03' });
+    } else {
+      setStage(bi);
+    }
+    lastBeat = stageKey;
+  }
+
+  // ── Panels visibility ──
+  // Prompt always visible after first token arrives
+  const tokenEls = promptPanel.querySelectorAll('.tk');
+
+  // ── Beat 1: tokens drift in ──
+  for (let i = 0; i < tokenClouds.length; i++) {
+    const tc = tokenClouds[i];
+    const stagger = 0.8 + i * 1.3;
+    const end = stagger + 2.5;
+    const local = Math.max(0, Math.min(1, (t - stagger) / (end - stagger)));
+    const ease = local < 0.5 ? 2*local*local : -1 + (4 - 2*local) * local;
+    const pos = tc.geo.getAttribute('position');
+    const start = tc.geo.getAttribute('start');
+    const tgt = tc.geo.getAttribute('target');
+    for (let p = 0; p < pos.count; p++) {
+      pos.setXYZ(p,
+        start.getX(p) + (tgt.getX(p) - start.getX(p)) * ease,
+        start.getY(p) + (tgt.getY(p) - start.getY(p)) * ease,
+        start.getZ(p) + (tgt.getZ(p) - start.getZ(p)) * ease,
+      );
+    }
+    pos.needsUpdate = true;
+
+    // Color morph as forward pass progresses
+    const cForward = Math.max(0, Math.min(1, (t - 35) / 23));
+    const col = new THREE.Color(COLOR_IN).lerp(new THREE.Color(COLOR_ATT), cForward);
+    tc.mat.color.copy(col);
+
+    // Token pill states in prompt panel
+    const el = tokenEls[i];
+    if (el) {
+      if (t > stagger - 0.2) el.classList.add('is-in'); else el.classList.remove('is-in');
+      // Active pill during attention + prediction
+      if ((t > 15 && t < 34) || (t > 60 && i === 5)) el.classList.add('is-active'); else el.classList.remove('is-active');
+    }
+  }
+
+  // ── Beat 2: attention ──
+  const attIn  = Math.max(0, Math.min(1, (t - 15) / 2.5));
+  const attOut = Math.max(0, Math.min(1, (34 - t) / 3));
+  const attVis = Math.min(attIn, attOut);
+  for (const a of attentionArcs) {
+    const pulseI = 0.5 + 0.5 * Math.sin(t * 2.4 + a.ai * 0.9 + a.bi * 0.4);
+    a.mat.opacity = attVis * (0.35 + 0.65 * a.strength) * (0.55 + 0.45 * pulseI);
+  }
+  // Soft blue halo while attention is active
+  haloMat.opacity = attVis * 0.05;
+  // Attention badge DOM
+  attBadge.classList.toggle('is-visible', attVis > 0.3);
+
+  // ── Beat 3: forward pass ──
+  const fwdLocal = Math.max(0, Math.min(1, (t - 35) / 22));
+  const frontLayer = fwdLocal * (NUM_LAYERS + 0.5) - 0.25;
+
+  // Pulse orb visible + traveling
+  const pulseVisible = t >= 34.5 && t <= 60 && !inTrain;
+  if (pulseVisible) {
+    const fl = Math.max(0, Math.min(NUM_LAYERS - 1, frontLayer));
+    pulse.position.set(LAYER_X(fl), 0, 0);
+    const base = 0.6;
+    pulseMat.opacity = base + 0.3 * Math.sin(t * 6);
+    pulseMat.color.setHex(inTrain ? COLOR_RED : (fwdLocal < 0.3 ? COLOR_IN : fwdLocal > 0.85 ? COLOR_OUT : 0xaacdaa));
+    pulse.scale.setScalar(1 + 0.15 * Math.sin(t * 8));
+  } else {
+    pulseMat.opacity = 0;
+  }
+  // Training flash — pulse reversed direction (shows gradients going backward)
+  if (inTrain) {
+    const local = (t - TRAIN_FLASH.start) / (TRAIN_FLASH.end - TRAIN_FLASH.start);
+    const reverseLayer = (1 - local) * (NUM_LAYERS - 1);
+    pulse.position.set(LAYER_X(reverseLayer), 0, 0);
+    pulseMat.opacity = 0.9 + 0.2 * Math.sin(t * 10);
+    pulseMat.color.setHex(COLOR_RED);
+    pulse.scale.setScalar(1.2 + 0.15 * Math.sin(t * 10));
+  }
+
+  // Forward gauge DOM
+  const showFwd = t >= 34 && t <= 60;
+  fwdGauge.classList.toggle('is-visible', showFwd);
+  if (showFwd) {
+    const curLayer = Math.max(1, Math.min(NUM_LAYERS, Math.ceil(frontLayer + 1)));
+    gLayer.textContent = String(curLayer).padStart(2,'0') + ' / ' + NUM_LAYERS;
+    const parPct = Math.max(0, Math.min(100, fwdLocal * 100));
+    gParams.textContent = (parPct.toFixed(0)) + '%';
+    gFill.style.width = parPct + '%';
+    if (inTrain) {
+      gLayer.textContent = 'REVERSE';
+      gParams.textContent = '∇';
+      gFill.style.width = (100 - (t - TRAIN_FLASH.start) / (TRAIN_FLASH.end - TRAIN_FLASH.start) * 100) + '%';
+    }
+  }
+
+  // Layers brightness near the pulse front
+  for (let li = 0; li < NUM_LAYERS; li++) {
+    const distance = Math.abs(li - frontLayer);
+    const glow = Math.max(0, 1 - distance * 0.8);
+    const inFwd = t >= 34 && t <= 60;
+    layerObjs[li].pMat.opacity = 0.04 + (inFwd ? glow * 0.28 : 0);
+    layerObjs[li].fMat.opacity = 0.22 + (inFwd ? glow * 0.7 : 0);
+    if (inTrain) layerObjs[li].fMat.color.setHex(COLOR_RED);
+    else layerObjs[li].fMat.color.setHex(0x8aa0ff);
+  }
+
+  // Nodes emissive + color
+  for (const n of nodes) {
+    const distance = Math.abs(n.layer - frontLayer);
+    const glow = t >= 34 && t <= 60 ? Math.max(0, 1 - distance * 0.7) : 0;
+    n.mat.emissiveIntensity = 0.35 + glow * 1.1 + Math.sin(t * 3 + n.layer * 0.3 + n.r * 0.2) * 0.05;
+    const targetCol = inTrain ? COLOR_RED
+                   : (n.layer === 0 ? COLOR_IN
+                   : (n.layer === NUM_LAYERS - 1 ? COLOR_OUT : COLOR_MID));
+    n.mat.emissive.setHex(targetCol);
+    n.mat.color.setHex(targetCol);
+  }
+
+  // Connections brighten near pulse
+  for (const c of conns) {
+    const distance = Math.abs(c.layerFrom + 0.5 - frontLayer);
+    const inFwd = t >= 34 && t <= 60;
+    const glow = inFwd ? Math.max(0, 1 - distance * 0.8) : 0;
+    c.mat.opacity = 0.05 + glow * 0.4;
+    c.mat.color.setHex(inTrain ? COLOR_RED : 0x6080c0);
+  }
+
+  // ── Beat 4: prediction ──
+  const predIn = Math.max(0, Math.min(1, (t - 60) / 5));
+  if (t >= 58) {
+    outputPanel.classList.add('is-visible');
+    const ease = predIn < 0.5 ? 2*predIn*predIn : -1 + (4 - 2*predIn) * predIn;
+    outRows.forEach((row, i) => {
+      row.querySelector('.out-bar').style.width = (ease * outTargets[i]) + '%';
+    });
+    beamMat.opacity = 0.12 + Math.sin(t * 3) * 0.05 + predIn * 0.3;
+  } else {
+    outputPanel.classList.remove('is-visible');
+    beamMat.opacity = 0;
+  }
+}
+
+// ──────────────────────────────────────────────────────────────────────────
+// Tweaks wiring
+
+const fidelitySeg   = tweaksPanel.querySelector('[data-seg="fidelity"]');
+const orbitRange    = document.getElementById('orbitRange');
+const orbitVal      = document.getElementById('orbitVal');
+const toggleLabels  = document.getElementById('toggleLabels');
+const toggleAutoplay= document.getElementById('toggleAutoplay');
+
+function applyFidelity(mode) {
+  window.__TWEAKS.fidelity = mode;
+  if (mode === 'cloud') {
+    for (const tc of tokenClouds) { tc.mat.size = 0.08; tc.mat.opacity = 0.9; tc.points.visible = true; }
+    for (const n of nodes)        { n.mat.transparent = true; n.mat.opacity = 0.85; n.mesh.visible = true; n.mat.wireframe = false; n.mesh.scale.setScalar(1); }
+    for (const c of conns)        { c.line.visible = true; }
+    for (const lo of layerObjs)   { lo.plane.visible = true; lo.fMat.color.setHex(0x8aa0ff); }
+    grid.visible = true;
+  } else if (mode === 'diagram') {
+    for (const tc of tokenClouds) { tc.mat.size = 0.05; tc.mat.opacity = 0.55; }
+    for (const n of nodes)        { n.mat.opacity = 0.98; n.mesh.visible = true; n.mat.wireframe = false; n.mesh.scale.setScalar(1.3); }
+    for (const c of conns)        { c.line.visible = true; }
+    for (const lo of layerObjs)   { lo.plane.visible = false; lo.fMat.color.setHex(0xaacdaa); }
+    grid.visible = false;
+  } else if (mode === 'blueprint') {
+    for (const tc of tokenClouds) { tc.mat.size = 0.04; tc.mat.opacity = 0.6; tc.mat.color.setHex(0xb8c4ff); }
+    for (const n of nodes)        { n.mat.opacity = 0.55; n.mat.wireframe = true; n.mat.color.setHex(0xb8c4ff); n.mat.emissive.setHex(0xb8c4ff); n.mesh.scale.setScalar(1); }
+    for (const c of conns)        { c.line.visible = true; c.mat.color.setHex(0xb8c4ff); }
+    for (const lo of layerObjs)   { lo.plane.visible = false; lo.fMat.color.setHex(0xb8c4ff); }
+    grid.visible = true;
+  }
+}
+fidelitySeg.addEventListener('click', (e) => {
+  const btn = e.target.closest('button');
+  if (!btn) return;
+  [...fidelitySeg.querySelectorAll('button')].forEach(b => b.classList.remove('is-on'));
+  btn.classList.add('is-on');
+  applyFidelity(btn.dataset.val);
+  postEdit({ fidelity: btn.dataset.val });
+});
+
+orbitRange.addEventListener('input', () => {
+  const v = parseFloat(orbitRange.value);
+  controls.autoRotateSpeed = v;
+  orbitVal.textContent = v.toFixed(2);
+  window.__TWEAKS.orbitSpeed = v;
+  postEdit({ orbitSpeed: v });
+});
+
+toggleLabels.addEventListener('click', () => {
+  const on = !toggleLabels.classList.contains('is-on');
+  toggleLabels.classList.toggle('is-on', on);
+  setLabelsVisible(on);
+  window.__TWEAKS.showLabels = on;
+  postEdit({ showLabels: on });
+});
+toggleAutoplay.addEventListener('click', () => {
+  const on = !toggleAutoplay.classList.contains('is-on');
+  toggleAutoplay.classList.toggle('is-on', on);
+  window.__TWEAKS.autoplay = on;
+  setPlaying(on);
+  postEdit({ autoplay: on });
+});
+
+// Apply initial tweaks
+applyFidelity(window.__TWEAKS.fidelity);
+orbitRange.value = window.__TWEAKS.orbitSpeed;
+orbitVal.textContent = Number(window.__TWEAKS.orbitSpeed).toFixed(2);
+controls.autoRotateSpeed = window.__TWEAKS.orbitSpeed;
+toggleLabels.classList.toggle('is-on', !!window.__TWEAKS.showLabels);
+setLabelsVisible(!!window.__TWEAKS.showLabels);
+toggleAutoplay.classList.toggle('is-on', !!window.__TWEAKS.autoplay);
+
+function postEdit(edits) {
+  try { window.parent.postMessage({ type: '__edit_mode_set_keys', edits }, '*'); } catch {}
+}
+window.addEventListener('message', (e) => {
+  const d = e.data;
+  if (!d || typeof d !== 'object') return;
+  if (d.type === '__activate_edit_mode')   tweaksPanel.classList.add('is-visible');
+  if (d.type === '__deactivate_edit_mode') tweaksPanel.classList.remove('is-visible');
+});
+try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch {}
+
+// ──────────────────────────────────────────────────────────────────────────
+// Main loop + resize
+
+function onResize() {
+  camera.aspect = W() / H();
+  camera.updateProjectionMatrix();
+  renderer.setSize(W(), H());
+}
+new ResizeObserver(onResize).observe(container);
+
+controls.addEventListener('start', () => { controls.autoRotate = false; });
+
+function tick(now) {
+  requestAnimationFrame(tick);
+  const dt = (now - lastFrameAt) / 1000;
+  lastFrameAt = now;
+  if (playing) {
+    currentTime += dt;
+    if (currentTime >= DURATION) currentTime = 0;
+  }
+  renderState(currentTime);
+  controls.update();
+  renderer.render(scene, camera);
+}
+requestAnimationFrame((t) => { lastFrameAt = t; tick(t); });
+
+} catch(err) {
+  const b=document.getElementById('__errBox'); b.style.display='block'; b.textContent='MODULE ERR: '+(err?.stack||err);
+  console.error(err);
+}
+</script>
+</body>
+</html>

@@ -298,7 +298,7 @@ export const slides = [
   },
   {
     id: 'qW3sN7gH1z',
-    layout: 'single',
+    layout: 'two-col',
     section: 'Module 2',
     chapter: '02',
     kicker: 'The Core Mechanism',
@@ -306,11 +306,20 @@ export const slides = [
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: 'They do one thing, extraordinarily well:',
-    blockquote: 'Predict the most likely next token, given everything they have received.',
-    body2:
-      'Everything LLMs do emerges from that one process — answering questions, writing poetry, interpreting a contract, drafting a sales pitch — performed at massive scale.\n\nThe world\'s most sophisticated autocomplete; one that has read every fiction and non-fiction book, research paper, forum discussion, manual, contract, and every other piece of text ever written, transcribed, or published and digitised on the internet.',
-    body3: '***Not magic. Not remotely human. Still, genuinely remarkable when applied carefully.***',
+    left: {
+      title: 'One mechanism',
+      body: `They do one thing, extraordinarily well:
+
+***Predict the most likely next token, given everything they have received.***
+
+Everything LLMs do emerges from that one process — answering questions, writing poetry, interpreting a contract, drafting a sales pitch — performed at massive scale.`,
+    },
+    right: {
+      title: 'At global scale',
+      body: `The world's most sophisticated autocomplete; one that has read every fiction and non-fiction book, research paper, forum discussion, manual, contract, and every other piece of text ever written, transcribed, or published and digitised on the internet.
+
+***Not magic. Not remotely human. Still, genuinely remarkable when applied carefully.***`,
+    },
   },
   {
     id: 'zK2nL8pQ5w',
@@ -405,6 +414,19 @@ Repeat — across books, articles, code, science, law, and much of the internet
 The result? Not memorisation — but distilled understanding, compressed into billions of numbers.`,
   },
   {
+    id: 'nN4kP8wR2x',
+    layout: 'embed',
+    section: 'Module 4',
+    chapter: '04',
+    tone: 'section-b',
+    style: 'dark',
+    animation: 'blur-in',
+    anim_duration: 0.9,
+    anim_stagger: 0.18,
+    embedSrc: '/neural-network.html',
+    embedTitle: 'Neural network: how an LLM is built',
+  },
+  {
     id: 'cM3wT6nK2y',
     layout: 'single',
     section: 'Module 4',
@@ -414,17 +436,21 @@ The result? Not memorisation — but distilled understanding, compressed into bi
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `A pre-trained model is powerful but impractical. Refinement makes it deployable:
-
-**Instruction fine-tuning** — Teaches it to behave like an assistant
-
-**RLHF** — Human raters guide it toward helpful, safe responses
-
-**System instructions** — Deployers set rules and persona — without retraining
-
-**Alignment & safety testing** — Red-teaming, benchmarks, sign-off
-
-When this is done — the model is frozen.`,
+    body: 'A pre-trained model is powerful but impractical. Refinement makes it deployable:',
+    bodyComparison: {
+      leftHeading: 'Technique',
+      rightHeading: 'What it does',
+      rows: [
+        { left: '**Instruction fine-tuning**', right: 'Teaches it to behave like an assistant' },
+        { left: '**RLHF**', right: 'Human raters guide it toward helpful, safe responses' },
+        {
+          left: '**System instructions**',
+          right: 'Deployers set rules and persona — without retraining',
+        },
+        { left: '**Alignment & safety testing**', right: 'Red-teaming, benchmarks, sign-off' },
+        { left: '**When this is done**', right: 'The model is frozen.' },
+      ],
+    },
   },
   {
     id: 'dN8jR4qV5z',
@@ -584,12 +610,20 @@ Fine-tuning means continuing the training process on a curated, domain-specific 
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `**Method** — **Adds** — **Best for** — **Requires retraining?**
-**RAG** — Current, specific knowledge — Policies, documents, live data — ❌ No
-**Fine-tuning** — Behaviour, tone, domain fluency — Style, specialisation, task focus — ✅ Yes
-**System instructions** — Rules & persona — Guardrails, context setting — ❌ No
-
-A well-deployed AI in banking is not just a frozen model — it's a frozen model with the right documents in hand, the right instructions on the desk, and the right behaviour trained in.`,
+    bodyDataTable: {
+      columns: ['Method', 'Adds', 'Best for', 'Requires retraining?'],
+      rows: [
+        ['**RAG**', 'Current, specific knowledge', 'Policies, documents, live data', '❌ No'],
+        [
+          '**Fine-tuning**',
+          'Behaviour, tone, domain fluency',
+          'Style, specialisation, task focus',
+          '✅ Yes',
+        ],
+        ['**System instructions**', 'Rules & persona', 'Guardrails, context setting', '❌ No'],
+      ],
+    },
+    body2: `A well-deployed AI in banking is not just a frozen model — it's a frozen model with the right documents in hand, the right instructions on the desk, and the right behaviour trained in.`,
   },
   {
     id: 'fL7xQ3nK8w',
@@ -610,20 +644,26 @@ A well-deployed AI in banking is not just a frozen model — it's a frozen model
     layout: 'two-col',
     section: 'Module 6',
     chapter: '06',
-    kicker: 'Split-brain research',
-    title: 'Split-Brain Research (Sperry & Gazzaniga): The “Interpreter” Effect',
+    kicker: 'Split-brain research · Sperry & Gazzaniga',
+    title: 'Split-Brain Research: The “Interpreter” Effect',
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.1,
     left: {
       title: 'Setup & key experiment',
-      body:
-        '**Setup (corpus callosotomy patients)**\n\nConnection between hemispheres is cut → no information sharing\n\nRight hemisphere = perception & action (no speech)\n\nLeft hemisphere = language, reasoning, explanation\n\n**Key experiment**\n\nObject seen only by right hemisphere (or placed in left hand)\n\nPatient acts correctly (e.g., selects object)\n\nBut when asked why → left hemisphere has no access to the cause',
+      bullets: [
+        '**Setup (corpus callosotomy)** — The hemispheres are disconnected → no shared information between sides.',
+        '**Roles** — **Right:** perception & action (no speech). **Left:** language, reasoning, explanation.',
+        '**Key experiment** — A stimulus reaches only the right hemisphere (or the left hand): the patient acts correctly, but when asked *why*, the left hemisphere has no access to the true cause.',
+      ],
     },
     right: {
       title: 'Interpretation & bridge',
-      body:
-        '**What happens next**\n\nLeft hemisphere does not say “I don’t know”\n\nIt confidently invents a logical explanation (“to clean the chicken coop”)\n\n👉 This is called the “interpreter” (Gazzaniga)\n\n**Implication (bridge to our story)**\n\nHuman reasoning is partly post-hoc storytelling\n\nThe brain prioritizes coherence over truth when information is missing\n\nOur “rational explanation” is often a constructed narrative, not direct access to reality\n\n**👉 Bridge:**\n\nEven humans don’t fully “know” why they act →\nBut unlike LLMs, we integrate across systems and update over time',
+      bullets: [
+        '**The interpreter** — The left hemisphere rarely says “I don’t know.” It invents a coherent story (e.g. “to clean the chicken coop”) — Gazzaniga’s **interpreter**.',
+        '**Human reasoning** — Often post-hoc storytelling: the brain favours coherence when information is missing; “rational” explanations can be narrative, not direct access to reality.',
+        '**Bridge to AI** — We don’t always know why we act — but unlike LLMs we integrate across systems and can update over time.',
+      ],
     },
   },
   {
@@ -646,16 +686,32 @@ A well-deployed AI in banking is not just a frozen model — it's a frozen model
     section: 'Module 7',
     chapter: '07',
     kicker: 'Techniques',
-    title: 'Prompt Engineering',
+    title: 'Prompt Engineering (1/2)',
     tone: 'section-a',
     animation: 'stagger',
     anim_stagger: 0.06,
+    tocSpacious: true,
     tocItems: [
       '**Clear and specific instructions** — Precisely define the task to reduce ambiguity and improve output quality.',
       '**Role prompting (persona assignment)** — Instruct the model to adopt a specific role to shape tone and expertise.',
       '**Few-shot prompting** — Provide examples to guide the model toward the desired pattern or format.',
       '**Zero-shot prompting** — Give only the instruction and rely on the model’s general knowledge to perform the task.',
       '**Chain-of-thought prompting** — Encourage step-by-step reasoning for more accurate handling of complex problems.',
+    ],
+  },
+  {
+    id: 'zK4nW8pL2q',
+    layout: 'toc',
+    section: 'Module 7',
+    chapter: '07',
+    kicker: 'Techniques',
+    title: 'Prompt Engineering (2/2)',
+    tone: 'section-a',
+    animation: 'stagger',
+    anim_stagger: 0.06,
+    tocSpacious: true,
+    tocStart: 6,
+    tocItems: [
       '**Instruction decomposition** — Break complex tasks into smaller, explicit steps within the prompt.',
       '**Output format specification** — Explicitly define how the response should be structured (e.g., JSON, table).',
       '**Self-consistency prompting** — Generate multiple reasoning paths and select the most consistent answer.',
@@ -671,10 +727,11 @@ A well-deployed AI in banking is not just a frozen model — it's a frozen model
     kicker: 'Context',
     title: 'From Prompt Engineering → Context Engineering',
     intro:
-      '**👉 Shift:** from “write a good prompt” → “design the environment the AI operates in”',
+      '**👉 Shift:** from “write a good prompt” → “design good operating environment”',
     tone: 'section-a',
     animation: 'stagger',
     anim_stagger: 0.1,
+    twoColLowerLarge: true,
     left: {
       title: 'Prompt Engineering',
       body:
@@ -696,6 +753,7 @@ A well-deployed AI in banking is not just a frozen model — it's a frozen model
     tone: 'section-a',
     animation: 'stagger',
     anim_stagger: 0.06,
+    tocLarge: true,
     tocItems: [
       '**Instructions** — Task, role, constraints',
       '**Business Data** — Customer data, transactions, documents',
@@ -755,20 +813,23 @@ A well-deployed AI in banking is not just a frozen model — it's a frozen model
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `So far: a model that reads, reasons, and responds.
-Next: a model that can act.
-A standard LLM takes input → produces text. That's it.
-An agent is an LLM given:
+    body: `**So far:** a model that reads, reasons, and responds.
+**Next:** a model that can **act**.
 
-A goal rather than just a question
-A set of tools it can decide to use
-The ability to chain multiple steps together — reasoning as it goes
+**Standard LLM Chat:** Input in -> text out. That's all that happens.
 
-The difference between a brilliant advisor who can only talk — and one who can also pick up the phone, pull the file, and send the email.`,
+**An agent** starts from the same model, but is also given:`,
+    pointsGridClass: 'points--triple-equal',
+    bullets: [
+      '**A goal** — Not just a question: something concrete to work toward.',
+      '**Tools** — Capabilities it can **choose** to invoke when they help.',
+      '**Multi-step chains** — Plan, execute, and revise — reasoning across several steps.',
+    ],
+    blockquote: `***The difference between a brilliant advisor who can only talk — and one who can also pick up the phone, pull the file, and send the email.***`,
   },
   {
     id: 'm8b2L4mP9y',
-    layout: 'single',
+    layout: 'two-col',
     section: 'Module 8',
     chapter: '08',
     kicker: 'Definitions',
@@ -776,18 +837,27 @@ The difference between a brilliant advisor who can only talk — and one who can
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `Tools are functions the model can choose to call.
-The model doesn't execute them itself — it decides when and why to use them, and receives the result back into its context.
+    twoColRatio: '1-2',
+    left: {
+      body: `Tools are functions the model can choose to call.
 
-**Tool type** — **Example in banking**
-**Search / RAG** — Retrieve relevant policy or client documents
-**Database query** — Look up a client's transaction history
-**API call** — Check current exchange rates or market data
-**Calculator / code** — Run a precise financial calculation
-**Write / send** — Draft an email, fill a form, log a case note
-**Trigger workflow** — Initiate a compliance check or approval process
-
-***Tools turn language into action.***`,
+The model doesn't execute them itself — it decides when and why to use them, and receives the result back into its context.`,
+    },
+    right: {
+      bodyComparison: {
+        leftHeading: 'Tool type',
+        rightHeading: 'Example in banking',
+        rows: [
+          { left: '**Search / RAG**', right: 'Retrieve relevant policy or client documents' },
+          { left: '**Database query**', right: "Look up a client's transaction history" },
+          { left: '**API call**', right: 'Check current exchange rates or market data' },
+          { left: '**Calculator / code**', right: 'Run a precise financial calculation' },
+          { left: '**Write / send**', right: 'Draft an email, fill a form, log a case note' },
+          { left: '**Trigger workflow**', right: 'Initiate a compliance check or approval process' },
+        ],
+      },
+      body2: `***Tools turn language into action.***`,
+    },
   },
   {
     id: 'm8b3M5nQ1z',
@@ -821,15 +891,30 @@ Each step informs the next. The model decides the sequence.`,
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `More capability = more responsibility.
-Agents operating in banking contexts must be carefully constrained:
-
-Human-in-the-loop — certain actions require approval before execution
-Tool boundaries — the agent can only access what it is explicitly permitted to
-Audit trails — every tool call and decision step should be logged
-Failure handling — what happens when a tool returns unexpected results?
-
-An agent with access to client data, communication channels, and workflow systems is not a chatbot. It requires governance like any other operational system.
+    body: 'More capability = more responsibility. Agents operating in banking contexts must be carefully constrained:',
+    bodyComparison: {
+      leftHeading: 'Control',
+      rightHeading: 'What it means',
+      rows: [
+        {
+          left: '**Human-in-the-loop**',
+          right: 'Certain actions require approval before execution.',
+        },
+        {
+          left: '**Tool boundaries**',
+          right: 'The agent can only access what it is explicitly permitted to.',
+        },
+        {
+          left: '**Audit trails**',
+          right: 'Every tool call and decision step should be logged.',
+        },
+        {
+          left: '**Failure handling**',
+          right: 'What happens when a tool returns unexpected results?',
+        },
+      ],
+    },
+    body2: `An agent with access to client data, communication channels, and workflow systems is not a chatbot. It requires governance like any other operational system.
 
 The question is never just "can it do this?" — but "should it do this autonomously?"`,
   },
@@ -843,30 +928,31 @@ The question is never just "can it do this?" — but "should it do this autonomo
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    bodyClass: 'lead--flowchart',
-    body: `How everything connects:
-User request
-      ↓
-  [ Agent / Orchestrator ]
-      ↓
-  Reasons about the goal
-      ↓
- ┌─────────────────────────────┐
- │  Tools available:           │
- │  • RAG (your documents)     │
- │  • Database queries         │
- │  • APIs & live data         │
- │  • Calculations & code      │
- │  • Workflow triggers        │
- └─────────────────────────────┘
-      ↓
-  Synthesises results
-      ↓
-  Response or Action
-      ↓
- [ Human review — where required ]
-
-The frozen chef, handed the right recipes, the right ingredients, and a fully equipped kitchen — with a supervisor in the room for the dishes that matter.`,
+    bodyInnerClass: 'slide-content__inner--body-diagram-stack',
+    body: 'How everything connects:',
+    flowTimeline: {
+      layout: 'horizontal',
+      steps: [
+        { kind: 'text', label: 'User request' },
+        { kind: 'agent', label: '[ Agent / Orchestrator ]' },
+        { kind: 'text', label: 'Reasons about the goal' },
+        {
+          kind: 'tools',
+          title: 'Tools available',
+          items: [
+            'RAG (your documents)',
+            'Database queries',
+            'APIs & live data',
+            'Calculations & code',
+            'Workflow triggers',
+          ],
+        },
+        { kind: 'text', label: 'Synthesises results' },
+        { kind: 'text', label: 'Response or Action' },
+        { kind: 'review', label: 'Human review — where required' },
+      ],
+    },
+    body2: `The frozen chef, handed the right recipes, the right ingredients, and a fully equipped kitchen — with a supervisor in the room for the dishes that matter.`,
   },
   {
     id: 'mcp1X2kN9w',

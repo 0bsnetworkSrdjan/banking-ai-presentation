@@ -3,8 +3,14 @@ import { motion } from 'motion/react'
 import { gsap } from 'gsap'
 import { t, tSide } from '../i18n'
 import { RichText } from './RichText'
-import { resolveBodyComparison, HtmlTableComparison } from './SideBySideComparison'
+import {
+  resolveBodyComparison,
+  resolveBodyDataTable,
+  HtmlTableComparison,
+  HtmlDataTable,
+} from './SideBySideComparison'
 import { VectorSpaceSlide } from './VectorSpaceSlide'
+import { FlowTimelineDiagram } from './FlowTimelineDiagram'
 
 function L(slide, lang) {
   return slide.no_translate ? 'en' : lang
@@ -46,16 +52,22 @@ function HeaderGlass({ slide, styleClass, lang }) {
 function BodyGlass({ slide, styleClass, lang }) {
   const lg = L(slide, lang)
   const body = t(slide.body, lg)
+  const body2 = slide.body2 != null ? t(slide.body2, lg) : null
   const bullets = t(slide.bullets, lg)
-  if (!body && !bullets?.length) return null
+  const bodyComparison = resolveBodyComparison(slide, lg)
+  const bodyDataTable = resolveBodyDataTable(slide, lg)
+  const flowTimeline = slide.flowTimeline
+  if (!body && !bullets?.length && !bodyComparison && !bodyDataTable && !flowTimeline) return null
 
   const kicker = t(slide.kicker, lg)
   const title = t(slide.title, lg)
   const showChip = !kicker && !title && (slide.section || slide.chapter)
+  const tableBeforeBody2 = !!(bodyComparison || bodyDataTable)
+  const innerClass = ['slide-content__inner', slide.bodyInnerClass].filter(Boolean).join(' ')
 
   return (
     <div className={`slide-glass slide-glass--body ${styleClass}`}>
-      <div className="slide-content__inner">
+      <div className={innerClass}>
         {showChip && (
           <div className="section-chip animated">
             {slide.section && <span>{t(slide.section, lg)}</span>}
@@ -65,6 +77,38 @@ function BodyGlass({ slide, styleClass, lang }) {
         {body && (
           <p className={['lead', 'animated', slide.bodyClass].filter(Boolean).join(' ')}>
             <RichText>{body}</RichText>
+          </p>
+        )}
+        {bodyComparison && (
+          <HtmlTableComparison
+            leftHeading={bodyComparison.leftHeading}
+            rightHeading={bodyComparison.rightHeading}
+            rows={bodyComparison.rows}
+            rowKeyPrefix="single-tbl"
+          />
+        )}
+        {bodyDataTable && (
+          <HtmlDataTable
+            columns={bodyDataTable.columns}
+            rows={bodyDataTable.rows}
+            rowKeyPrefix="single-dt"
+            ariaLabel="Methods compared"
+          />
+        )}
+        {flowTimeline && <FlowTimelineDiagram timeline={flowTimeline} />}
+        {body2 && (
+          <p
+            className={[
+              'lead',
+              'animated',
+              tableBeforeBody2 ? 'lead--after-comparison' : '',
+              flowTimeline ? 'lead--after-diagram' : '',
+              slide.body2Class,
+            ]
+              .filter(Boolean)
+              .join(' ')}
+          >
+            <RichText>{body2}</RichText>
           </p>
         )}
         {bullets?.length > 0 && (
@@ -136,6 +180,7 @@ function ColContent({ side, lang }) {
   const resolved = tSide(side, lang)
   if (!resolved) return null
   const bodyComparison = resolveBodyComparison({ bodyComparison: side?.bodyComparison }, lang)
+  const body2 = side?.body2 != null ? t(side.body2, lang) : null
   return (
     <div className="slide-content__inner">
       {resolved.kicker && <p className="kicker animated">{resolved.kicker}</p>}
@@ -167,6 +212,15 @@ function ColContent({ side, lang }) {
           rowKeyPrefix="col-tbl"
         />
       )}
+      {body2 && (
+        <p
+          className={['lead', 'animated', bodyComparison ? 'lead--after-comparison' : '', side.body2Class]
+            .filter(Boolean)
+            .join(' ')}
+        >
+          <RichText>{body2}</RichText>
+        </p>
+      )}
       {resolved.bullets?.length > 0 && (
         <ul className="points">
           {resolved.bullets.map((b) => (
@@ -183,9 +237,11 @@ function ColContent({ side, lang }) {
 function SingleExtendedBody({ slide, styleClass, lang }) {
   const lg = L(slide, lang)
   const body = t(slide.body, lg)
+  const bullets = t(slide.bullets, lg)
   const blockquote = slide.blockquote ? t(slide.blockquote, lg) : null
   const body2 = slide.body2 ? t(slide.body2, lg) : null
   const body3 = slide.body3 ? t(slide.body3, lg) : null
+  const pointsGridClass = slide.pointsGridClass ? String(slide.pointsGridClass) : ''
 
   return (
     <div className={`slide-glass slide-glass--body ${styleClass}`}>
@@ -194,6 +250,15 @@ function SingleExtendedBody({ slide, styleClass, lang }) {
           <p className="lead animated">
             <RichText>{body}</RichText>
           </p>
+        )}
+        {bullets?.length > 0 && (
+          <ul className={['points', pointsGridClass].filter(Boolean).join(' ')}>
+            {bullets.map((b) => (
+              <li className="animated" key={b}>
+                <RichText>{b}</RichText>
+              </li>
+            ))}
+          </ul>
         )}
         {blockquote && (
           <blockquote className="emphasis-panel animated">
@@ -469,7 +534,17 @@ function TocLayout({ slide, styleClass, lang, isActive, tocRevealStep = 0 }) {
       <HeaderGlass slide={slide} styleClass={styleClass} lang={lang} />
       <div className={`slide-glass slide-glass--body ${styleClass}`}>
         <div className="slide-content__inner slide-content__inner--toc">
-          <ol ref={listRef} className="toc-list">
+          <ol
+            ref={listRef}
+            start={slide.tocStart ?? 1}
+            className={[
+              'toc-list',
+              slide.tocSpacious && 'toc-list--spacious',
+              slide.tocLarge && 'toc-list--large',
+            ]
+              .filter(Boolean)
+              .join(' ')}
+          >
             {slice.map((line, i) => (
               <li key={`${slide.id}-${i}`} className="toc-list__item">
                 <RichText>{line}</RichText>
@@ -632,6 +707,8 @@ export function SlideFrame({ slide, isActive, lang, tocRevealStep = 0 }) {
               className={[
                 'slide-two-pane',
                 slide.intro_variant === 'guides' && 'slide-two-pane--guides-bios',
+                slide.twoColLowerLarge && 'slide-two-pane--lower-col-large',
+                slide.twoColRatio === '1-2' && 'slide-two-pane--ratio-1-2',
               ]
                 .filter(Boolean)
                 .join(' ')}
@@ -682,6 +759,18 @@ export function SlideFrame({ slide, isActive, lang, tocRevealStep = 0 }) {
         {layout === 'vector-space' && (
           <div className={`slide-glass slide-glass--full ${styleClass} slide-layout--vector-space`}>
             <VectorSpaceSlide slide={slide} lang={L(slide, lang)} isActive={isActive} />
+          </div>
+        )}
+
+        {layout === 'embed' && (
+          <div className={`slide-glass slide-glass--full ${styleClass} slide-layout--embed`}>
+            <iframe
+              className="slide-embed__iframe"
+              src={slide.embedSrc}
+              title={slide.embedTitle ?? 'Interactive slide content'}
+              allow="autoplay"
+              style={{ backgroundColor: 'transparent' }}
+            />
           </div>
         )}
 

@@ -131,3 +131,70 @@ export function HtmlTableComparison({
     </div>
   )
 }
+
+/**
+ * Normalises `slide.bodyDataTable` for the current language.
+ *
+ * Shape: { columns: (string|i18n)[], rows: ((string|i18n)[])[] }
+ * Or wrapped: `{ en: { columns, rows }, sr: { … } }`
+ */
+export function resolveBodyDataTable(slide, lang) {
+  const raw = slide?.bodyDataTable
+  if (!raw || typeof raw !== 'object') return null
+  const c =
+    'en' in raw && typeof raw.en === 'object' && raw.en !== null && Array.isArray(raw.en.rows)
+      ? t(raw, lang)
+      : raw
+  if (!c?.columns?.length || !c?.rows?.length) return null
+  const columns = c.columns.map((col) => t(col, lang))
+  const rows = c.rows.map((row) => {
+    if (!Array.isArray(row)) return null
+    return row.map((cell) => t(cell, lang))
+  })
+  if (rows.some((r) => !r || r.length !== columns.length)) return null
+  return { columns, rows }
+}
+
+/**
+ * Generic multi-column `<table>` — same visual language as `HtmlTableComparison`.
+ */
+export function HtmlDataTable({
+  columns,
+  rows,
+  rowKeyPrefix = 'dt',
+  className = '',
+  ariaLabel = 'Data table',
+}) {
+  if (!columns?.length || !rows?.length) return null
+
+  return (
+    <div
+      className={['slide-table-wrap', 'animated', className].filter(Boolean).join(' ')}
+      role="region"
+      aria-label={ariaLabel}
+    >
+      <table className="slide-data-table slide-data-table--multi">
+        <thead>
+          <tr>
+            {columns.map((col, i) => (
+              <th key={`${rowKeyPrefix}-h-${i}`} scope="col">
+                <RichText>{col}</RichText>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, ri) => (
+            <tr key={`${rowKeyPrefix}-${ri}`}>
+              {row.map((cell, ci) => (
+                <td key={`${rowKeyPrefix}-${ri}-${ci}`}>
+                  <RichText>{cell}</RichText>
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}

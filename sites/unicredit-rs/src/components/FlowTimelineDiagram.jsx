@@ -1,12 +1,22 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 
 /**
- * Vertical flow timeline for “The Full Picture” — agent orchestration steps and tool palette.
+ * Flow timeline for “The Full Picture” — agent orchestration steps and tool palette.
+ * `timeline.layout === 'horizontal'` renders left-to-right (fits the slide width better).
  */
-function Connector() {
+function Connector({ horizontal }) {
   return (
-    <div className="flow-timeline__arrow animated" aria-hidden="true">
-      <span className="flow-timeline__arrow-line" />
+    <div
+      className={['flow-timeline__arrow', horizontal && 'flow-timeline__arrow--horizontal']
+        .filter(Boolean)
+        .join(' ')}
+      aria-hidden="true"
+    >
+      <span
+        className={['flow-timeline__arrow-line', horizontal && 'flow-timeline__arrow-line--horizontal']
+          .filter(Boolean)
+          .join(' ')}
+      />
     </div>
   )
 }
@@ -88,10 +98,11 @@ export function FlowTimelineDiagram({ timeline }) {
 
   if (!timeline?.steps?.length) return null
   const { steps } = timeline
+  const horizontal = timeline.layout === 'horizontal'
 
   const parts = []
   steps.forEach((step, i) => {
-    if (i > 0) parts.push(<Connector key={`c-${i}`} />)
+    if (i > 0) parts.push(<Connector key={`c-${i}`} horizontal={horizontal} />)
     parts.push(renderStep(step, i))
   })
 
@@ -99,7 +110,7 @@ export function FlowTimelineDiagram({ timeline }) {
     <div ref={slotRef} className="body-diagram-slot">
       <div
         ref={flowRef}
-        className="flow-timeline"
+        className={['flow-timeline', horizontal && 'flow-timeline--horizontal'].filter(Boolean).join(' ')}
         role="img"
         aria-label="Flow from user request to response"
         style={{
