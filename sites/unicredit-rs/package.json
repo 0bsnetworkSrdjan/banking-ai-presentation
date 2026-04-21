@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "export-slides-md": "node scripts/export-slides-from-js.mjs"
   },
   "dependencies": {
     "@react-three/fiber": "^9.6.0",
