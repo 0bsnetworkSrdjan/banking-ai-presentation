@@ -43,7 +43,9 @@ function App() {
   const deckRef      = useRef(null)
   const indexRef     = useRef(0)
   const wheelLockRef = useRef(0)
+  const tocRevealStepRef = useRef(0)
   const [activeSlide, setActiveSlide] = useState(0)
+  const [tocRevealStep, setTocRevealStep] = useState(0)
   const [lang, setLang] = useState(
     () => localStorage.getItem('presentation-lang') ?? DEFAULT_LANG,
   )
@@ -61,6 +63,8 @@ function App() {
     const i = Math.max(0, Math.min(raw, slides.length - 1))
     if (i === indexRef.current) return
     indexRef.current = i
+    tocRevealStepRef.current = 0
+    setTocRevealStep(0)
     setActiveSlide(i)
     const el = deckRef.current
     if (el) el.scrollTo({ left: i * el.clientWidth, behavior: 'smooth' })
@@ -78,12 +82,54 @@ function App() {
       const now = performance.now()
       if (now - wheelLockRef.current < 680) return
       wheelLockRef.current = now
+
+      const slide = slides[indexRef.current]
+      const tocSteps = slide?.tocRevealSteps
+      const tocMax = tocSteps?.length ?? 0
+      if (tocMax > 0) {
+        const s = tocRevealStepRef.current
+        if (delta > 0) {
+          if (s < tocMax) {
+            const next = s + 1
+            tocRevealStepRef.current = next
+            setTocRevealStep(next)
+            return
+          }
+        } else if (s > 0) {
+          const next = s - 1
+          tocRevealStepRef.current = next
+          setTocRevealStep(next)
+          return
+        }
+      }
+
       goTo(indexRef.current + (delta > 0 ? 1 : -1))
     }
 
     const onKey = (e) => {
       if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return
       e.preventDefault()
+
+      const slide = slides[indexRef.current]
+      const tocSteps = slide?.tocRevealSteps
+      const tocMax = tocSteps?.length ?? 0
+      if (tocMax > 0) {
+        const s = tocRevealStepRef.current
+        if (e.key === 'ArrowRight') {
+          if (s < tocMax) {
+            const next = s + 1
+            tocRevealStepRef.current = next
+            setTocRevealStep(next)
+            return
+          }
+        } else if (s > 0) {
+          const next = s - 1
+          tocRevealStepRef.current = next
+          setTocRevealStep(next)
+          return
+        }
+      }
+
       goTo(indexRef.current + (e.key === 'ArrowRight' ? 1 : -1))
     }
 
@@ -138,7 +184,13 @@ function App() {
           />
         }
       />
-      <SlideDeck deckRef={deckRef} slides={slides} activeSlide={activeSlide} lang={lang} />
+      <SlideDeck
+        deckRef={deckRef}
+        slides={slides}
+        activeSlide={activeSlide}
+        lang={lang}
+        tocRevealStep={tocRevealStep}
+      />
       <ProgressRail slides={slides} activeSlide={activeSlide} onSelect={goTo} />
     </main>
   )

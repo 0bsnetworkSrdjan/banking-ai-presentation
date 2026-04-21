@@ -65,8 +65,9 @@ export const slides = [
     title: 'Your guides today',
     tone: 'section-a',
     animation: 'fade-up',
+    intro_variant: 'guides',
     intro:
-      'Blockstruct GmbH, member of AI Factory Austria AI:AT hub\n\nAI Applications for Business. Zero Bullshit.\n\nEuropean Tech. Team in Austria, Serbia, UK, Montenegro, Croatia.',
+      'Blockstruct GmbH, member of AI Factory Austria AI:AT hub\nAI Applications for Business. Zero Bullshit.\nEuropean Tech. Team in Austria, Serbia, UK, Montenegro, Croatia.\nClients in Austria, UK, Croatia, USA. We have worked for banks and governments. Cybersecurity tested.',
     left: {
       title: 'Srđan Kuprešanin',
       subtitle: 'Founder & CEO',
@@ -90,7 +91,7 @@ export const slides = [
     anim_stagger: 0.12,
     left: {
       body:
-        'Part of the European AI Factories initiative, funded by the European High Performance Computing Joint Undertaking (EuroHPC JU) — a €1.5B+ pan-European commitment to AI research, infrastructure and applications.',
+        'Part of the European AI Factories initiative, funded by the European High Performance Computing Joint Undertaking (EuroHPC JU) — a €2.6B+ pan-European commitment to AI research, infrastructure and applications.',
       sections: [
         {
           heading: 'Led jointly by:',
@@ -113,7 +114,7 @@ export const slides = [
     rightBottom: {
       title: 'Blockstruct at AI:AT',
       body:
-        "One of the hub's business members, working at the intersection of AI research and real-world enterprise deployment. Today's masterclass was developed within this ecosystem framing.",
+        "One of the hub's business members, working at the intersection of AI research and real-world enterprise deployment. Today's masterclass was developed within this ecosystem framing.\n\nAccess to European network of supercomputers — some of the highest performance computing in the world. Direct access and involvement with the entire network of European research institutes and universities, as well as companies.",
     },
   },
   {
@@ -154,7 +155,7 @@ export const slides = [
     id: 'kJ7nB4qW1v',
     layout: 'title',
     section: 'Introduction',
-    kicker: 'UniCredit Srbija · The Opportunity',
+    kicker: 'UniCredit Bank Srbija · The Opportunity',
     tone: 'section-b',
     style: 'dark',
     animation: 'blur-in',
@@ -162,7 +163,7 @@ export const slides = [
     anim_stagger: 0.18,
     title: 'The Window Is Open.',
     subtitle:
-      "While the Group focuses on its most significant strategic move in years, country offices have the freedom — and the moment — to define their own AI agenda.\n\nUniCredit Srbija has an opportunity to position itself as one of the Group's AI Centers of Excellence.",
+      "While the Group focuses on its most significant strategic move in years, country offices have the opportunity to contribute to the definition of the Group's AI Application Agenda.\n\nUniCredit Bank Srbija could position itself as one of the Group's AI Centers of Excellence.",
   },
   {
     id: 'hQ3mK7vN5p',
@@ -187,6 +188,8 @@ export const slides = [
       '**Brainstorming: AI @ UniCredit Srbija** (Your candidates for AI applications)',
       '**PoC Design Elaboration in Groups**',
     ],
+    /* Cumulative item counts after each reveal step (groups: 1–3, 4–5, 6–7, 8, 9, 10, 11–12) */
+    tocRevealSteps: [3, 5, 7, 8, 9, 10, 12],
   },
   {
     id: 'yF6kD4nM9h',
@@ -308,6 +311,18 @@ export const slides = [
     body2:
       'Everything LLMs do emerges from that one process — answering questions, writing poetry, interpreting a contract, drafting a sales pitch — performed at massive scale.\n\nThe world\'s most sophisticated autocomplete; one that has read every fiction and non-fiction book, research paper, forum discussion, manual, contract, and every other piece of text ever written, transcribed, or published and digitised on the internet.',
     body3: '***Not magic. Not remotely human. Still, genuinely remarkable when applied carefully.***',
+  },
+  {
+    id: 'zK2nL8pQ5w',
+    layout: 'title',
+    section: 'Module 2',
+    chapter: '02',
+    tone: 'section-b',
+    style: 'tinted',
+    animation: 'blur-in',
+    anim_duration: 1.1,
+    anim_stagger: 0.22,
+    title: 'So, how can we make the best use of these serial text processors?',
   },
   {
     id: 'jP9mK6fL2w',
@@ -448,7 +463,7 @@ This is intentional — a model that silently updated from live interactions wou
   },
   {
     id: 'rK2mT8hJ3v',
-    layout: 'single',
+    layout: 'two-col',
     section: 'Module 5',
     chapter: '05',
     kicker: 'The gap',
@@ -456,24 +471,31 @@ This is intentional — a model that silently updated from live interactions wou
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `A frozen model only knows what it learned during training.
+    left: {
+      body: `A frozen model only knows what it learned during training.
 In banking, that's rarely enough:
 
 ❌ No knowledge of your internal documents, policies, or data
 ❌ No awareness of events after its training cut-off
-❌ No understanding of your specific products, clients, or processes
+❌ No understanding of your specific products, clients, or processes`,
+    },
+    right: {
+      body: `So how do we close the gap?
 
-So how do we close the gap?
-
-Two distinct problems — two distinct solutions:
-
-**Problem** | **Solution**
-**What it knows** | Embeddings + RAG
-**How it behaves** | Fine-tuning`,
+Two distinct problems — two distinct solutions:`,
+      bodyComparison: {
+        leftHeading: 'Problem',
+        rightHeading: 'Solution',
+        rows: [
+          { left: '**What it knows**', right: 'Embeddings + RAG' },
+          { left: '**How it behaves**', right: 'Fine-tuning' },
+        ],
+      },
+    },
   },
   {
     id: 'sL3nU9jK4w',
-    layout: 'single',
+    layout: 'two-col',
     section: 'Module 5',
     chapter: '05',
     kicker: 'Meaning',
@@ -481,19 +503,25 @@ Two distinct problems — two distinct solutions:
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `Before we can feed a model new knowledge, it needs to be able to find it.
-
-Every piece of text — a policy document, a client note, a regulation — gets converted into a vector: a list of numbers representing its meaning
-Similar meanings → similar vectors → stored close together in a vector database
-When a user asks a question, the question is also converted to a vector — and the database finds the most semantically relevant content
-
-***Not a keyword search. A meaning search.***
+    left: {
+      title: 'From text to vectors',
+      body:
+        'Before we can feed a model new knowledge, it needs to be able to find it.\n\nEvery piece of text — a policy document, a client note, a regulation — gets converted into a vector: a list of numbers representing its meaning.',
+      bullets: [
+        'Similar meanings → similar vectors → stored close together in a vector database',
+        'When a user asks a question, the question is also converted to a vector — and the database finds the most semantically relevant content',
+      ],
+    },
+    right: {
+      title: 'Why it matters',
+      body: `***Not a keyword search. A meaning search.***
 
 This is what makes it possible to ask "What is our policy on early loan repayment?" and retrieve the right paragraph — even if it never uses those exact words.`,
+    },
   },
   {
     id: 'tM4oV0kL5x',
-    layout: 'single',
+    layout: 'two-col',
     section: 'Module 5',
     chapter: '05',
     kicker: 'Retrieval',
@@ -501,25 +529,28 @@ This is what makes it possible to ask "What is our policy on early loan repaymen
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `RAG = Retrieval-Augmented Generation
-The process in practice:
-
-User asks a question
-System searches the vector database for relevant content
-That content is inserted into the context alongside the question
-The model answers — grounded in your documents, not just its training
-
-What this enables:
-
-✅ Answers based on current, internal knowledge
+    left: {
+      title: 'How it works',
+      body: '**RAG** = Retrieval-Augmented Generation',
+      bullets: [
+        'User asks a question',
+        'System searches the vector database for relevant content',
+        'That content is inserted into the context alongside the question',
+        'The model answers — grounded in your documents, not just its training',
+      ],
+    },
+    right: {
+      title: 'What you gain',
+      body: `✅ Answers based on current, internal knowledge
 ✅ Responses that can cite their source
 ✅ No retraining required — update the database, not the model
 
 The model's brain stays frozen. You just hand it the right documents before it speaks.`,
+    },
   },
   {
     id: 'uN5pW1mM6y',
-    layout: 'single',
+    layout: 'two-col',
     section: 'Module 5',
     chapter: '05',
     kicker: 'Behaviour',
@@ -527,16 +558,21 @@ The model's brain stays frozen. You just hand it the right documents before it s
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    body: `RAG adds knowledge. Fine-tuning shapes behaviour.
-Fine-tuning means continuing the training process on a curated, domain-specific dataset — adjusting the model's parameters for a specific purpose.
+    left: {
+      title: 'Concept',
+      body: `RAG adds knowledge. Fine-tuning shapes behaviour.
 
-**Use case** — **Example**
-**Tone & style** — Always respond formally, in German
+Fine-tuning means continuing the training process on a curated, domain-specific dataset — adjusting the model's parameters for a specific purpose.`,
+    },
+    right: {
+      title: 'Typical use cases',
+      body: `**Tone & style** — Always respond formally, in German
 **Domain fluency** — Deeply familiar with credit risk terminology
 **Task specialisation** — Trained specifically on loan assessment workflows
 **Reducing hallucination** — Reinforced on verified, accurate domain content
 
 **Important:** Fine-tuning is expensive, requires expertise, and needs to be redone when the model updates. It is not a substitute for RAG — most organisations use both.`,
+    },
   },
   {
     id: 'vO6qX2nN7z',
@@ -711,31 +747,24 @@ A well-deployed AI in banking is not just a frozen model — it's a frozen model
   },
   {
     id: 'm8b1K3nL8x',
-    layout: 'two-col',
+    layout: 'single',
     section: 'Module 8',
     chapter: '08',
     kicker: 'Agents',
     title: 'Beyond Answering — AI That Does',
-    intro:
-      '***Evolution:*** **so far** — a model that reads, reasons, and responds.\n**Next** — one that can act.',
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    left: {
-      title: 'LLM alone',
-      body:
-        '**Input → text.** One turn at a time. No tools, no side effects.\n\nLike a brilliant advisor who can only talk — not pull the file or send the update.',
-    },
-    right: {
-      title: 'LLM + agent',
-      body: 'Same model — set up to **pursue a goal**, not just finish an answer.',
-      bullets: [
-        '**Goal** — not only a single question',
-        '**Tools** — APIs, data, documents; the model chooses when to call them',
-        '**Multi-step** — plan, act, read results, keep reasoning',
-        '**👉 Contrast:** can pick up the phone, pull the file, and send the email — not only describe how.',
-      ],
-    },
+    body: `So far: a model that reads, reasons, and responds.
+Next: a model that can act.
+A standard LLM takes input → produces text. That's it.
+An agent is an LLM given:
+
+A goal rather than just a question
+A set of tools it can decide to use
+The ability to chain multiple steps together — reasoning as it goes
+
+The difference between a brilliant advisor who can only talk — and one who can also pick up the phone, pull the file, and send the email.`,
   },
   {
     id: 'm8b2L4mP9y',
@@ -747,7 +776,6 @@ A well-deployed AI in banking is not just a frozen model — it's a frozen model
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    bodyInnerClass: 'slide-content__inner--body-vert-balanced',
     body: `Tools are functions the model can choose to call.
 The model doesn't execute them itself — it decides when and why to use them, and receives the result back into its context.
 
@@ -760,183 +788,6 @@ The model doesn't execute them itself — it decides when and why to use them, a
 **Trigger workflow** — Initiate a compliance check or approval process
 
 ***Tools turn language into action.***`,
-  },
-  {
-    id: 'mcp1X2kN9w',
-    layout: 'single',
-    section: 'Module 8',
-    chapter: '08',
-    kicker: 'MCP',
-    title: 'The Problem Before MCP',
-    tone: 'section-b',
-    animation: 'stagger',
-    anim_stagger: 0.12,
-    bodyInnerClass: 'slide-content__inner--body-vert-balanced',
-    body: `**MCP — Giving Agents a Standard Language**
-
-Every tool connection was built by hand.
-As agents became more capable, teams wanted to connect them to more systems:
-
-**CRM platforms
-Internal databases
-Document stores
-Calendar, email, communication tools
-Core banking systems**
-
-***The problem: every integration was custom-built. Different syntax, different authentication, different error handling — for every model, for every tool, for every vendor.***`,
-  },
-  {
-    id: 'mcp2Y3lP8x',
-    layout: 'single',
-    section: 'Module 8',
-    chapter: '08',
-    kicker: 'MCP',
-    title: 'What MCP Is',
-    tone: 'section-b',
-    animation: 'stagger',
-    anim_stagger: 0.12,
-    body: `**MCP = Model Context Protocol**
-An open standard, introduced by Anthropic in 2024, that defines a single, universal way for AI models to connect to external tools and data sources.
-Think of it as USB for AI agents:
-
-**Without MCP** | **With MCP**
-Custom integration per tool | One standard connection method
-Rebuild for every model update | Tool works with any MCP-compatible model
-Fragile, expensive to maintain | Plug in, and it works
-Siloed by vendor | Interoperable across platforms
-
-***Build the tool once. Any compatible agent can use it.***`,
-  },
-  {
-    id: 'mcp3Z4mQ7y',
-    layout: 'single',
-    section: 'Module 8',
-    chapter: '08',
-    kicker: 'MCP',
-    title: 'Where MCP Sits in the Architecture',
-    tone: 'section-b',
-    animation: 'stagger',
-    anim_stagger: 0.12,
-    bodySurface: 'mcp-connect',
-    bodyDiagram: 'mcp-stack',
-    body: `MCP is the connective layer between the agent and the outside world:`,
-    mcpStack: {
-      agentLabel: 'Agent / Orchestrator',
-      layerLabel: 'MCP Interface',
-      serversTitle: 'MCP Servers (tools/systems)',
-      servers: [
-        'Internal document store',
-        'Core banking API',
-        'CRM / client data',
-        'Compliance & risk systems',
-        'Email & calendar',
-        'Market data feeds',
-      ],
-    },
-    bodyAfter: `***Each system exposes itself as an MCP server. The agent speaks to all of them through the same standard interface — it doesn't need to know the specifics of each system underneath.***`,
-  },
-  {
-    id: 'mcp4A5nR6z',
-    layout: 'single',
-    section: 'Module 8',
-    chapter: '08',
-    kicker: 'MCP',
-    title: 'Why It Matters for Banking',
-    tone: 'section-b',
-    animation: 'stagger',
-    anim_stagger: 0.12,
-    body: `MCP turns AI integration from a bespoke engineering project into an infrastructure decision.
-
-✅ **Faster deployment** — connect new systems without rebuilding agent logic
-✅ **Vendor flexibility** — swap the underlying model without rewiring all your tools
-✅ **Auditability** — a standardised layer is easier to monitor and govern
-✅ **Ecosystem momentum** — MCP is being adopted rapidly across platforms, tools, and vendors
-
-In the same way that REST APIs standardised how web services talk to each other — MCP is standardising how AI agents talk to the world.
-
-***For bank leadership, the strategic implication is clear: institutions that build their integrations on open standards now will not be locked into a single vendor's ecosystem later.***`,
-  },
-  {
-    id: 'm8skA1b2c3',
-    layout: 'single',
-    section: 'Module 8',
-    chapter: '08',
-    kicker: 'Skills',
-    title: 'Skills — Packaged, reusable procedures',
-    tone: 'section-b',
-    animation: 'stagger',
-    anim_stagger: 0.12,
-    body: `**Agent Skills** are a lightweight, open format for extending AI agent capabilities with specialized knowledge and workflows.
-
-    In every serious bank, there are standardized procedures — for example, a procedure for loan approval. These procedures are written, tested, and aligned with regulations.
-
-When a new associate arrives, they don't reinvent the procedure — they apply the existing one. A Skill is exactly that, but for a ***packaged procedure***, ***tailored to a specific task***, which the AI can "take off the shelf" and apply.`,
-  },
-  {
-    id: 'm8skD4e5f6',
-    layout: 'single',
-    section: 'Module 8',
-    chapter: '08',
-    kicker: 'Skills',
-    title: 'Inside a Skill file',
-    tone: 'section-b',
-    animation: 'stagger',
-    anim_stagger: 0.12,
-    body: `A Skill file is essentially a Markdown document — like a detailed work manual you give to an AI agent before it starts its task. The agent "reads" it, and from that moment on, knows exactly how to proceed.
-
-Here is what a summary of a Credit Assessment Skill looks like:`,
-    bullets: [
-      {
-        heading: 'Overview',
-        body: 'The AI agent reads this first. It clearly states the purpose and, just as importantly, ++what is NOT its purpose++ (e.g., it does not make the final decision).',
-      },
-      {
-        heading: 'When to Use',
-        body: 'The agent must know ++when to invoke this specific skill versus another++. Without this, it might try to process mortgage loans using the same rules as consumer loans.',
-      },
-      {
-        heading: 'Required Tools',
-        body: 'A list of all ++MCP++ connections that the agent is allowed to use within this skill. The agent ++cannot call a tool that isn\'t on this list++.',
-      },
-      {
-        heading: 'Step-by-Step Procedure',
-        body: 'The core of the file. Every step has clear ++IF/THEN rules++ — the agent does not improvise; it applies policy literally. You\'ll notice ++"STOP"++ written in several places — these are ++hard stops++ that the agent is not allowed to bypass.',
-      },
-      {
-        heading: 'What the Agent Must NOT Do',
-        body: 'Negative rules are just as important as positive ones. This is the section where you define ++the boundaries of autonomy++.',
-      },
-      {
-        heading: 'Audit and Compliance',
-        body: 'Every skill in a regulated industry must have this. ++Every call, every result, every decision++ — everything is logged.',
-      },
-      {
-        heading: 'Skill Metadata',
-        body: 'Version, owner, revision date. This is crucial because skills change when regulations or internal policies change — you need to know ++which version was active++ at the time of a specific decision.',
-      },
-    ],
-  },
-  {
-    id: 'm8b4N6pR2v',
-    layout: 'single',
-    section: 'Module 8',
-    chapter: '08',
-    kicker: 'Governance',
-    title: 'Guardrails — Why Control Matters',
-    tone: 'section-b',
-    animation: 'stagger',
-    anim_stagger: 0.12,
-    body: `**More capability = more responsibility.**
-Agents operating in banking contexts must be carefully constrained:
-
-Human-in-the-loop — certain actions require approval before execution
-***Tool boundaries*** — the agent can only access what it is explicitly permitted to
-***Audit trails*** — every tool call and decision step should be logged
-***Failure handling*** — what happens when a tool returns unexpected results?
-
-An agent with access to client data, communication channels, and workflow systems is not a chatbot. It requires governance like any other operational system.
-
-***The question is never just "can it do this?" — but "should it do this autonomously?"***`,
   },
   {
     id: 'm8b3M5nQ1z',
@@ -958,7 +809,29 @@ The agent doesn't just answer — it works:
 🧠 Reasons across all retrieved information
 ✍️ Produces a structured briefing — ready for the meeting
 
-***Each step informs the next. The model decides the sequence.***`,
+Each step informs the next. The model decides the sequence.`,
+  },
+  {
+    id: 'm8b4N6pR2v',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'Governance',
+    title: 'Guardrails — Why Control Matters',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `More capability = more responsibility.
+Agents operating in banking contexts must be carefully constrained:
+
+Human-in-the-loop — certain actions require approval before execution
+Tool boundaries — the agent can only access what it is explicitly permitted to
+Audit trails — every tool call and decision step should be logged
+Failure handling — what happens when a tool returns unexpected results?
+
+An agent with access to client data, communication channels, and workflow systems is not a chatbot. It requires governance like any other operational system.
+
+The question is never just "can it do this?" — but "should it do this autonomously?"`,
   },
   {
     id: 'm8b5O7qS3w',
@@ -970,103 +843,124 @@ The agent doesn't just answer — it works:
     tone: 'section-b',
     animation: 'stagger',
     anim_stagger: 0.12,
-    bodyDiagram: 'flow-timeline',
-    body: `**How everything connects:**`,
-    flowTimeline: {
-      steps: [
-        { kind: 'text', label: 'User request' },
-        { kind: 'agent', label: '[ Agent / Orchestrator ]' },
-        { kind: 'text', label: 'Reasons about the goal' },
-        {
-          kind: 'tools',
-          title: 'Tools available',
-          items: [
-            'RAG (your documents)',
-            'Database queries',
-            'APIs & live data',
-            'Calculations & code',
-            'Workflow triggers',
-          ],
-        },
-        { kind: 'text', label: 'Synthesises results' },
-        { kind: 'text', label: 'Response or Action' },
-        { kind: 'review', label: '[ Human review — where required ]' },
-      ],
-    },
-    bodyAfter: `***The frozen chef, handed the right recipes, the right ingredients, and a fully equipped kitchen — with a supervisor in the room for the dishes that matter.***`,
+    bodyClass: 'lead--flowchart',
+    body: `How everything connects:
+User request
+      ↓
+  [ Agent / Orchestrator ]
+      ↓
+  Reasons about the goal
+      ↓
+ ┌─────────────────────────────┐
+ │  Tools available:           │
+ │  • RAG (your documents)     │
+ │  • Database queries         │
+ │  • APIs & live data         │
+ │  • Calculations & code      │
+ │  • Workflow triggers        │
+ └─────────────────────────────┘
+      ↓
+  Synthesises results
+      ↓
+  Response or Action
+      ↓
+ [ Human review — where required ]
+
+The frozen chef, handed the right recipes, the right ingredients, and a fully equipped kitchen — with a supervisor in the room for the dishes that matter.`,
   },
   {
-    id: 'm8tWF4nP2x',
-    layout: 'timeline',
+    id: 'mcp1X2kN9w',
+    layout: 'single',
     section: 'Module 8',
     chapter: '08',
-    hideSectionChip: true,
-    kicker: 'Example',
-    title: 'Agentic Workflow — Tools, MCP & Skills',
+    kicker: 'MCP',
+    title: 'The Problem Before MCP',
     tone: 'section-b',
     animation: 'stagger',
-    anim_stagger: 0.07,
-    timelineSteps: [
-      {
-        emoji: '📥',
-        label: {
-          en: '**Agent Receives the Request**',
-          sr: '**Agent prima zahtev**',
-        },
-        body: {
-          en: 'An email arrives. The agent reads it: “Client requesting a limit increase.” It immediately knows the next step.',
-          sr: 'Email stigne. Agent ga pročita: „Klijent traži povećanje limita.“ Odmah zna šta sledi.',
-        },
-      },
-      {
-        emoji: '🔗',
-        label: {
-          en: '**Agent Utilizes Tools**',
-          sr: '**Agent koristi alatke**',
-        },
-        body: {
-          en: 'Via MCP, the agent simultaneously queries: core banking (balance, payment history), credit bureau (external score), and CRM (client profile). Done in seconds.',
-          sr: 'Preko MCP-a agent istovremeno povlači: core banking (stanje, istorija plaćanja), kreditni biro (eksterni skor) i CRM (profil klijenta). Gotovo za nekoliko sekundi.',
-        },
-      },
-      {
-        emoji: '🧠',
-        label: {
-          en: '**Agent Applies Skills**',
-          sr: '**Agent primenjuje veštine**',
-        },
-        body: {
-          en: 'The “Credit Assessment Skill” activates — your internal credit policy. Every criterion is evaluated: standing, limits, eligibility.',
-          sr: 'Aktivira se „Credit Assessment Skill“ — vaša interna kreditna politika. Svaki kriterijum se procenjuje: odnos, limiti, podobnost.',
-        },
-      },
-      {
-        emoji: '👤',
-        label: {
-          en: '**Agent Makes a Recommendation**',
-          sr: '**Agent daje preporuku**',
-        },
-        body: {
-          en: 'If approval is needed, a summary goes to the credit officer — all relevant data, a clear recommendation, and full rationale. Officer accepts or declines.',
-          sr: 'Ako je potrebno odobrenje, sažetak ide kreditnom službeniku — svi relevantni podaci, jasna preporuka i potpuno obrazloženje. Službenik prihvata ili odbija.',
-        },
-        badge: {
-          en: 'HUMAN IN THE LOOP',
-          sr: 'ČOVEK U PETLJI',
-        },
-        highlight: true,
-      },
-      {
-        emoji: '✅',
-        label: {
-          en: '**The Result**',
-          sr: '**Rezultat**',
-        },
-        body: {
-          en: 'Client receives a response in 2–4 minutes. Everything logged. Full audit trail. Nothing falls through the cracks.',
-          sr: 'Klijent dobija odgovor za 2–4 minuta. Sve je evidentirano. Kompletan revizijski trag. Ništa ne propada iz vida.',
-        },
-      },
-    ],
+    anim_stagger: 0.12,
+    body: `**MCP — Giving Agents a Standard Language**
+
+Every tool connection was built by hand.
+As agents became more capable, teams wanted to connect them to more systems:
+
+CRM platforms
+Internal databases
+Document stores
+Calendar, email, communication tools
+Core banking systems
+
+The problem: every integration was custom-built. Different syntax, different authentication, different error handling — for every model, for every tool, for every vendor.
+
+Imagine every appliance in the kitchen needing its own unique, incompatible power socket.`,
+  },
+  {
+    id: 'mcp2Y3lP8x',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'MCP',
+    title: 'What MCP Is',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `MCP = Model Context Protocol
+An open standard, introduced by Anthropic in 2024, that defines a single, universal way for AI models to connect to external tools and data sources.
+Think of it as USB for AI agents:
+
+**Without MCP** | **With MCP**
+Custom integration per tool | One standard connection method
+Rebuild for every model update | Tool works with any MCP-compatible model
+Fragile, expensive to maintain | Plug in, and it works
+Siloed by vendor | Interoperable across platforms
+
+***Build the tool once. Any compatible agent can use it.***`,
+  },
+  {
+    id: 'mcp3Z4mQ7y',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'MCP',
+    title: 'Where MCP Sits in the Architecture',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `MCP is the connective layer between the agent and the outside world:
+[ Agent / Orchestrator ]
+         ↓
+   [ MCP Interface ]
+         ↓
+┌────────────────────────────────┐
+│  MCP Servers (tools/systems):  │
+│  • Internal document store     │
+│  • Core banking API            │
+│  • CRM / client data           │
+│  • Compliance & risk systems   │
+│  • Email & calendar            │
+│  • Market data feeds           │
+└────────────────────────────────┘
+
+Each system exposes itself as an MCP server. The agent speaks to all of them through the same standard interface — it doesn't need to know the specifics of each system underneath.`,
+  },
+  {
+    id: 'mcp4A5nR6z',
+    layout: 'single',
+    section: 'Module 8',
+    chapter: '08',
+    kicker: 'MCP',
+    title: 'Why It Matters for Banking',
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: `MCP turns AI integration from a bespoke engineering project into an infrastructure decision.
+
+✅ Faster deployment — connect new systems without rebuilding agent logic
+✅ Vendor flexibility — swap the underlying model without rewiring all your tools
+✅ Auditability — a standardised layer is easier to monitor and govern
+✅ Ecosystem momentum — MCP is being adopted rapidly across platforms, tools, and vendors
+
+In the same way that REST APIs standardised how web services talk to each other — MCP is standardising how AI agents talk to the world.
+
+For bank leadership, the strategic implication is clear: institutions that build their integrations on open standards now will not be locked into a single vendor's ecosystem later.`,
   },
 ]

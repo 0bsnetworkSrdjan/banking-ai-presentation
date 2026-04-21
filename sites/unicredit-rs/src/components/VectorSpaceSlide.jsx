@@ -106,16 +106,16 @@ export function VectorSpaceSlide({ slide, lang, isActive }) {
     const W = () => container.clientWidth
     const H = () => container.clientHeight
 
-    // ── Renderer — solid, matching the dark glass background colour
-    // Using alpha:false + matching clear colour because WebGL alpha compositing
-    // breaks inside a backdrop-filter stacking context (renders black).
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false })
+    // ── Renderer — transparent clear so the slide-glass--dark gradient + backdrop
+    // show through (same semi-transparent frosted look as other slides).
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
     renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
     renderer.setSize(W(), H())
-    renderer.setClearColor(0x0a1410, 1)   // dark teal-black — matches slide-glass--dark
+    renderer.setClearColor(0x000000, 0)
     container.appendChild(renderer.domElement)
     renderer.domElement.style.position = 'absolute'
     renderer.domElement.style.inset = '0'
+    renderer.domElement.style.background = 'transparent'
 
     // ── Scene
     const scene = new THREE.Scene()

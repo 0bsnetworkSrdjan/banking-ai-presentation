@@ -83,3 +83,51 @@ export function SideBySideComparison({
     </div>
   )
 }
+
+/**
+ * Same data as SideBySideComparison, rendered as a semantic HTML `<table>`.
+ * Styling: `.slide-data-table` in `index.css`.
+ */
+export function HtmlTableComparison({
+  leftHeading,
+  rightHeading,
+  rows,
+  rowKeyPrefix = 'tbl',
+  className = '',
+  ariaLabel = 'Comparison',
+}) {
+  if (!rows?.length) return null
+
+  return (
+    <div
+      className={['slide-table-wrap', 'animated', className].filter(Boolean).join(' ')}
+      role="region"
+      aria-label={ariaLabel}
+    >
+      <table className="slide-data-table">
+        <thead>
+          <tr>
+            <th scope="col">
+              <RichText>{leftHeading}</RichText>
+            </th>
+            <th scope="col">
+              <RichText>{rightHeading}</RichText>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, i) => (
+            <tr key={`${rowKeyPrefix}-${i}`}>
+              <td>
+                <RichText>{row.left}</RichText>
+              </td>
+              <td>
+                <RichText>{row.right}</RichText>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}

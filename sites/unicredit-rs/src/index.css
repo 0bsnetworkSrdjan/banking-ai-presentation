@@ -609,6 +609,45 @@ body {
   font-weight: 600;
 }
 
+/* “Your guides today” — denser intro strip so the two bio panes get more height */
+.slide-glass--deck-intro--guides .slide-content__inner {
+  /* ~1 intro line extra above + below (tight base + line-height-sized bump) */
+  padding-block: calc(clamp(0.55rem, 0.9cqh, 1rem) + 1.35rem);
+  padding-inline: clamp(1rem, 2vw, 1.65rem);
+  gap: clamp(0.25rem, 0.55cqh, 0.45rem);
+}
+
+.slide-glass--deck-intro--guides .lead--deck-intro {
+  font-size: clamp(0.88rem, 0.42rem + 1.05vw, 1.12rem);
+  line-height: 1.28;
+}
+
+/* Guides intro: one block per line, 0.5 line-height between (this slide only) */
+.slide-glass--deck-intro--guides .lead--deck-intro.deck-intro-lines {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  white-space: normal;
+  gap: 0.5lh;
+}
+
+.slide-glass--deck-intro--guides .deck-intro-line {
+  margin: 0;
+  max-width: none;
+  text-align: center;
+  font: inherit;
+  line-height: inherit;
+}
+
+.slide-two-pane--guides-bios {
+  flex: 1 1 0;
+  min-height: 0;
+}
+
+.slide-two-pane--guides-bios .slide-glass--col .slide-content__inner {
+  align-content: center;
+}
+
 /* Two-col: type scales with pane height + width so long bios stay inside the card */
 .slide-glass--col h2 {
   font-family: 'Noto Serif', Georgia, serif;
@@ -781,6 +820,78 @@ body {
 .body-comparison__cell--right {
   color: #1e2558;
   background: rgba(100, 110, 250, 0.08);
+}
+
+/* Semantic `<table>` variant (e.g. two-col column `bodyComparison`) — matches .body-comparison */
+.slide-table-wrap {
+  width: 100%;
+  margin-top: clamp(0.65rem, 1.4cqh, 1rem);
+}
+
+.slide-data-table {
+  --sd-line: rgba(20, 34, 24, 0.14);
+  --sd-line-soft: rgba(20, 34, 24, 0.09);
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: clamp(12px, 1.2cqh, 18px);
+  border: 1px solid var(--sd-line);
+  overflow: hidden;
+  color: var(--text-main);
+  background: linear-gradient(180deg, #fbfcfb 0%, #f2f5f3 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 1px 2px rgba(20, 34, 24, 0.06);
+  font-size: clamp(0.72rem, 0.3rem + 2.65cqh, 1.12rem);
+  line-height: 1.42;
+}
+
+.slide-data-table thead th {
+  padding: clamp(0.55rem, 1.1cqh, 0.75rem) clamp(0.65rem, 1.4cqw, 1rem);
+  font-size: clamp(0.72rem, 0.28rem + 2.35cqh, 1.05rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: left;
+  border-bottom: 1px solid var(--sd-line);
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.slide-data-table thead th:first-child {
+  color: #3d5244;
+  border-right: 1px solid var(--sd-line-soft);
+}
+
+.slide-data-table thead th:last-child {
+  color: #2f3d8a;
+  background: rgba(100, 110, 250, 0.1);
+}
+
+.slide-data-table tbody td {
+  padding: clamp(0.5rem, 1cqh, 0.7rem) clamp(0.65rem, 1.4cqw, 1rem);
+  font-weight: 600;
+  color: var(--text-main);
+  border-bottom: 1px solid var(--sd-line-soft);
+  vertical-align: top;
+}
+
+.slide-data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.slide-data-table tbody td:first-child {
+  border-right: 1px solid var(--sd-line-soft);
+  color: #3d5244;
+}
+
+.slide-data-table tbody td:last-child {
+  color: #1e2558;
+  background: rgba(100, 110, 250, 0.08);
+}
+
+.slide-data-table strong,
+.slide-data-table .rich-bold {
+  color: inherit;
+  font-weight: 800;
 }
 
 .slide-glass--body .lead.lead--after-comparison {
@@ -1888,6 +1999,16 @@ h1 {
 
 /* ── Vector Space slide ──────────────────────────────────────────────────── */
 
+.slide-layout--vector-space {
+  display: flex;
+  flex-direction: column;
+}
+
+.slide-layout--vector-space .vs-slide {
+  flex: 1;
+  min-height: 0;
+}
+
 .vs-slide {
   width: 100%;
   height: 100%;
@@ -1898,6 +2019,12 @@ h1 {
   width: 100%;
   height: 100%;
   cursor: grab;
+  /* Helps transparent WebGL composite over the parent frosted-glass layer */
+  isolation: isolate;
+}
+
+.vs-canvas-wrap canvas {
+  background: transparent;
 }
 
 .vs-canvas-wrap:active {

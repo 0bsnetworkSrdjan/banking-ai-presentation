@@ -1,37 +1,13 @@
-import { useState } from 'react'
+import { useState, useLayoutEffect, useRef } from 'react'
 import { motion } from 'motion/react'
+import { gsap } from 'gsap'
 import { t, tSide } from '../i18n'
 import { RichText } from './RichText'
+import { resolveBodyComparison, HtmlTableComparison } from './SideBySideComparison'
 import { VectorSpaceSlide } from './VectorSpaceSlide'
-import { McpStackDiagram } from './McpStackDiagram'
-import { FlowTimelineDiagram } from './FlowTimelineDiagram'
-import { SideBySideComparison, resolveBodyComparison } from './SideBySideComparison'
 
 function L(slide, lang) {
   return slide.no_translate ? 'en' : lang
-}
-
-function isPointCardBullet(item) {
-  return item != null && typeof item === 'object' && !Array.isArray(item) && ('heading' in item || 'body' in item)
-}
-
-function PointCardContent({ item, lang }) {
-  const heading = item.heading != null ? t(item.heading, lang) : null
-  const body = item.body != null ? t(item.body, lang) : null
-  return (
-    <>
-      {heading ? (
-        <div className="point-card__heading">
-          <RichText>{heading}</RichText>
-        </div>
-      ) : null}
-      {body ? (
-        <p className="point-card__body">
-          <RichText>{body}</RichText>
-        </p>
-      ) : null}
-    </>
-  )
 }
 
 // ─── Layout renderers ──────────────────────────────────────────────────────
@@ -56,7 +32,7 @@ function HeaderGlass({ slide, styleClass, lang }) {
             <RichText>{title}</RichText>
           </h1>
         )}
-        {(slide.section || slide.chapter) && !slide.hideSectionChip && (
+        {(slide.section || slide.chapter) && (
           <div className="section-chip animated">
             {slide.section && <span>{t(slide.section, lg)}</span>}
             {slide.chapter && <span>{slide.chapter}</span>}
@@ -67,113 +43,35 @@ function HeaderGlass({ slide, styleClass, lang }) {
   )
 }
 
-function resolveMcpStack(slide, lang) {
-  const raw = slide.mcpStack
-  if (!raw || typeof raw !== 'object') return null
-  if ('en' in raw && typeof raw.en === 'object' && raw.en !== null) return t(raw, lang)
-  return raw
-}
-
-function resolveFlowTimeline(slide, lang) {
-  const raw = slide.flowTimeline
-  if (!raw || typeof raw !== 'object') return null
-  if ('en' in raw && typeof raw.en === 'object' && raw.en !== null) return t(raw, lang)
-  return raw
-}
-
 function BodyGlass({ slide, styleClass, lang }) {
   const lg = L(slide, lang)
   const body = t(slide.body, lg)
-  const bodyAfter = slide.bodyAfter ? t(slide.bodyAfter, lg) : null
   const bullets = t(slide.bullets, lg)
-  const mcpStack =
-    slide.bodyDiagram === 'mcp-stack' ? resolveMcpStack(slide, lg) : null
-  const flowTimeline =
-    slide.bodyDiagram === 'flow-timeline' ? resolveFlowTimeline(slide, lg) : null
-  const bodyComparison = resolveBodyComparison(slide, lg)
-  const bodyClosing = slide.bodyClosing ? t(slide.bodyClosing, lg) : null
-
-  if (!body && !bullets?.length && !mcpStack && !flowTimeline && !bodyAfter && !bodyComparison)
-    return null
+  if (!body && !bullets?.length) return null
 
   const kicker = t(slide.kicker, lg)
   const title = t(slide.title, lg)
   const showChip = !kicker && !title && (slide.section || slide.chapter)
 
-  const bodyGlassClass = [
-    'slide-glass',
-    'slide-glass--body',
-    slide.bodySurface === 'mcp-connect' ? 'slide-glass--body-mcp-connect' : '',
-    styleClass,
-  ]
-    .filter(Boolean)
-    .join(' ')
-
   return (
-    <div className={bodyGlassClass}>
-      <div
-        className={[
-          'slide-content__inner',
-          flowTimeline || mcpStack ? 'slide-content__inner--body-diagram-stack' : '',
-          slide.bodyInnerClass,
-        ]
-          .filter(Boolean)
-          .join(' ')}
-      >
+    <div className={`slide-glass slide-glass--body ${styleClass}`}>
+      <div className="slide-content__inner">
         {showChip && (
           <div className="section-chip animated">
             {slide.section && <span>{t(slide.section, lg)}</span>}
             {slide.chapter && <span>{slide.chapter}</span>}
           </div>
         )}
-        {mcpStack || flowTimeline ? (
-          <>
-            {body ? (
-              <p className="lead animated">
-                <RichText>{body}</RichText>
-              </p>
-            ) : null}
-            {mcpStack ? <McpStackDiagram key={`${slide.id}-${lang}`} stack={mcpStack} /> : null}
-            {flowTimeline ? (
-              <FlowTimelineDiagram key={`${slide.id}-${lang}`} timeline={flowTimeline} />
-            ) : null}
-            {bodyAfter ? (
-              <p className="lead lead--after-diagram animated">
-                <RichText>{bodyAfter}</RichText>
-              </p>
-            ) : null}
-          </>
-        ) : (
-          <>
-            {body ? (
-              <p className={['lead', 'animated', slide.bodyClass].filter(Boolean).join(' ')}>
-                <RichText>{body}</RichText>
-              </p>
-            ) : null}
-            {bodyComparison ? (
-              <SideBySideComparison
-                leftHeading={bodyComparison.leftHeading}
-                rightHeading={bodyComparison.rightHeading}
-                rows={bodyComparison.rows}
-                rowKeyPrefix={`${slide.id}-cmp`}
-              />
-            ) : null}
-            {bodyClosing ? (
-              <p className="lead lead--after-comparison animated">
-                <RichText>{bodyClosing}</RichText>
-              </p>
-            ) : null}
-          </>
+        {body && (
+          <p className={['lead', 'animated', slide.bodyClass].filter(Boolean).join(' ')}>
+            <RichText>{body}</RichText>
+          </p>
         )}
         {bullets?.length > 0 && (
-          <ul
-            className={['points', bullets.some(isPointCardBullet) ? 'points--card-prose' : '']
-              .filter(Boolean)
-              .join(' ')}
-          >
-            {bullets.map((b, i) => (
-              <li className="animated" key={`${slide.id}-${i}`}>
-                {isPointCardBullet(b) ? <PointCardContent item={b} lang={lg} /> : <RichText>{b}</RichText>}
+          <ul className="points">
+            {bullets.map((b) => (
+              <li className="animated" key={b}>
+                <RichText>{b}</RichText>
               </li>
             ))}
           </ul>
@@ -237,6 +135,7 @@ function QuoteContent({ slide, lang }) {
 function ColContent({ side, lang }) {
   const resolved = tSide(side, lang)
   if (!resolved) return null
+  const bodyComparison = resolveBodyComparison({ bodyComparison: side?.bodyComparison }, lang)
   return (
     <div className="slide-content__inner">
       {resolved.kicker && <p className="kicker animated">{resolved.kicker}</p>}
@@ -259,6 +158,14 @@ function ColContent({ side, lang }) {
         <p className="lead animated">
           <RichText>{resolved.body}</RichText>
         </p>
+      )}
+      {bodyComparison && (
+        <HtmlTableComparison
+          leftHeading={bodyComparison.leftHeading}
+          rightHeading={bodyComparison.rightHeading}
+          rows={bodyComparison.rows}
+          rowKeyPrefix="col-tbl"
+        />
       )}
       {resolved.bullets?.length > 0 && (
         <ul className="points">
@@ -467,70 +374,6 @@ function DeckIcon({ name }) {
   }
 }
 
-function TimelineLayout({ slide, styleClass, lang }) {
-  const lg = L(slide, lang)
-  const steps = Array.isArray(slide.timelineSteps) ? slide.timelineSteps : []
-
-  return (
-    <>
-      <HeaderGlass slide={slide} styleClass={styleClass} lang={lang} />
-      <div className={`slide-glass slide-glass--body ${styleClass}`}>
-        <div className="slide-content__inner slide-content__inner--timeline">
-          <ol className="slide-timeline" aria-label={t(slide.title, lg) || 'Workflow'}>
-            {steps.map((step, i) => {
-              const label = t(step.label, lg)
-              const body = t(step.body, lg)
-              const badge = step.badge != null ? t(step.badge, lg) : null
-              const highlight = Boolean(step.highlight)
-              return (
-                <li
-                  key={i}
-                  className={[
-                    'slide-timeline__step',
-                    'animated',
-                    highlight ? 'slide-timeline__step--hitl' : '',
-                  ]
-                    .filter(Boolean)
-                    .join(' ')}
-                >
-                  <div className="slide-timeline__marker-col" aria-hidden="true">
-                    <span className="slide-timeline__num">{i + 1}</span>
-                    {i < steps.length - 1 && <span className="slide-timeline__connector" />}
-                  </div>
-                  <div className="slide-timeline__card">
-                    <div className="slide-timeline__head">
-                      {step.emoji ? (
-                        <span className="slide-timeline__emoji" aria-hidden="true">
-                          {step.emoji}
-                        </span>
-                      ) : null}
-                      {label && (
-                        <p className="slide-timeline__label">
-                          <RichText>{label}</RichText>
-                        </p>
-                      )}
-                      {badge && (
-                        <span className="slide-timeline__badge">
-                          <RichText>{badge}</RichText>
-                        </span>
-                      )}
-                    </div>
-                    {body && (
-                      <p className="slide-timeline__body">
-                        <RichText>{body}</RichText>
-                      </p>
-                    )}
-                  </div>
-                </li>
-              )
-            })}
-          </ol>
-        </div>
-      </div>
-    </>
-  )
-}
-
 function IconGridLayout({ slide, styleClass, lang }) {
   const lg = L(slide, lang)
   const intro = slide.intro ? t(slide.intro, lg) : null
@@ -569,18 +412,66 @@ function IconGridLayout({ slide, styleClass, lang }) {
   )
 }
 
-function TocLayout({ slide, styleClass, lang }) {
+function TocLayout({ slide, styleClass, lang, isActive, tocRevealStep = 0 }) {
   const lg = L(slide, lang)
   const items = t(slide.tocItems, lg) ?? []
+  const steps = slide.tocRevealSteps
+  const maxStep = steps?.length ?? 0
+  const effectiveStep = isActive ? tocRevealStep : maxStep
+  const visibleCount = maxStep
+    ? effectiveStep <= 0
+      ? 0
+      : steps[Math.min(effectiveStep, maxStep) - 1]
+    : items.length
+
+  const listRef = useRef(null)
+  const prevVisibleRef = useRef(0)
+
+  useLayoutEffect(() => {
+    if (!maxStep) {
+      prevVisibleRef.current = visibleCount
+      return
+    }
+    if (!isActive) {
+      prevVisibleRef.current = visibleCount
+      return
+    }
+    if (effectiveStep <= 0) {
+      prevVisibleRef.current = 0
+      return
+    }
+    const prev = prevVisibleRef.current
+    if (visibleCount > prev && listRef.current) {
+      const lis = listRef.current.querySelectorAll('.toc-list__item')
+      const newEls = Array.from(lis).slice(prev)
+      if (newEls.length) {
+        gsap.fromTo(
+          newEls,
+          { opacity: 0, y: 14, filter: 'blur(4px)' },
+          {
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            duration: 0.48,
+            stagger: 0.07,
+            ease: 'power2.out',
+          },
+        )
+      }
+    }
+    prevVisibleRef.current = visibleCount
+  }, [visibleCount, maxStep, isActive, effectiveStep])
+
+  const slice = items.slice(0, visibleCount)
 
   return (
     <>
       <HeaderGlass slide={slide} styleClass={styleClass} lang={lang} />
       <div className={`slide-glass slide-glass--body ${styleClass}`}>
         <div className="slide-content__inner slide-content__inner--toc">
-          <ol className="toc-list">
-            {items?.map((line, i) => (
-              <li key={i} className="toc-list__item animated">
+          <ol ref={listRef} className="toc-list">
+            {slice.map((line, i) => (
+              <li key={`${slide.id}-${i}`} className="toc-list__item">
                 <RichText>{line}</RichText>
               </li>
             ))}
@@ -666,23 +557,21 @@ function ImagePane({ src, alt }) {
 // ─── Layout constants ──────────────────────────────────────────────────────
 
 const FULL_CARD_LAYOUTS = ['title', 'quote']
-const RAW_FILL_LAYOUTS  = ['vector-space']
 
 // ─── Main component ────────────────────────────────────────────────────────
 
-export function SlideFrame({ slide, isActive, lang }) {
+export function SlideFrame({ slide, isActive, lang, tocRevealStep = 0 }) {
   const layout = slide.layout || 'single'
   const styleClass = slide.style ? `slide-glass--${slide.style}` : ''
   const isFullCard = FULL_CARD_LAYOUTS.includes(layout)
-  const isRawFill = RAW_FILL_LAYOUTS.includes(layout)
 
   return (
     <article
-      className={`slide ${isActive ? 'is-active' : ''} ${slide.tone} ${layout === 'timeline' ? 'slide--timeline' : ''}`}
+      className={`slide ${isActive ? 'is-active' : ''} ${slide.tone}`}
       aria-hidden={!isActive}
     >
       <motion.div
-        className={`slide-shell ${isRawFill ? 'slide-shell--centered' : isFullCard ? 'slide-shell--centered' : 'slide-shell--stacked'} ${layout === 'timeline' ? 'slide-shell--timeline' : ''}`}
+        className={`slide-shell ${isFullCard ? 'slide-shell--centered' : 'slide-shell--stacked'}`}
         initial={{ opacity: 0.5, scale: 0.98 }}
         animate={{ opacity: isActive ? 1 : 0.44, scale: isActive ? 1 : 0.98 }}
         transition={{ duration: 0.48, ease: 'easeOut' }}
@@ -709,15 +598,44 @@ export function SlideFrame({ slide, isActive, lang }) {
           <>
             <HeaderGlass slide={slide} styleClass={styleClass} lang={lang} />
             {t(slide.intro, L(slide, lang)) && (
-              <div className={`slide-glass slide-glass--deck-intro ${styleClass}`}>
+              <div
+                className={[
+                  'slide-glass',
+                  'slide-glass--deck-intro',
+                  slide.intro_variant && `slide-glass--deck-intro--${slide.intro_variant}`,
+                  styleClass,
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
+              >
                 <div className="slide-content__inner">
-                  <p className="lead animated lead--deck-intro">
-                    <RichText>{t(slide.intro, L(slide, lang))}</RichText>
-                  </p>
+                  {slide.intro_variant === 'guides' ? (
+                    <div className="lead animated lead--deck-intro deck-intro-lines">
+                      {String(t(slide.intro, L(slide, lang)))
+                        .split('\n')
+                        .filter((line) => line.trim().length > 0)
+                        .map((line, i) => (
+                          <p key={i} className="deck-intro-line animated">
+                            <RichText>{line}</RichText>
+                          </p>
+                        ))}
+                    </div>
+                  ) : (
+                    <p className="lead animated lead--deck-intro">
+                      <RichText>{t(slide.intro, L(slide, lang))}</RichText>
+                    </p>
+                  )}
                 </div>
               </div>
             )}
-            <div className="slide-two-pane">
+            <div
+              className={[
+                'slide-two-pane',
+                slide.intro_variant === 'guides' && 'slide-two-pane--guides-bios',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+            >
               <div className={`slide-glass slide-glass--col ${styleClass}`}>
                 <ColContent side={slide.left} lang={lang} />
               </div>
@@ -749,14 +667,20 @@ export function SlideFrame({ slide, isActive, lang }) {
 
         {layout === 'icon-grid' && <IconGridLayout slide={slide} styleClass={styleClass} lang={lang} />}
 
-        {layout === 'timeline' && <TimelineLayout slide={slide} styleClass={styleClass} lang={lang} />}
-
-        {layout === 'toc' && <TocLayout slide={slide} styleClass={styleClass} lang={lang} />}
+        {layout === 'toc' && (
+          <TocLayout
+            slide={slide}
+            styleClass={styleClass}
+            lang={lang}
+            isActive={isActive}
+            tocRevealStep={tocRevealStep}
+          />
+        )}
 
         {layout === 'four-quad' && <FourQuadLayout slide={slide} styleClass={styleClass} lang={lang} />}
 
         {layout === 'vector-space' && (
-          <div className={`slide-glass slide-glass--full ${styleClass || 'slide-glass--dark'} slide-layout--title slide-layout--vector-space`}>
+          <div className={`slide-glass slide-glass--full ${styleClass} slide-layout--vector-space`}>
             <VectorSpaceSlide slide={slide} lang={L(slide, lang)} isActive={isActive} />
           </div>
         )}
