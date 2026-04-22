@@ -17,6 +17,15 @@ function L(slide, lang) {
   return slide.no_translate ? 'en' : lang
 }
 
+/** Public-folder URLs (iframe embeds, slide images) must respect Vite base path for GitHub Pages. */
+function publicAssetUrl(path) {
+  if (path == null || path === '') return path
+  const s = String(path)
+  if (/^https?:\/\//i.test(s)) return s
+  const trimmed = s.startsWith('/') ? s.slice(1) : s
+  return `${import.meta.env.BASE_URL}${trimmed}`
+}
+
 function isPointCardBullet(item) {
   return item != null && typeof item === 'object' && !Array.isArray(item) && ('heading' in item || 'body' in item)
 }
@@ -884,7 +893,7 @@ export function SlideFrame({ slide, isActive, lang, tocRevealStep = 0 }) {
           <div className={`slide-glass slide-glass--full ${styleClass} slide-layout--embed`}>
             <iframe
               className="slide-embed__iframe"
-              src={slide.embedSrc}
+              src={publicAssetUrl(slide.embedSrc)}
               title={slide.embedTitle ?? 'Interactive slide content'}
               allow="autoplay"
               style={{ backgroundColor: 'transparent' }}
@@ -896,7 +905,7 @@ export function SlideFrame({ slide, isActive, lang, tocRevealStep = 0 }) {
           <>
             <HeaderGlass slide={slide} styleClass={styleClass} lang={lang} />
             <div className="slide-two-pane">
-              <ImagePane src={`/img/${slide.image}`} alt={t(slide.imageAlt, L(slide, lang)) || ''} />
+              <ImagePane src={publicAssetUrl(`img/${slide.image}`)} alt={t(slide.imageAlt, L(slide, lang)) || ''} />
               <div className={`slide-glass slide-glass--col ${styleClass}`}>
                 <ColContent side={slide.right} lang={lang} />
               </div>
