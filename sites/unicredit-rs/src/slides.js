@@ -1376,146 +1376,7 @@ Model ih ne izvršava sam — on odlučuje kada i zašto da ih koristi, a rezult
       },
     },
   },
-  {
-    id: 'm8b3M5nQ1z',
-    layout: 'single',
-    section: { en: 'Module 8', sr: 'Modul 8' },
-    chapter: '08',
-    kicker: { en: 'Orchestration', sr: 'Orkestracija' },
-    title: { en: 'How an Agent Thinks', sr: 'Kako agent razmišlja' },
-    tone: 'section-b',
-    animation: 'stagger',
-    anim_stagger: 0.12,
-    body: {
-      en: `A simple example: "Summarise the credit risk for client X before tomorrow's meeting"
-The agent doesn't just answer — it works:
-
-🔍 Retrieves the client's file from the document store (RAG)
-📊 Queries the database for recent transaction patterns
-🧮 Runs a risk scoring calculation
-🌐 Checks current market conditions via API
-🧠 Reasons across all retrieved information
-✍️ Produces a structured briefing — ready for the meeting
-
-Each step informs the next. The model decides the sequence.`,
-      sr: `Jednostavan primer: „Sažmi kreditni rizik za klijenta X pre sutrašnjeg sastanka“
-Agent ne samo da odgovara — on radi:
-
-🔍 Pronalazi dosije klijenta iz baze dokumenata (RAG)
-📊 Pretražuje bazu za skorašnje obrasce transakcija
-🧮 Pokreće kalkulaciju skora rizika
-🌐 Proverava aktuelne tržišne uslove putem API-ja
-🧠 Rezonuje na osnovu svih pronađenih informacija
-✍️ Priprema strukturiran brifing — spreman za sastanak
-
-Svaki korak informiše naredni. Model odlučuje o redosledu.`,
-    },
-  },
-  {
-    id: 'm8b4N6pR2v',
-    layout: 'single',
-    section: { en: 'Module 8', sr: 'Modul 8' },
-    chapter: '08',
-    kicker: { en: 'Governance', sr: 'Upravljanje' },
-    title: {
-      en: 'Guardrails — Why Control Matters',
-      sr: 'Ograde — zašto je kontrola važna',
-    },
-    tone: 'section-b',
-    animation: 'stagger',
-    anim_stagger: 0.12,
-    body: {
-      en: 'More capability = more responsibility. Agents operating in banking contexts must be carefully constrained:',
-      sr: 'Više mogućnosti = više odgovornosti. Agenti koji rade u bankarskom kontekstu moraju biti pažljivo ograničeni:',
-    },
-    bodyComparison: {
-      leftHeading: { en: 'Control', sr: 'Kontrola' },
-      rightHeading: { en: 'What it means', sr: 'Šta to znači' },
-      rows: [
-        {
-          left: { en: '**Human-in-the-loop**', sr: '**Čovek u petlji**' },
-          right: {
-            en: 'Certain actions require approval before execution.',
-            sr: 'Određene radnje zahtevaju odobrenje pre izvršenja.',
-          },
-        },
-        {
-          left: { en: '**Tool boundaries**', sr: '**Granice alata**' },
-          right: {
-            en: 'The agent can only access what it is explicitly permitted to.',
-            sr: 'Agent može da pristupi samo onome što mu je eksplicitno dozvoljeno.',
-          },
-        },
-        {
-          left: { en: '**Audit trails**', sr: '**Revizioni tragovi**' },
-          right: {
-            en: 'Every tool call and decision step should be logged.',
-            sr: 'Svaki poziv alata i korak u odluci treba da budu zabeleženi.',
-          },
-        },
-        {
-          left: { en: '**Failure handling**', sr: '**Rukovanje greškama**' },
-          right: {
-            en: 'What happens when a tool returns unexpected results?',
-            sr: 'Šta se dešava kada alat vrati neočekivane rezultate?',
-          },
-        },
-      ],
-    },
-    body2: {
-      en: `An agent with access to client data, communication channels, and workflow systems is not a chatbot. It requires governance like any other operational system.
-
-The question is never just "can it do this?" — but "should it do this autonomously?"`,
-      sr: `Agent sa pristupom podacima klijenata, komunikacionim kanalima i sistemima radnih tokova nije chatbot. Zahteva upravljanje kao i svaki drugi operativni sistem.
-
-Pitanje nikada nije samo „da li ovo može da uradi?“ — već „da li treba ovo da radi samostalno?“`,
-    },
-  },
-  {
-    id: 'm8b5O7qS3w',
-    layout: 'single',
-    section: { en: 'Module 8', sr: 'Modul 8' },
-    chapter: '08',
-    kicker: { en: 'Arc', sr: 'Luk' },
-    title: { en: 'To summarize Agents', sr: 'Rezime o agentima' },
-    tone: 'section-b',
-    animation: 'stagger',
-    anim_stagger: 0.12,
-    bodyInnerClass: 'slide-content__inner--body-diagram-stack',
-    body: { en: 'How everything connects:', sr: 'Kako se sve povezuje:' },
-    flowTimeline: {
-      rows: [
-        [
-          { kind: 'text', label: { en: 'User request', sr: 'Zahtev korisnika' } },
-          { kind: 'agent', label: { en: '[ Agent / Orchestrator ]', sr: '[ Agent / orkestrator ]' } },
-          { kind: 'text', label: { en: 'Reasons about the goal', sr: 'Rezonuje o cilju' } },
-        ],
-        [
-          {
-            kind: 'tools',
-            title: { en: 'Tools available', sr: 'Dostupni alati' },
-            items: [
-              { en: 'RAG (your documents)', sr: 'RAG (vaši dokumenti)' },
-              { en: 'Database queries', sr: 'Upiti u bazu podataka' },
-              { en: 'APIs & live data', sr: 'API-jevi i podaci u realnom vremenu' },
-              { en: 'Calculations & code', sr: 'Kalkulacije i kod' },
-              { en: 'Workflow triggers', sr: 'Pokretači radnih tokova' },
-            ],
-          },
-          { kind: 'text', label: { en: 'Synthesises results', sr: 'Sintetiše rezultate' } },
-          { kind: 'text', label: { en: 'Response or Action', sr: 'Odgovor ili radnja' } },
-          {
-            kind: 'review',
-            label: { en: 'Human review — where required', sr: 'Ljudska provera — tamo gde je potrebna' },
-          },
-        ],
-      ],
-    },
-    body2: {
-      en: `The frozen chef, handed the right recipes, the right ingredients, and a fully equipped kitchen — with a supervisor in the room for the dishes that matter.`,
-      sr: `Zaleđeni kuvar, kome su predati pravi recepti, pravi sastojci i potpuno opremljena kuhinja — uz nadzornika u prostoriji za jela koja su važna.`,
-    },
-  },
+  
   {
     id: 'mcp1X2kN9w',
     layout: 'single',
@@ -1822,6 +1683,145 @@ Evo kako izgleda sažetak veštine procene kredita — svaki odeljak, po jedan s
     ],
   },
   {
+    id: 'm8b3M5nQ1z',
+    layout: 'single',
+    section: { en: 'Module 8', sr: 'Modul 8' },
+    chapter: '08',
+    kicker: { en: 'Orchestration', sr: 'Orkestracija' },
+    title: { en: 'How an Agent Thinks', sr: 'Kako agent razmišlja' },
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: {
+      en: `A simple example: "Summarise the credit risk for client X before tomorrow's meeting"
+The agent doesn't just answer — it works:
+
+🔍 Retrieves the client's file from the document store (RAG)
+📊 Queries the database for recent transaction patterns
+🧮 Runs a risk scoring calculation
+🌐 Checks current market conditions via API
+🧠 Reasons across all retrieved information
+✍️ Produces a structured briefing — ready for the meeting
+
+Each step informs the next. The model decides the sequence.`,
+      sr: `Jednostavan primer: „Sažmi kreditni rizik za klijenta X pre sutrašnjeg sastanka“
+Agent ne samo da odgovara — on radi:
+
+🔍 Pronalazi dosije klijenta iz baze dokumenata (RAG)
+📊 Pretražuje bazu za skorašnje obrasce transakcija
+🧮 Pokreće kalkulaciju skora rizika
+🌐 Proverava aktuelne tržišne uslove putem API-ja
+🧠 Rezonuje na osnovu svih pronađenih informacija
+✍️ Priprema strukturiran brifing — spreman za sastanak
+
+Svaki korak informiše naredni. Model odlučuje o redosledu.`,
+    },
+  },
+  {
+    id: 'm8b5O7qS3w',
+    layout: 'single',
+    section: { en: 'Module 8', sr: 'Modul 8' },
+    chapter: '08',
+    kicker: { en: 'Arc', sr: 'Luk' },
+    title: { en: 'To summarize Agents', sr: 'Rezime o agentima' },
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    bodyInnerClass: 'slide-content__inner--body-diagram-stack',
+    body: { en: 'How everything connects:', sr: 'Kako se sve povezuje:' },
+    flowTimeline: {
+      rows: [
+        [
+          { kind: 'text', label: { en: 'User request', sr: 'Zahtev korisnika' } },
+          { kind: 'agent', label: { en: '[ Agent / Orchestrator ]', sr: '[ Agent / orkestrator ]' } },
+          { kind: 'text', label: { en: 'Reasons about the goal', sr: 'Rezonuje o cilju' } },
+        ],
+        [
+          {
+            kind: 'tools',
+            title: { en: 'Tools available', sr: 'Dostupni alati' },
+            items: [
+              { en: 'RAG (your documents)', sr: 'RAG (vaši dokumenti)' },
+              { en: 'Database queries', sr: 'Upiti u bazu podataka' },
+              { en: 'APIs & live data', sr: 'API-jevi i podaci u realnom vremenu' },
+              { en: 'Calculations & code', sr: 'Kalkulacije i kod' },
+              { en: 'Workflow triggers', sr: 'Pokretači radnih tokova' },
+            ],
+          },
+          { kind: 'text', label: { en: 'Synthesises results', sr: 'Sintetiše rezultate' } },
+          { kind: 'text', label: { en: 'Response or Action', sr: 'Odgovor ili radnja' } },
+          {
+            kind: 'review',
+            label: { en: 'Human review — where required', sr: 'Ljudska provera — tamo gde je potrebna' },
+          },
+        ],
+      ],
+    },
+    body2: {
+      en: `The frozen chef, handed the right recipes, the right ingredients, and a fully equipped kitchen — with a supervisor in the room for the dishes that matter.`,
+      sr: `Zaleđeni kuvar, kome su predati pravi recepti, pravi sastojci i potpuno opremljena kuhinja — uz nadzornika u prostoriji za jela koja su važna.`,
+    },
+  },{
+    id: 'm8b4N6pR2v',
+    layout: 'single',
+    section: { en: 'Module 8', sr: 'Modul 8' },
+    chapter: '08',
+    kicker: { en: 'Governance', sr: 'Upravljanje' },
+    title: {
+      en: 'Guardrails — Why Control Matters',
+      sr: 'Ograde — zašto je kontrola važna',
+    },
+    tone: 'section-b',
+    animation: 'stagger',
+    anim_stagger: 0.12,
+    body: {
+      en: 'More capability = more responsibility. Agents operating in banking contexts must be carefully constrained:',
+      sr: 'Više mogućnosti = više odgovornosti. Agenti koji rade u bankarskom kontekstu moraju biti pažljivo ograničeni:',
+    },
+    bodyComparison: {
+      leftHeading: { en: 'Control', sr: 'Kontrola' },
+      rightHeading: { en: 'What it means', sr: 'Šta to znači' },
+      rows: [
+        {
+          left: { en: '**Human-in-the-loop**', sr: '**Čovek u petlji**' },
+          right: {
+            en: 'Certain actions require approval before execution.',
+            sr: 'Određene radnje zahtevaju odobrenje pre izvršenja.',
+          },
+        },
+        {
+          left: { en: '**Tool boundaries**', sr: '**Granice alata**' },
+          right: {
+            en: 'The agent can only access what it is explicitly permitted to.',
+            sr: 'Agent može da pristupi samo onome što mu je eksplicitno dozvoljeno.',
+          },
+        },
+        {
+          left: { en: '**Audit trails**', sr: '**Revizioni tragovi**' },
+          right: {
+            en: 'Every tool call and decision step should be logged.',
+            sr: 'Svaki poziv alata i korak u odluci treba da budu zabeleženi.',
+          },
+        },
+        {
+          left: { en: '**Failure handling**', sr: '**Rukovanje greškama**' },
+          right: {
+            en: 'What happens when a tool returns unexpected results?',
+            sr: 'Šta se dešava kada alat vrati neočekivane rezultate?',
+          },
+        },
+      ],
+    },
+    body2: {
+      en: `An agent with access to client data, communication channels, and workflow systems is not a chatbot. It requires governance like any other operational system.
+
+The question is never just "can it do this?" — but "should it do this autonomously?"`,
+      sr: `Agent sa pristupom podacima klijenata, komunikacionim kanalima i sistemima radnih tokova nije chatbot. Zahteva upravljanje kao i svaki drugi operativni sistem.
+
+Pitanje nikada nije samo „da li ovo može da uradi?“ — već „da li treba ovo da radi samostalno?“`,
+    },
+  },
+  {
     id: 'm8tWF4nP2x',
     layout: 'timeline',
     section: { en: 'Module 8', sr: 'Modul 8' },
@@ -1847,17 +1847,7 @@ Evo kako izgleda sažetak veštine procene kredita — svaki odeljak, po jedan s
           sr: 'Email stigne. Agent ga pročita: „Klijent traži povećanje limita.“ Odmah zna šta sledi.',
         },
       },
-      {
-        emoji: '🔗',
-        label: {
-          en: '**Agent Utilizes Tools**',
-          sr: '**Agent koristi alatke**',
-        },
-        body: {
-          en: 'Via MCP, the agent simultaneously queries: core banking (balance, payment history), credit bureau (external score), and CRM (client profile). Done in seconds.',
-          sr: 'Preko MCP-a agent istovremeno povlači: core banking (stanje, istorija plaćanja), kreditni biro (eksterni skor) i CRM (profil klijenta). Gotovo za nekoliko sekundi.',
-        },
-      },
+      
       {
         emoji: '🧠',
         label: {
@@ -1867,6 +1857,16 @@ Evo kako izgleda sažetak veštine procene kredita — svaki odeljak, po jedan s
         body: {
           en: 'The “Credit Assessment Skill” activates — your internal credit policy. Every criterion is evaluated: standing, limits, eligibility.',
           sr: 'Aktivira se „Credit Assessment Skill“ — vaša interna kreditna politika. Svaki kriterijum se procenjuje: odnos, limiti, podobnost.',
+        },
+      },{
+        emoji: '🔗',
+        label: {
+          en: '**Agent Utilizes Tools**',
+          sr: '**Agent koristi alatke**',
+        },
+        body: {
+          en: 'Via MCP, the agent simultaneously queries: core banking (balance, payment history), credit bureau (external score), and CRM (client profile). Done in seconds.',
+          sr: 'Preko MCP-a agent istovremeno povlači: core banking (stanje, istorija plaćanja), kreditni biro (eksterni skor) i CRM (profil klijenta). Gotovo za nekoliko sekundi.',
         },
       },
       {
