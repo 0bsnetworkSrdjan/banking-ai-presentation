@@ -1,3 +1,5 @@
+import neuralNetworkEmbedUrl from './embed/neural-network.html?url'
+
 // ─── Language configuration ────────────────────────────────────────────────
 // Derived from ---META--- in src/content/slides new.md
 
@@ -573,7 +575,7 @@ Rezultat? Ne memorisanje — već destilovano razumevanje, sažeto u milijarde b
     animation: 'blur-in',
     anim_duration: 0.9,
     anim_stagger: 0.18,
-    embedSrc: '/neural-network.html',
+    embedSrc: neuralNetworkEmbedUrl,
     embedTitle: 'Neural network: how an LLM is built',
   },
   {

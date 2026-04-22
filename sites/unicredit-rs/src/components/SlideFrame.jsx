@@ -22,8 +22,12 @@ function publicAssetUrl(path) {
   if (path == null || path === '') return path
   const s = String(path)
   if (/^https?:\/\//i.test(s)) return s
+  const base = import.meta.env.BASE_URL
+  const baseNoSlash = base.replace(/\/$/, '')
+  // Vite `?url` imports and absolute paths already include the base — do not prefix twice
+  if (s.startsWith('/') && (s === baseNoSlash || s.startsWith(`${baseNoSlash}/`))) return s
   const trimmed = s.startsWith('/') ? s.slice(1) : s
-  return `${import.meta.env.BASE_URL}${trimmed}`
+  return `${base}${trimmed}`
 }
 
 function isPointCardBullet(item) {

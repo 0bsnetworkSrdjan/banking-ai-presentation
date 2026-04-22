@@ -22,7 +22,7 @@ const PROTECTED_SLIDES = [
   },
   {
     id: 'nN4kP8wR2x',
-    reason: 'Embedded interactive canvas — content in public/neural-network.html',
+    reason: 'Embedded interactive canvas — content in src/embed/neural-network.html (import ?url in slides.js)',
   },
 ]
 
@@ -204,11 +204,16 @@ function emitIconGrid(slide) {
 }
 
 function emitToc(slide) {
-  const items = slide.tocItems ?? []
+  const rawItems = slide.tocItems
+  const items = Array.isArray(rawItems)
+    ? rawItems
+    : Array.isArray(rawItems?.en)
+      ? rawItems.en
+      : []
   const startNum = slide.tocStart ?? 1
   const lines = []
   items.forEach((line, i) => {
-    lines.push(`${startNum + i}. ${line}`)
+    lines.push(`${startNum + i}. ${tPlain(line)}`)
   })
   return lines.join('\n')
 }
